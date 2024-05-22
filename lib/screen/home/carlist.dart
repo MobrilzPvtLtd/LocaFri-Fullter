@@ -1,3 +1,4 @@
+import 'package:carapp/screen/Productdetails/productdetail.dart';
 import 'package:flutter/material.dart';
 
 class Carlist extends StatefulWidget {
@@ -40,50 +41,55 @@ class _CarlistState extends State<Carlist> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final product = productlist[index];
-          return Container(
-            height: height * 0.75,
-            width: width * 0.50,
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.grey[200],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(height: 2,),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      product["name"],
-                      style:
-                          const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
-                    ),
-                     Icon(Icons.favorite_outline_sharp,size: 25,)
-                  ],
-                ),
-                Image.asset(product['image'],),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "\$${product["Price"]}/day",
-                      style:
-                          const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
-                    ),
-                   Text(
-                      product["Rating"],
-                      style:
-                          const TextStyle(fontSize: 18,fontFamily: "PostsenOne"),
-                    ),
-                  ],
-                ),
-                      
-              ],
+          return InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> Product_detail()));
+            },
+            child: Container(
+              height: height * 0.75,
+              width: width * 0.50,
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey[200],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(height: 2,),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        product["name"],
+                        style:
+                            const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
+                      ),
+                       Icon(Icons.favorite_outline_sharp,size: 25,)
+                    ],
+                  ),
+                  Image.asset(product['image'],),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "\$${product["Price"]}/day",
+                        style:
+                            const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
+                      ),
+                     Text(
+                        product["Rating"],
+                        style:
+                            const TextStyle(fontSize: 18,fontFamily: "PostsenOne"),
+                      ),
+                    ],
+                  ),
+                        
+                ],
+              ),
             ),
           );
         },

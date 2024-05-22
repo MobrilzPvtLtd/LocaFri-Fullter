@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+class Profile_Button extends StatelessWidget {
+  const Profile_Button({super.key, this.onPressed, required this.Icons, required this.Icons2,required this.text});
+  final void Function()? onPressed;
+  final IconData Icons;
+  final IconData Icons2;
+  final String text;
+
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return  GestureDetector(
+            onTap: onPressed,
+            child: Container(
+              height: height * 0.10,
+              width: width,
+              color: Colors.white70,
+              child:  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(
+                    Icons,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                   Text(
+                    text,
+                    style: const TextStyle(
+                        fontSize: 30, color: Colors.black, fontFamily: "DMSans"),
+                  ),
+                  Icon(
+                    Icons2,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                ],
+              ),
+            ),
+          );
+  }
+}

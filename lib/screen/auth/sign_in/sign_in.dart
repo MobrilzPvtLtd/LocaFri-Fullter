@@ -29,9 +29,11 @@ class _Sign_inState extends State<Sign_in> {
                     style: TextStyle(
                         fontSize: 40,
                         color: Colors.white,
-                        fontFamily: "PostsenOne"),
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "DMSans"),
                   ),
                 ),
+                Image.asset("assets/images/introduction_image.png"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -107,8 +109,9 @@ class _Sign_inState extends State<Sign_in> {
                         "LOGIN",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "PostsenOne",
-                            fontSize: 20),
+                            fontFamily: "DMSans",
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800),
                       ),
                     ),
                   ),
@@ -123,7 +126,7 @@ class _Sign_inState extends State<Sign_in> {
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontFamily: "PostsenOne"),
+                        fontFamily: "PlayfairDisplay"),
                   ),
                 ),
                 const SizedBox(
@@ -143,11 +146,12 @@ class _Sign_inState extends State<Sign_in> {
                         color: Colors.amber),
                     child: const Center(
                       child: Text(
-                        "Sign UP",
+                        "SIGN UP",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "PostsenOne",
-                            fontSize: 20),
+                            fontFamily: "DMSans",
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800),
                       ),
                     ),
                   ),
@@ -160,6 +164,7 @@ class _Sign_inState extends State<Sign_in> {
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white,
+                          fontFamily: "DMSans"
                         )),
                   ),
                 ),

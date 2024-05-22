@@ -139,8 +139,9 @@ class _Sign_upState extends State<Sign_up> {
                       "SIGN UP ",
                       style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 20,
+                          fontFamily: "DMSans"),
                     ),
                   ),
                 ),
@@ -155,7 +156,7 @@ class _Sign_upState extends State<Sign_up> {
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
-                      fontFamily: "PostsenOne"),
+                      fontFamily: "DMSans"),
                 ),
               ),
               const SizedBox(
@@ -179,7 +180,8 @@ class _Sign_upState extends State<Sign_up> {
                       "SIGN IN",
                       style: TextStyle(
                           color: Colors.white,
-                          fontFamily: "PostsenOne",
+                           fontFamily: "DMSans",
+                           fontWeight: FontWeight.w800,
                           fontSize: 20),
                     ),
                   ),
@@ -192,6 +194,7 @@ class _Sign_upState extends State<Sign_up> {
                       const Text("If You have Any Query Click Here Contact US!",
                           style: TextStyle(
                             fontSize: 13,
+                            fontFamily: "PlayfairDisplay",
                             color: Colors.white,
                           )),
                 ),

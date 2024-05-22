@@ -1,8 +1,12 @@
+import 'package:carapp/screen/Account_info/edit_user_detail.dart';
 import 'package:carapp/screen/Introduction/introduction.dart';
+import 'package:carapp/screen/Productdetails/Specification_page.dart';
 import 'package:carapp/screen/Productdetails/productdetail.dart';
 import 'package:carapp/screen/auth/Forget/forgetpassword.dart';
+import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:carapp/screen/auth/sign_in/sign_in.dart';
 import 'package:carapp/screen/auth/sign_up/sign_up.dart';
+import 'package:carapp/screen/customer_detail/customer_detail_one.dart';
 import 'package:carapp/screen/home/home.dart';
 import 'package:carapp/webview.dart';
 import 'package:carapp/widget/categories.dart';
@@ -18,11 +22,11 @@ class MyApp extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       
-      home: Product_detail(),
+      home: Customer_Detail_one(),
     );
   }
 }

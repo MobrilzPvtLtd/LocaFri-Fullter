@@ -1,3 +1,4 @@
+import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:carapp/screen/home/carlist.dart';
 import 'package:carapp/widget/categories.dart';
 import 'package:carapp/widget/section.dart';
@@ -88,16 +89,21 @@ class _HomeState extends State<Home> {
                   )
                 ],
               ),
-              const SectionWidget(
+               SectionWidget(
+                onpressed: () {
+                  
+                },
+                fontSize: 20,
                 leadingText: "Avaliable Cars",
                 ButtonText: "More",
+                FontFamily: "DMSans"
               ),
              const  SizedBox(height: 20,),
           
              // Carlist this list store all cars 
              const  Carlist( ),
               const SizedBox(height: 10,),
-              const SectionWidget(leadingText: "PROMO", ButtonText: ""),
+              const SectionWidget(leadingText: "PROMO",fontSize: 20, ButtonText: "",FontFamily: "DMSans",),
               Container(
                 height: height*0.20 ,
                 width: width*0.90,
@@ -139,9 +145,14 @@ class _HomeState extends State<Home> {
           color: Colors.amber[600],
           size: 40,
         ),
-        const CircleAvatar(
-          backgroundImage: AssetImage("assets/images/person.jpg"),
-          radius: 30,
+        InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+          },
+          child: const CircleAvatar(
+            backgroundImage: AssetImage("assets/images/person.jpg"),
+            radius: 30,
+          ),
         )
       ],
     );

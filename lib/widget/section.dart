@@ -1,10 +1,16 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class SectionWidget extends StatelessWidget {
   const SectionWidget(
-      {super.key, required this.leadingText, required this.ButtonText});
+      {super.key, required this.leadingText, required this.ButtonText, required this.FontFamily, required this.fontSize, this.fontWeight, this.onpressed});
   final String leadingText;
   final String ButtonText;
+  final String FontFamily;
+  final double fontSize;
+  final FontWeight? fontWeight;
+  final void Function()? onpressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +20,17 @@ class SectionWidget extends StatelessWidget {
       children: [
         Text(
           leadingText,
-          style: const TextStyle(
-              fontSize: 20, color: Colors.black, fontFamily: "Postsenone"),
+          style:  TextStyle(
+              fontSize: fontSize, color: Colors.black, fontFamily: FontFamily,fontWeight: fontWeight),
         ),
         TextButton(
-            onPressed: () {},
+            onPressed: onpressed,
             child: Text(
               ButtonText,
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.amber[600],
-                  fontFamily: "PostsenOne"),
+                  fontFamily: FontFamily ),
             ))
       ],
     );
