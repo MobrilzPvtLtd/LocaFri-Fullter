@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:carapp/screen/Productdetails/Specification_page.dart';
+import 'package:carapp/screen/customer_detail/customer_detail_one.dart';
 import 'package:carapp/widget/section.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,9 +22,14 @@ class _Product_detailState extends State<Product_detail> {
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
-        minimum: EdgeInsets.all(10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        
+        minimum: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
@@ -52,19 +59,22 @@ class _Product_detailState extends State<Product_detail> {
             width: width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/farrericar.png")),
+                  image: AssetImage("assets/images/car9.png")),
               // backgroundBlendMode: BlendMode.color
             ),
           ),
+          Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 "Farreri Car",
                 style: TextStyle(
                     fontSize: 30,
-                    fontFamily: "DMSans",
+                    fontFamily: "UberMove",
                     fontWeight: FontWeight.w900),
               ),
               TextButton.icon(
@@ -79,7 +89,7 @@ class _Product_detailState extends State<Product_detail> {
                     style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,
-                      fontFamily: "DMSans",
+                      fontFamily: "UberMove",
                       fontWeight: FontWeight.bold,
                     ),
                   ))
@@ -93,13 +103,13 @@ class _Product_detailState extends State<Product_detail> {
                 "\$499",
                 style: TextStyle(
                     fontSize: 30,
-                    fontFamily: "DMSans",
-                    fontWeight: FontWeight.w900),
+                    fontFamily: "UberMove",
+                    fontWeight: FontWeight.bold),
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (_) => const  Sign_in()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) =>   Customer_Detail_one()));
                 },
                 child: Container(
                   margin: const EdgeInsets.all(20),
@@ -113,25 +123,26 @@ class _Product_detailState extends State<Product_detail> {
                       "Rent",
                       style: TextStyle(
                           color: Colors.white,
-                          fontFamily: "DMSans",
+                          fontFamily: "UberMove",
                           fontSize: 20,
-                          fontWeight: FontWeight.w800),
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
             ],
           ),
+          ],),
           const Text(
             "Detail",
             style: TextStyle(
                 fontSize: 30,
-                fontFamily: "PlayfairDisplay",
+                fontFamily: "UberMove",
                 fontWeight: FontWeight.w800),
           ),
           Text(
             "The (car name) is the high-performance version of the 2 Series 2-door coupé. The first generation of the M2 is the F87 coupé and is powered by turbocharged.",
-            style: TextStyle(fontSize: 20, color: Colors.grey[500]),
+            style: TextStyle(fontSize: 20, color: Colors.grey[500],fontFamily: "UberMove"),
           ),
           const Divider(
             color: Colors.black45,
@@ -144,11 +155,12 @@ class _Product_detailState extends State<Product_detail> {
                     MaterialPageRoute(
                         builder: (context) => const Specifications_page()));
               },
+
               fontWeight: FontWeight.w800,
               fontSize: 30,
               leadingText: "Specifications",
               ButtonText: "ViewsAll",
-              FontFamily: "DMSans"),
+              FontFamily: "UberMove"),
           SizedBox(
             height: height * 0.20,
             width: width,
@@ -157,8 +169,8 @@ class _Product_detailState extends State<Product_detail> {
               itemCount: 3,
               itemBuilder: (context, index) {
                 return Container(
-                  margin: const EdgeInsets.all(20),
-                  height: height * 0.15,
+                  margin: const EdgeInsets.all(10),
+                  height: height * 0.25,
                   width: width * 0.40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -174,12 +186,12 @@ class _Product_detailState extends State<Product_detail> {
                       Text("Body",
                           style: TextStyle(
                               fontSize: 25,
-                              fontFamily: "DMSans",
+                              fontFamily: "UberMove",
                               fontWeight: FontWeight.w800)),
                       Text("Hatchback",
                           style: TextStyle(
                               fontSize: 20,
-                              fontFamily: "DMSans",
+                              fontFamily: "UberMove",
                               fontWeight: FontWeight.w800)),
                     ],
                   ),

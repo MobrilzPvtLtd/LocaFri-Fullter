@@ -15,7 +15,7 @@ class SectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -28,6 +28,7 @@ class SectionWidget extends StatelessWidget {
             child: Text(
               ButtonText,
               style: TextStyle(
+                
                   fontSize: 20,
                   color: Colors.amber[600],
                   fontFamily: FontFamily ),

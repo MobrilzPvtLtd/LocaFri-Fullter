@@ -1,4 +1,5 @@
 import 'package:carapp/screen/auth/sign_in/sign_in.dart';
+import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 
 class Sign_up extends StatefulWidget {
@@ -14,6 +15,7 @@ class _Sign_upState extends State<Sign_up> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.black,),
         backgroundColor: Colors.black,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -23,9 +25,10 @@ class _Sign_upState extends State<Sign_up> {
               const Text(
                 "Sign up",
                 style: TextStyle(
+                  fontWeight: FontWeight.w900,
                     fontSize: 40,
                     color: Colors.white,
-                    fontFamily: "PostsenOne"),
+                    fontFamily: "UberMove"),
               ),
               const SizedBox(
                 height: 20,
@@ -38,6 +41,10 @@ class _Sign_upState extends State<Sign_up> {
                   // decoration
                   decoration: InputDecoration(
                       hintText: "First Name",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -54,6 +61,10 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       hintText: "Last Name",
+                       hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -70,6 +81,10 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       hintText: "Email Id",
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -93,6 +108,10 @@ class _Sign_upState extends State<Sign_up> {
                       //   obscureText.obscureText.value = !obscureText.obscureText.value;
                       // }, icon: Icon(obscureText.obscureText.value?Icons.visibility:Icons.visibility_off),),
                       hintText: "password",
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -109,6 +128,10 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       hintText: "Confirm Password",
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -126,7 +149,9 @@ class _Sign_upState extends State<Sign_up> {
               // Signup button
 
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));
+                },
                 child: Container(
                   margin: const EdgeInsets.all(20),
                   height: height * 0.08,
@@ -141,7 +166,7 @@ class _Sign_upState extends State<Sign_up> {
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
                           fontSize: 20,
-                          fontFamily: "DMSans"),
+                          fontFamily: "UberMove"),
                     ),
                   ),
                 ),
@@ -154,9 +179,10 @@ class _Sign_upState extends State<Sign_up> {
                 child: Text(
                   "Already have an account?",
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                       fontSize: 15,
                       color: Colors.white,
-                      fontFamily: "DMSans"),
+                      fontFamily: "UberMove"),
                 ),
               ),
               const SizedBox(
@@ -180,8 +206,8 @@ class _Sign_upState extends State<Sign_up> {
                       "SIGN IN",
                       style: TextStyle(
                           color: Colors.white,
-                           fontFamily: "DMSans",
-                           fontWeight: FontWeight.w800,
+                           fontFamily: "UberMove",
+                           fontWeight: FontWeight.w900,
                           fontSize: 20),
                     ),
                   ),
@@ -193,8 +219,9 @@ class _Sign_upState extends State<Sign_up> {
                   child:
                       const Text("If You have Any Query Click Here Contact US!",
                           style: TextStyle(
+                            fontWeight: FontWeight.w800,
                             fontSize: 13,
-                            fontFamily: "PlayfairDisplay",
+                            fontFamily: "UberMove",
                             color: Colors.white,
                           )),
                 ),

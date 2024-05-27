@@ -1,6 +1,7 @@
 import 'package:carapp/screen/auth/Forget/forgetpassword.dart';
 import 'package:carapp/screen/auth/sign_up/sign_up.dart';
 import 'package:carapp/screen/home/home.dart';
+import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 
 class Sign_in extends StatefulWidget {
@@ -16,6 +17,9 @@ class _Sign_inState extends State<Sign_in> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
         backgroundColor: Colors.black,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -23,17 +27,16 @@ class _Sign_inState extends State<Sign_in> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Center(
-                  child: Text(
-                    "Welcome Back",
+                 Center(
+                  child:Image.asset("assets/images/introduction_image.png"),),
+                   const Text(
+                    "Looking for a vehicle? \nYou're at the right place",
                     style: TextStyle(
                         fontSize: 40,
                         color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: "DMSans"),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "UberMove"),
                   ),
-                ),
-                Image.asset("assets/images/introduction_image.png"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -45,6 +48,10 @@ class _Sign_inState extends State<Sign_in> {
                   child: TextFormField(
                     decoration: InputDecoration(
                         hintText: "Email ID",
+                        hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                         focusColor: Colors.white,
                         disabledBorder: InputBorder.none,
                         filled: true,
@@ -68,6 +75,10 @@ class _Sign_inState extends State<Sign_in> {
                         // }, icon: Icon(obscureText.obscureText.value?Icons.visibility:Icons.visibility_off),),
                         hintText: "Password",
                         focusColor: Colors.white,
+                        hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontFamily:"UberMove"
+                      ),
                         disabledBorder: InputBorder.none,
                         filled: true,
                         fillColor: Colors.white,
@@ -85,8 +96,10 @@ class _Sign_inState extends State<Sign_in> {
                       textAlign: TextAlign.left,
                       "Forget Password?",
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: Colors.white,
+                        fontFamily: "UberMove"
                       )),
                 ),
 
@@ -95,7 +108,7 @@ class _Sign_inState extends State<Sign_in> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Home()));
+                        context, MaterialPageRoute(builder: (_) => BottomNav()));
                   },
                   child: Container(
                     margin: const EdgeInsets.all(20),
@@ -109,9 +122,9 @@ class _Sign_inState extends State<Sign_in> {
                         "LOGIN",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "DMSans",
+                            fontFamily: "UberMove",
                             fontSize: 20,
-                            fontWeight: FontWeight.w800),
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
                   ),
@@ -126,7 +139,7 @@ class _Sign_inState extends State<Sign_in> {
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontFamily: "PlayfairDisplay"),
+                        fontFamily: "UberMove",fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
@@ -149,9 +162,9 @@ class _Sign_inState extends State<Sign_in> {
                         "SIGN UP",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "DMSans",
+                            fontFamily: "UberMove",
                             fontSize: 20,
-                            fontWeight: FontWeight.w800),
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
                   ),
@@ -164,7 +177,8 @@ class _Sign_inState extends State<Sign_in> {
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white,
-                          fontFamily: "DMSans"
+                          fontFamily: "UberMove",
+                          fontWeight: FontWeight.bold
                         )),
                   ),
                 ),

@@ -1,5 +1,9 @@
+import 'package:carapp/screen/Listof_cars/cardetail_list.dart';
+import 'package:carapp/screen/Listof_cars/show_page.dart';
 import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:carapp/screen/home/carlist.dart';
+import 'package:carapp/screen/whistlist/whistlist.dart';
+import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:carapp/widget/categories.dart';
 import 'package:carapp/widget/section.dart';
 import 'package:flutter/material.dart';
@@ -19,25 +23,14 @@ class _HomeState extends State<Home> {
     "assets/images/categories/mg.png",
     "assets/images/categories/ferrari.png",
     "assets/images/categories/bmw.png"
-  ];
+  ]; 
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 30,
-        unselectedItemColor: Colors.white,
-        elevation: 0,
-        items: const [
-        BottomNavigationBarItem(
-         backgroundColor: Colors.black, icon: Icon(Icons.home_filled,),label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite),label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.place_outlined),label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.notifications,),label: ""),
-        BottomNavigationBarItem(icon: Icon(Icons.person,),label: ""),
-      ]),
+      // bottomNavigationBar: BottomNav(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(10),
         child: AppBar(),
@@ -61,7 +54,9 @@ class _HomeState extends State<Home> {
                 children: [
                   const Text(
                     "Brands",
-                    style: TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 20,fontFamily: "UberMove"),
                   ),
                   const SizedBox(
                     height: 20,
@@ -91,28 +86,35 @@ class _HomeState extends State<Home> {
               ),
                SectionWidget(
                 onpressed: () {
-                  
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ListOfCar()));
                 },
                 fontSize: 20,
                 leadingText: "Avaliable Cars",
                 ButtonText: "More",
-                FontFamily: "DMSans"
+                FontFamily: "UberMove",
+                fontWeight: FontWeight.w800,
               ),
-             const  SizedBox(height: 20,),
+            //  const  SizedBox(height: 20,),
           
              // Carlist this list store all cars 
              const  Carlist( ),
+
+
+
               const SizedBox(height: 10,),
-              const SectionWidget(leadingText: "PROMO",fontSize: 20, ButtonText: "",FontFamily: "DMSans",),
+              const SectionWidget(leadingText: "PROMO",fontSize: 20, ButtonText: "",FontFamily: "UberMove",fontWeight: FontWeight.w800,),
               Container(
-                height: height*0.20 ,
+                height: height*0.25 ,
                 width: width*0.90,
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(image: AssetImage("assets/images/farrericar.png"))
+                  // image: DecorationImage(image: AssetImage("assets/images/car8.png",),)
                 ),
+                child:Image.asset("assets/images/car4.png",fit: BoxFit.contain,
+                  height: height*0.30,
+                  width: width*0.30,),
           
               )
             ],
@@ -134,8 +136,9 @@ class _HomeState extends State<Home> {
         const Text(
           "Your Location\nMumbai,Thane",
           style: TextStyle(
+            fontWeight: FontWeight.bold,
               fontSize: 20,
-              fontFamily: "PostsenOne"),
+              fontFamily: "UberMove"),
         ),
         const SizedBox(
           height: 40,

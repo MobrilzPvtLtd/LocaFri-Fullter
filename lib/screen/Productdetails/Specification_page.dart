@@ -18,7 +18,7 @@ class Specifications_page extends StatelessWidget {
               color: Colors.black,
               size: 30,
             )),
-        title: Text("Specification",style: TextStyle(fontSize: 30,fontFamily: "DMSans"),),
+        title: Text("Specification",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 30,fontFamily: "UberMove"),),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -53,13 +53,13 @@ class Specifications_page extends StatelessWidget {
                           Text("Body",
                               style: TextStyle(
                                   fontSize: 25,
-                                  fontFamily: "DMSans",
+                                  fontFamily: "UberMove",
                                   fontWeight: FontWeight.w800)),
                           Text("Hatchback",
                               style: TextStyle(
                                   fontSize: 20,
-                                  fontFamily: "DMSans",
-                                  fontWeight: FontWeight.w800)),
+                                  fontFamily: "UberMove",
+                                  fontWeight: FontWeight.w700)),
                         ],
                       ),
                     );
@@ -75,8 +75,8 @@ class Specifications_page extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 30,
                     color: Colors.black,
-                    fontFamily: "DMSans",
-                    fontWeight: FontWeight.w800),
+                    fontFamily: "UberMove",
+                    fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 20,),
               SizedBox(
@@ -98,8 +98,8 @@ class Specifications_page extends StatelessWidget {
                         Text("Bluetooth",
                             style: TextStyle(
                                 fontSize: 25,
-                                fontFamily: "DMSans",
-                                fontWeight: FontWeight.w800)),
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w700)),
                         
                       ],
                     );

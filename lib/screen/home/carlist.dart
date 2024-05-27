@@ -12,19 +12,19 @@ class _CarlistState extends State<Carlist> {
   final List<Map<String, dynamic>> productlist = [
     {
       "name": "Tesla",
-      "image": "assets/images/teslacar.png",
+      "image": "assets/images/car8.png",
       "Price": "234",
       "Rating": "4.5",
     },
     {
       "name": "Farreri",
-      "image": "assets/images/farrericar.png",
+      "image": "assets/images/car5.png",
       "Price": "800",
       "Rating": "4.9",
     },
     {
       "name": "MG",
-      "image": "assets/images/mgcars.png",
+      "image": "assets/images/car4.png",
       "Price": "214",
       "Rating": "4.0",
     }
@@ -65,12 +65,14 @@ class _CarlistState extends State<Carlist> {
                       Text(
                         product["name"],
                         style:
-                            const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
+                            const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
                       ),
                        Icon(Icons.favorite_outline_sharp,size: 25,)
                     ],
                   ),
-                  Image.asset(product['image'],),
+                  Image.asset(product['image'],fit: BoxFit.cover,
+                  height: height*0.20,
+                  width: width*0.45,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -78,12 +80,12 @@ class _CarlistState extends State<Carlist> {
                       Text(
                         "\$${product["Price"]}/day",
                         style:
-                            const TextStyle(fontSize: 20,fontFamily: "PostsenOne"),
+                            const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
                       ),
                      Text(
                         product["Rating"],
                         style:
-                            const TextStyle(fontSize: 18,fontFamily: "PostsenOne"),
+                            const TextStyle(fontSize: 18,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
                       ),
                     ],
                   ),
