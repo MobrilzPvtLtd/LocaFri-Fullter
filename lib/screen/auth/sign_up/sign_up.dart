@@ -15,8 +15,8 @@ class _Sign_upState extends State<Sign_up> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black,),
-        backgroundColor: Colors.black,
+      appBar: AppBar(backgroundColor: Colors.white,),
+        backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
           child: Center(
@@ -27,7 +27,7 @@ class _Sign_upState extends State<Sign_up> {
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                     fontSize: 40,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontFamily: "UberMove"),
               ),
               const SizedBox(
@@ -36,12 +36,17 @@ class _Sign_upState extends State<Sign_up> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  cursorColor: Colors.black,
                   // Validator
 
                   // decoration
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       hintText: "First Name",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontFamily:"UberMove"
                       ),
@@ -59,7 +64,12 @@ class _Sign_upState extends State<Sign_up> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       hintText: "Last Name",
                        hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
@@ -79,7 +89,12 @@ class _Sign_upState extends State<Sign_up> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       hintText: "Email Id",
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
@@ -92,6 +107,7 @@ class _Sign_upState extends State<Sign_up> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       )),
+                      
                 ),
               ),
 
@@ -100,13 +116,19 @@ class _Sign_upState extends State<Sign_up> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  cursorColor: Colors.black,
                   // password TextEditingController
 
                   // obscureText: obscureText.obscureText.value,
                   decoration: InputDecoration(
+
                       // suffixIcon: IconButton(onPressed: (){
                       //   obscureText.obscureText.value = !obscureText.obscureText.value;
                       // }, icon: Icon(obscureText.obscureText.value?Icons.visibility:Icons.visibility_off),),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       hintText: "password",
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
@@ -126,7 +148,12 @@ class _Sign_upState extends State<Sign_up> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       hintText: "Confirm Password",
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
@@ -158,7 +185,9 @@ class _Sign_upState extends State<Sign_up> {
                   width: width * 0.90,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.amber),
+                      color: Color(0xffff36a21),
+
+),
                   child: const Center(
                     child: Text(
                       "SIGN UP ",
@@ -181,7 +210,7 @@ class _Sign_upState extends State<Sign_up> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontFamily: "UberMove"),
                 ),
               ),
@@ -200,7 +229,9 @@ class _Sign_upState extends State<Sign_up> {
                   width: width * 0.90,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.amber),
+                      color: Color(0xffff36a21),
+
+),
                   child: const Center(
                     child: Text(
                       "SIGN IN",
@@ -222,7 +253,7 @@ class _Sign_upState extends State<Sign_up> {
                             fontWeight: FontWeight.w800,
                             fontSize: 13,
                             fontFamily: "UberMove",
-                            color: Colors.white,
+                            color: Colors.black,
                           )),
                 ),
               ),

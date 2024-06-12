@@ -1,3 +1,4 @@
+import 'package:carapp/screen/auth/sign_in/sign_in.dart';
 import 'package:carapp/screen/customer_detail/customer_datetime_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,14 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextFormField(
+                keyboardType: TextInputType.name,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
+                  
+                  focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                     hintText: "Full Name ",
@@ -66,10 +74,38 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextFormField(
+                keyboardType: TextInputType.number,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                     hintText: "Phone Number",
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -83,9 +119,9 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
               "Pick Up Location",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 25,
+                fontSize: 20,
                 fontFamily: "UberMove",
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(
@@ -112,9 +148,9 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
               "Drop Off Location",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 25,
+                fontSize: 20,
                 fontFamily: "UberMove",
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(
@@ -150,12 +186,15 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
               height: 20,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (_)=> Sign_in()));
+              },
               child: Container(
                 height: height * 0.08,
                 width: width * 0.90,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
+                    color: Color(0xffff36a21),
+
                     borderRadius: BorderRadius.circular(20),
                     // border: Border.all(color: Colors.black, width: 2)
                     ),
@@ -166,7 +205,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                       fontSize: 25,
                       fontFamily: "UberMove",
                       fontWeight: FontWeight.w800,
-                      color: Colors.black),
+                      color: Colors.white),
                 )),
               ),
             )

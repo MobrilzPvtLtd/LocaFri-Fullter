@@ -18,22 +18,23 @@ class _Sign_inState extends State<Sign_in> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
       ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: SafeArea(
+          minimum: EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                  Center(
-                  child:Image.asset("assets/images/introduction_image.png"),),
+                  child:Image.asset("assets/logo/final-3.png"),),
                    const Text(
-                    "Looking for a vehicle? \nYou're at the right place",
+                    "Looking for a vehicle? You're at the right place",
                     style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
+                        fontSize: 35,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontFamily: "UberMove"),
                   ),
@@ -46,7 +47,12 @@ class _Sign_inState extends State<Sign_in> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextFormField(
+                    cursorColor: Colors.black,
                     decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         hintText: "Email ID",
                         hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800,
@@ -66,13 +72,19 @@ class _Sign_inState extends State<Sign_in> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextFormField(
+                    cursorColor: Colors.black,
                     // password TextEditingController
 
                     // obscureText: obscureText.obscureText.value,
                     decoration: InputDecoration(
+                      
                         // suffixIcon: IconButton(onPressed: (){
                         //   obscureText.obscureText.value = !obscureText.obscureText.value;
                         // }, icon: Icon(obscureText.obscureText.value?Icons.visibility:Icons.visibility_off),),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         hintText: "Password",
                         focusColor: Colors.white,
                         hintStyle: const TextStyle(
@@ -80,6 +92,7 @@ class _Sign_inState extends State<Sign_in> {
                         fontFamily:"UberMove"
                       ),
                         disabledBorder: InputBorder.none,
+
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -98,7 +111,7 @@ class _Sign_inState extends State<Sign_in> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: "UberMove"
                       )),
                 ),
@@ -116,7 +129,9 @@ class _Sign_inState extends State<Sign_in> {
                     width: width * 0.90,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.amber),
+                        color: Color(0xffff36a21),
+
+),
                     child: const Center(
                       child: Text(
                         "LOGIN",
@@ -138,7 +153,7 @@ class _Sign_inState extends State<Sign_in> {
                     "Don't Have an Account Yet",
                     style: TextStyle(
                         fontSize: 15,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: "UberMove",fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -156,7 +171,9 @@ class _Sign_inState extends State<Sign_in> {
                     width: width * 0.90,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.amber),
+                        color: Color(0xffff36a21),
+
+),
                     child: const Center(
                       child: Text(
                         "SIGN UP",

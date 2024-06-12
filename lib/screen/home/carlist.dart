@@ -46,11 +46,11 @@ class _CarlistState extends State<Carlist> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=> Product_detail()));
             },
             child: Container(
-              height: height * 0.75,
+              height: height * 0.78,
               width: width * 0.50,
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(15),
                 color: Colors.grey[200],
               ),
               child: Column(
@@ -60,14 +60,21 @@ class _CarlistState extends State<Carlist> {
                   SizedBox(height: 2,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        product["name"],
-                        style:
-                            const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                      Container(
+                        width: 120,
+                        child: Text(
+                           textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          product["name"],
+                          style:
+                              const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                        ),
                       ),
-                       Icon(Icons.favorite_outline_sharp,size: 25,)
+                      //  Icon(Icons.favorite_outline_sharp,size: 25,)
+                      // Text("")
                     ],
                   ),
                   Image.asset(product['image'],fit: BoxFit.cover,

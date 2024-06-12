@@ -81,7 +81,8 @@ class _Product_detailState extends State<Product_detail> {
                   onPressed: () {},
                   icon: const Icon(
                     Icons.star,
-                    color: Colors.amber,
+                    color: Color(0xffff36a21),
+
                     size: 30,
                   ),
                   label: const Text(
@@ -117,7 +118,7 @@ class _Product_detailState extends State<Product_detail> {
                   width: width * 0.40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.amber[800]),
+                      color: Color(0xffff36a21),),
                   child: const Center(
                     child: Text(
                       "Rent",

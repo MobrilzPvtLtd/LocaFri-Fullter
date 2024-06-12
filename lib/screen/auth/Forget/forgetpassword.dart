@@ -34,7 +34,7 @@ class _Forget_passwordState extends State<Forget_password> {
                       height: 10,
                     ),
                     const Text(
-                      "   Please enter your email or phone number receive a \n   password",
+                      "   Please enter your email or phone number receive\n a password",
                       style: TextStyle(color: Colors.white,fontSize: 15,fontFamily: "PostsenOne"),
                     ),
                     const SizedBox(
@@ -61,14 +61,18 @@ class _Forget_passwordState extends State<Forget_password> {
                     // Signup button
 
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.
+                      },
                       child: Container(
                         margin: const EdgeInsets.all(20),
                         height: height * 0.08,
                         width: width * 0.90,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.amber),
+                            color: Color(0xffff36a21),
+
+),
                         child: const Center(
                           child: Text(
                             "Reset Password",
@@ -107,7 +111,9 @@ class _Forget_passwordState extends State<Forget_password> {
                         width: width * 0.90,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.amber),
+                            color: Color(0xffff36a21),
+
+),
                         child: const Center(
                           child: Text(
                             "LOGIN",

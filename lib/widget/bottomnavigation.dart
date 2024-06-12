@@ -3,25 +3,24 @@ import 'package:carapp/screen/Listof_cars/ListOfCar.dart';
 import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:carapp/screen/home/home.dart';
 import 'package:carapp/screen/key_box/keybox.dart';
+import 'package:carapp/screen/mainpage/mainpage.dart';
 import 'package:carapp/screen/whistlist/whistlist.dart';
 import 'package:flutter/material.dart';
 
-class BottomNav extends StatefulWidget {
-   BottomNav({super.key});
+class BottomNavigator extends StatefulWidget {
+   BottomNavigator({super.key});
 
   @override
-  State<BottomNav> createState() => _BottomNavState();
+  State<BottomNavigator> createState() => _BottomNavigatorState();
 }
 
-class _BottomNavState extends State<BottomNav> {
+class _BottomNavigatorState extends State<BottomNavigator> {
 int _currentindex = 0;
 
-  List<Widget> pages= const [
-    Home(),
+  List<Widget> pages=  [
+    MainPage(),
     ListOfCar(),
-    // whistlist(),
-    KeyBox()
-    // Profile(),
+    KeyBox(),
   ];
 
  void _onItemTapped(int index) {
@@ -41,11 +40,14 @@ int _currentindex = 0;
         unselectedItemColor: Colors.grey,
         elevation: 0,
         items: const [
-        BottomNavigationBarItem(
-         backgroundColor: Colors.black, icon: Icon(Icons.home_filled,),label: "Home"),
-        BottomNavigationBarItem(  backgroundColor: Colors.black,icon: Icon(Icons.directions_car),label: "Mobility",),
-        // BottomNavigationBarItem( backgroundColor: Colors.black,icon: Icon(Icons.favorite),label: ""),
-        BottomNavigationBarItem( backgroundColor: Colors.black,icon: Icon(Icons.wifi,),label: "KeyBox"),
+         BottomNavigationBarItem(
+              icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.directions_car), label: 'Mobility'),
+              // room_service
+          BottomNavigationBarItem(icon: Icon(Icons.wifi), label: 'KeyBox'),
+        
+        // selectedItemColor: Colors.orange,
       ]),
       body:IndexedStack(
         children: pages,

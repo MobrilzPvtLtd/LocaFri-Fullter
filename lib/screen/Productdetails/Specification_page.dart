@@ -93,7 +93,8 @@ class Specifications_page extends StatelessWidget {
                           Icons.check_sharp,
                           size: 40,
                           weight: 30,
-                          color: Colors.amber,
+                          color: Color(0xffff36a21),
+
                         ),
                         Text("Bluetooth",
                             style: TextStyle(

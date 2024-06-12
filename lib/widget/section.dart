@@ -30,7 +30,7 @@ class SectionWidget extends StatelessWidget {
               style: TextStyle(
                 
                   fontSize: 20,
-                  color: Colors.amber[600],
+                  color: Color(0xffff36a21),
                   fontFamily: FontFamily ),
             ))
       ],

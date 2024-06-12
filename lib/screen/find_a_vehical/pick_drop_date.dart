@@ -1,63 +1,63 @@
 import 'package:flutter/material.dart';
 
-class Customer_DateTime_Field extends StatefulWidget {
-  const Customer_DateTime_Field({super.key});
+class Pick_Drop_Date extends StatefulWidget {
+  const Pick_Drop_Date({super.key});
 
   @override
-  State<Customer_DateTime_Field> createState() => _Customer_DateTime_FieldState();
+  State<Pick_Drop_Date> createState() => _Pick_Drop_DateState();
 }
 
-class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
-    DateTime picktdatetime = DateTime.now();
-  DateTime returnedateTime = DateTime.now();
-  TimeOfDay picktime = TimeOfDay.now();
-  TimeOfDay returntime = TimeOfDay.now();
+class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
+     DateTime _picktdatetime = DateTime.now();
+  DateTime _returnedateTime = DateTime.now();
+  TimeOfDay _picktime = TimeOfDay.now();
+  TimeOfDay _returntime = TimeOfDay.now();
 
   Future<void> _pickDateTime(BuildContext context) async {
     DateTime? picker = await showDatePicker(
       context: context,
-      initialDate: picktdatetime,
+      initialDate: _picktdatetime,
       firstDate: DateTime.now(),
       onDatePickerModeChange: (value) {
         DatePickerEntryMode.calendar;
       },
       lastDate: DateTime(2099),
     );
-    if (picker != null && picker != picktdatetime) {
+    if (picker != null && picker != _picktdatetime) {
       setState(() {
-        picktdatetime = picker;
+        _picktdatetime = picker;
       });
     }
   }
-   Future<void> _returnDateTime(BuildContext context) async {
+   Future<void> _return_Date_Time(BuildContext context) async {
     DateTime? returnpicker = await showDatePicker(
       context: context,
-      initialDate: returnedateTime,
+      initialDate: _returnedateTime,
       firstDate: DateTime.now(),
       onDatePickerModeChange: (value) {
         DatePickerEntryMode.calendar;
       },
       lastDate: DateTime(2099),
     );
-    if (returnpicker != null && returnpicker != returnedateTime) {
+    if (returnpicker != null && returnpicker != _returnedateTime) {
       setState(() {
-        returnedateTime = returnpicker;
+        _returnedateTime = returnpicker;
       });
     }
   }
 
-  void _picktime() {
-    showTimePicker(context: context, initialTime: picktime,
+  void _pick_time() {
+    showTimePicker(context: context, initialTime: _picktime,
     )
         .then((value) => setState(() {
-              picktime = value!;
+              _picktime = value!;
             }));
   }
-  void _returntime() {
-    showTimePicker(context: context, initialTime: returntime,
+  void _return_time() {
+    showTimePicker(context: context, initialTime: _returntime,
     )
         .then((value) => setState(() {
-              returntime = value!;
+              _returntime = value!;
             }));
   }
   @override
@@ -66,19 +66,22 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
     final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700),),
+         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontFamily: "UberMove",fontWeight: FontWeight.w700),),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
-                 width: width*0.40,
+                 width: width*0.50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    
+
+                    // backgroundColor: Colors.white,
                 backgroundColor: Color(0xffff36a21),
                 elevation: 0,
-                shape:  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
-                            ),
+                shape:  RoundedRectangleBorder(side: BorderSide(width: 50,color: Colors.transparent,style: BorderStyle.none),)
+                             ),
                 onPressed: () {
                   _pickDateTime(context);
                 },
@@ -90,10 +93,10 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xffff36a21),
                 elevation: 0,
-                shape:  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
+                shape:  RoundedRectangleBorder(side: BorderSide(width: 50,color: Colors.transparent,style: BorderStyle.none))
               ),
                 onPressed: () {
-                  _picktime();
+                  _pick_time();
                 },
                 child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
           ),
@@ -106,16 +109,16 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text("Date: ${picktdatetime.toLocal().day}-"
-              "${picktdatetime.toLocal().month}-"
-              "${picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),),
-              Text("Time: ${picktime.hour}:""${picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),)
+              Text("Date: ${_picktdatetime.toLocal().day}-"
+              "${_picktdatetime.toLocal().month}-"
+              "${_picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),),
+              Text("Time: ${_picktime.hour}:""${_picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),)
             ],
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700,),),
+          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontFamily: "UberMove",fontWeight: FontWeight.w700,),),
           SizedBox(
             width: width,
             child: Row(
@@ -123,15 +126,15 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  width: width*0.40,
+                  width: width*0.50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xffff36a21),
                   elevation: 0,
-                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
+                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 50,color: Colors.transparent,style: BorderStyle.none))
                                 ),
                   onPressed: () {
-                    _returnDateTime(context);
+                    _return_Date_Time(context);
                   },
                   child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
                 ),
@@ -141,10 +144,10 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xffff36a21),
                   elevation: 0,
-                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
+                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 50,color: Colors.transparent,style: BorderStyle.none))
                 ),
                   onPressed: () {
-                    _returntime();
+                    _return_time();
                   },
                   child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
             ),
@@ -157,10 +160,10 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text("Date: ${returnedateTime.toLocal().day}-"
-              "${returnedateTime.toLocal().month}-"
-              "${returnedateTime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),),
-              Text("Time: ${returntime.hour}:""${returntime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),)
+              Text("Date: ${_returnedateTime.toLocal().day}-"
+              "${_returnedateTime.toLocal().month}-"
+              "${_returnedateTime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),),
+              Text("Time: ${_returntime.hour}:""${_returntime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),)
             ],
           )
       ],
