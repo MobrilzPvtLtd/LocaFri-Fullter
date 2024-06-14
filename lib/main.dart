@@ -9,6 +9,7 @@ import 'package:carapp/screen/mainpage/main-2.dart';
 import 'package:carapp/screen/mainpage/mainpage.dart';
 import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:carapp/widget/bottomnavigationbar.dart';
+import 'package:carapp/widget/homewidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // home: Contact_us(),
+      // home: MainSecond(),
       home: BottomNavigator(),
       // home: BottomNav(),
     );

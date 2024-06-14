@@ -3,6 +3,7 @@ import 'package:carapp/screen/Listof_cars/ListOfCar.dart';
 import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:carapp/screen/home/home.dart';
 import 'package:carapp/screen/key_box/keybox.dart';
+import 'package:carapp/screen/mainpage/main-2.dart';
 import 'package:carapp/screen/mainpage/mainpage.dart';
 import 'package:carapp/screen/whistlist/whistlist.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 int _currentindex = 0;
 
   List<Widget> pages=  [
-    MainPage(),
+    MainSecond(),
     ListOfCar(),
     KeyBox(),
   ];

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
-class MainSecond extends StatefulWidget {
+class homewidget extends StatefulWidget {
   @override
-  _MainSecondState createState() => _MainSecondState();
+  _homewidgetState createState() => _homewidgetState();
 }
 
-class _MainSecondState extends State<MainSecond> {
+class _homewidgetState extends State<homewidget> {
   DateTime _pickUpDate = DateTime(2024, 6, 7);
   TimeOfDay _pickUpTime = TimeOfDay(hour: 17, minute: 0);
   DateTime _dropOffDate = DateTime(2024, 6, 14);
@@ -44,17 +44,16 @@ class _MainSecondState extends State<MainSecond> {
 
     DateTime? selectedDate;
 
-    var screenHeight = MediaQuery.of(context).size.height;
     await showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: screenHeight*0.35,
+          height: 250,
           color: Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
-                height: 250,
+                height: 200,
                 child: CupertinoDatePicker(
                   onDateTimeChanged: (DateTime newDateTime) {
                     selectedDate = newDateTime;
@@ -62,12 +61,11 @@ class _MainSecondState extends State<MainSecond> {
                   initialDateTime: initialDateTime,
                   maximumDate: DateTime(2035),
                   minimumDate: now,
-                  mode: CupertinoDatePickerMode.date,
+                  mode: CupertinoDatePickerMode.dateAndTime,
                 ),
               ),
               CupertinoButton(
-           child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
-
+                child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -102,17 +100,16 @@ class _MainSecondState extends State<MainSecond> {
 
     Duration? selectedDuration;
 
-    var screenHeight = MediaQuery.of(context).size.height;
     await showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: screenHeight*0.35,
+          height: 250,
           color: Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
-                height: 250,
+                height: 200,
                 child: CupertinoTimerPicker(
                   initialTimerDuration: initialTimerDuration,
                   mode: CupertinoTimerPickerMode.hm,
@@ -122,7 +119,7 @@ class _MainSecondState extends State<MainSecond> {
                 ),
               ),
               CupertinoButton(
-             child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
+                child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -160,194 +157,175 @@ class _MainSecondState extends State<MainSecond> {
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar:PreferredSize(
-          preferredSize: Size.fromHeight(90),
-          child: Container(
-            width: screenWidth,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: screenHeight,
-                  width: screenWidth * 0.30,
-                  padding:const  EdgeInsets.all(28.0),
-                  child: Image.asset(
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                    'assets/logo/Final-1.png', // Ensure you have this asset in your project
-                    // height: screenHeight * 0.00,
-                  ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Image.asset(
+          'assets/logo/Final-1.png',
+          height: screenHeight * 0.06,
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person, color: Colors.black, size: 30),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => Profile()));
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(screenWidth * 0.03),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: screenHeight * 0.02),
+              Container(
+                height: screenHeight * 0.45,
+                width: screenWidth * 1,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: 30,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pick up office',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "UberMove",
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.85,
+                      child: DropdownButton<String>(
+                        icon: Icon(
+                          Icons.arrow_outward,
+                          color: Colors.amber,
+                        ),
+                        value: selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue;
+                          });
+                        },
+                        items: dropdownItems,
+                        hint: Text(
+                          "Select Your Pickup Location",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.045,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        isExpanded: true,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.045,
+                          fontFamily: "UberMove",
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    SizedBox(
+                      width: screenWidth * 0.88,
+                      child: _buildDateTimePicker(
+                        context,
+                        'Pick up day',
+                        _pickUpDate,
+                        'Pick up hour',
+                        _pickUpTime,
+                        true,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    Text(
+                      'Drop off office',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "UberMove",
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.85,
+                      child: DropdownButton<String>(
+                        icon: Icon(
+                          Icons.arrow_outward,
+                          color: Colors.amber,
+                        ),
+                        value: _selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedValue = newValue;
+                          });
+                        },
+                        items: dropdownItems,
+                        hint: Text(
+                          "Select Your Drop-off Location",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.045,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        isExpanded: true,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.045,
+                          fontFamily: "UberMove",
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    SizedBox(
+                      width: screenWidth * 0.88,
+                      child: _buildDateTimePicker(
+                        context,
+                        'Drop off day',
+                        _dropOffDate,
+                        'Drop off hour',
+                        _dropOffTime,
+                        false,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              Center(
+                child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Profile()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ListOfCar()));
                   },
-                ),
-              ],
-            ),
-          )),
-      body: SafeArea(
-        
-        minimum: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(height: screenHeight * 0.02),
-            Container(
-              height: screenHeight * 0.45,
-              width: screenWidth * 1,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Pick up office',
+                  child: Text(
+                    'Search',
                     style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
                       fontFamily: "UberMove",
                     ),
                   ),
-                  SizedBox(
-                    width: screenWidth * 0.85,
-                    child: DropdownButton<String>(
-                      icon: Icon(
-                        Icons.arrow_outward,
-                        color: Colors.amber,
-                      ),
-                      value: selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue;
-                        });
-                      },
-                      items: dropdownItems,
-                      hint: Text(
-                        "Select Your Pickup Location",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      isExpanded: true,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.045,
-                        fontFamily: "UberMove",
-                      ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.3,
+                      vertical: screenHeight * 0.02,
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  SizedBox(
-                    width: screenWidth * 0.88,
-                    child: _buildDateTimePicker(
-                      context,
-                      'Pick up day',
-                      _pickUpDate,
-                      'Pick up hour',
-                      _pickUpTime,
-                      true,
+                    textStyle: TextStyle(fontSize: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    'Drop off office',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",
-                    ),
-                  ),
-                  SizedBox(
-                    width: screenWidth * 0.85,
-                    child: DropdownButton<String>(
-                      icon: Icon(
-                        Icons.arrow_outward,
-                        color: Colors.amber,
-                      ),
-                      value: _selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedValue = newValue;
-                        });
-                      },
-                      items: dropdownItems,
-                      hint: Text(
-                        "Select Your Drop-off Location",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      isExpanded: true,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.045,
-                        fontFamily: "UberMove",
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  SizedBox(
-                    width: screenWidth * 0.88,
-                    child: _buildDateTimePicker(
-                      context,
-                      'Drop off day',
-                      _dropOffDate,
-                      'Drop off hour',
-                      _dropOffTime,
-                      false,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.02),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ListOfCar()));
-                },
-                child: Text(
-                  'Search',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "UberMove",
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.3,
-                    vertical: screenHeight * 0.02,
-                  ),
-                  textStyle: TextStyle(fontSize: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
