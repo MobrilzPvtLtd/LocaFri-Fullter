@@ -5,7 +5,7 @@ import 'package:carapp/screen/Introduction/introduction.dart';
 import 'package:carapp/screen/contact_us/contact_us.dart';
 import 'package:carapp/screen/find_a_vehical/find_a_vehical.dart';
 import 'package:carapp/screen/home/home.dart';
-import 'package:carapp/screen/mainpage/main-2.dart';
+import 'package:carapp/screen/mainpage/mainsecond.dart';
 import 'package:carapp/screen/mainpage/mainpage.dart';
 import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:carapp/widget/bottomnavigationbar.dart';

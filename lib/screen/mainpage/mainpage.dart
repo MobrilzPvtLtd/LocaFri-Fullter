@@ -50,7 +50,7 @@ var screenHeight = MediaQuery.of(context).size.height;
               ),
             ),
             CupertinoButton(
-              child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
+              child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: "UberMove"),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -103,7 +103,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
               ),
             ),
             CupertinoButton(
-              child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
+              child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: "UberMove"),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -173,7 +173,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
-            fontFamily: "UberMove",
+            
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -269,7 +269,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -277,7 +277,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -313,7 +313,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -321,7 +321,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -350,7 +350,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
-                      fontFamily: "UberMove",
+                      
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -468,7 +468,7 @@ Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
               //           '+ More information',
               //           style: TextStyle(
               //             color: Colors.black,
-              //             fontFamily: "UberMove",
+              //             
               //             fontWeight: FontWeight.w500,
               //           ),
               //         ),

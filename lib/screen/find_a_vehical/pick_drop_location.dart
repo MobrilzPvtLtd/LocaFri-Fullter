@@ -19,7 +19,7 @@ class _Pick_Drop_LocationState extends State<Pick_Drop_Location> {
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
-                  fontFamily: "UberMove",
+                  
                   fontWeight: FontWeight.w600)),
           value: "Romont Gare"),
     ];
@@ -41,8 +41,8 @@ class _Pick_Drop_LocationState extends State<Pick_Drop_Location> {
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 25,
-                    fontFamily: "UberMove",
-                    fontWeight: FontWeight.w800,
+                    
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(
@@ -67,7 +67,7 @@ class _Pick_Drop_LocationState extends State<Pick_Drop_Location> {
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w700)),
                     isExpanded: true,
                     style: const TextStyle(
@@ -90,8 +90,8 @@ class _Pick_Drop_LocationState extends State<Pick_Drop_Location> {
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 25,
-                    fontFamily: "UberMove",
-                    fontWeight: FontWeight.w800,
+                    
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(
@@ -116,7 +116,7 @@ class _Pick_Drop_LocationState extends State<Pick_Drop_Location> {
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w600)),
                     isExpanded: true,
                     style: const TextStyle(

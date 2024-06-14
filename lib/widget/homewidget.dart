@@ -25,7 +25,7 @@ class _homewidgetState extends State<homewidget> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
-            fontFamily: "UberMove",
+            
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -196,7 +196,7 @@ class _homewidgetState extends State<homewidget> {
                       style: TextStyle(
                         fontSize: screenWidth * 0.04,
                         fontWeight: FontWeight.bold,
-                        fontFamily: "UberMove",
+                        
                       ),
                     ),
                     SizedBox(
@@ -218,7 +218,7 @@ class _homewidgetState extends State<homewidget> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -226,7 +226,7 @@ class _homewidgetState extends State<homewidget> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -248,7 +248,7 @@ class _homewidgetState extends State<homewidget> {
                       style: TextStyle(
                         fontSize: screenWidth * 0.04,
                         fontWeight: FontWeight.bold,
-                        fontFamily: "UberMove",
+                        
                       ),
                     ),
                     SizedBox(
@@ -270,7 +270,7 @@ class _homewidgetState extends State<homewidget> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -278,7 +278,7 @@ class _homewidgetState extends State<homewidget> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -308,7 +308,7 @@ class _homewidgetState extends State<homewidget> {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
-                      fontFamily: "UberMove",
+                      
                     ),
                   ),
                   style: ElevatedButton.styleFrom(

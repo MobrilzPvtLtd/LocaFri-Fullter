@@ -40,7 +40,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
         title: const Text(
           "Detail Form",
           style: TextStyle(
-              fontSize: 30, color: Colors.black, fontFamily: "UberMove",fontWeight: FontWeight.bold),
+              fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
@@ -60,7 +60,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                     hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                        fontWeight: FontWeight.w600, fontFamily: "UberMove"),
                     hintText: "Full Name ",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
@@ -82,7 +82,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                     hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                        fontWeight: FontWeight.w600, fontFamily: "UberMove"),
                     hintText: "Phone Number",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
@@ -104,7 +104,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                     hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                        fontWeight: FontWeight.w600, fontFamily: "UberMove"),
                     hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
@@ -120,7 +120,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
-                fontFamily: "UberMove",
+                
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -149,7 +149,7 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
-                fontFamily: "UberMove",
+                
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -203,8 +203,8 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                   "SUBMIT FORM",
                   style: TextStyle(
                       fontSize: 25,
-                      fontFamily: "UberMove",
-                      fontWeight: FontWeight.w800,
+                      
+                      fontWeight: FontWeight.w600,
                       color: Colors.white),
                 )),
               ),

@@ -47,7 +47,7 @@ class _Sign_upState extends State<Sign_up> {
                         ),
                       hintText: "First Name",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                       focusColor: Colors.white,
@@ -72,7 +72,7 @@ class _Sign_upState extends State<Sign_up> {
                         ),
                       hintText: "Last Name",
                        hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                       focusColor: Colors.white,
@@ -97,7 +97,7 @@ class _Sign_upState extends State<Sign_up> {
                         ),
                       hintText: "Email Id",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                       focusColor: Colors.white,
@@ -131,7 +131,7 @@ class _Sign_upState extends State<Sign_up> {
                         ),
                       hintText: "password",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                       focusColor: Colors.white,
@@ -156,7 +156,7 @@ class _Sign_upState extends State<Sign_up> {
                         ),
                       hintText: "Confirm Password",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                       focusColor: Colors.white,
@@ -237,7 +237,7 @@ class _Sign_upState extends State<Sign_up> {
                       "SIGN IN",
                       style: TextStyle(
                           color: Colors.white,
-                           fontFamily: "UberMove",
+                           
                            fontWeight: FontWeight.w900,
                           fontSize: 20),
                     ),
@@ -250,9 +250,9 @@ class _Sign_upState extends State<Sign_up> {
                   child:
                       const Text("If You have Any Query Click Here Contact US!",
                           style: TextStyle(
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w600,
                             fontSize: 13,
-                            fontFamily: "UberMove",
+                            
                             color: Colors.black,
                           )),
                 ),

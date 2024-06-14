@@ -55,7 +55,7 @@ class _Sign_inState extends State<Sign_in> {
                         ),
                         hintText: "Email ID",
                         hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                         focusColor: Colors.white,
@@ -88,7 +88,7 @@ class _Sign_inState extends State<Sign_in> {
                         hintText: "Password",
                         focusColor: Colors.white,
                         hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontFamily:"UberMove"
                       ),
                         disabledBorder: InputBorder.none,
@@ -137,7 +137,7 @@ class _Sign_inState extends State<Sign_in> {
                         "LOGIN",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "UberMove",
+                            
                             fontSize: 20,
                             fontWeight: FontWeight.w900),
                       ),
@@ -154,7 +154,7 @@ class _Sign_inState extends State<Sign_in> {
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
-                        fontFamily: "UberMove",fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
@@ -179,7 +179,7 @@ class _Sign_inState extends State<Sign_in> {
                         "SIGN UP",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "UberMove",
+                            
                             fontSize: 20,
                             fontWeight: FontWeight.w900),
                       ),
@@ -194,7 +194,7 @@ class _Sign_inState extends State<Sign_in> {
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white,
-                          fontFamily: "UberMove",
+                          
                           fontWeight: FontWeight.bold
                         )),
                   ),

@@ -25,7 +25,7 @@ class _MainSecondState extends State<MainSecond> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
-            fontFamily: "UberMove",
+            
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -66,7 +66,7 @@ class _MainSecondState extends State<MainSecond> {
                 ),
               ),
               CupertinoButton(
-           child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
+           child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: "UberMove"),),
 
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -122,7 +122,7 @@ class _MainSecondState extends State<MainSecond> {
                 ),
               ),
               CupertinoButton(
-             child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontFamily: "UberMove"),),
+             child: const  Text('OK',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontFamily: "UberMove"),),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -161,40 +161,47 @@ class _MainSecondState extends State<MainSecond> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar:PreferredSize(
-          preferredSize: Size.fromHeight(90),
+          preferredSize: Size.fromHeight(150),
           child: Container(
             width: screenWidth,
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: screenHeight,
-                  width: screenWidth * 0.30,
-                  padding:const  EdgeInsets.all(28.0),
-                  child: Image.asset(
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                    'assets/logo/Final-1.png', // Ensure you have this asset in your project
-                    // height: screenHeight * 0.00,
+            child: SafeArea(
+              minimum: EdgeInsets.symmetric(vertical: 40),
+              top: true,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: screenHeight*0.07,
+                    width: screenWidth * 0.20,
+                    padding:const  EdgeInsets.all(28.0),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage('assets/logo/Final-1.png'),fit: BoxFit.cover)
+                    ),
+                    // child: Image.asset(
+                    //   height: 300,
+                    //   width: 300,
+                    //   fit: BoxFit.cover,
+                    //   'assets/logo/Final-1.png', // Ensure you have this asset in your project
+                    //   // height: screenHeight * 0.00,
+                    // ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: 30,
+                  IconButton(
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => Profile()));
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Profile()));
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           )),
       body: SafeArea(
@@ -219,7 +226,7 @@ class _MainSecondState extends State<MainSecond> {
                     style: TextStyle(
                       fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",
+                      
                     ),
                   ),
                   SizedBox(
@@ -241,7 +248,7 @@ class _MainSecondState extends State<MainSecond> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -249,7 +256,7 @@ class _MainSecondState extends State<MainSecond> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: screenWidth * 0.045,
-                        fontFamily: "UberMove",
+                        
                       ),
                     ),
                   ),
@@ -271,7 +278,7 @@ class _MainSecondState extends State<MainSecond> {
                     style: TextStyle(
                       fontSize: screenWidth * 0.04,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",
+                      
                     ),
                   ),
                   SizedBox(
@@ -293,7 +300,7 @@ class _MainSecondState extends State<MainSecond> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -301,7 +308,7 @@ class _MainSecondState extends State<MainSecond> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: screenWidth * 0.045,
-                        fontFamily: "UberMove",
+                        
                       ),
                     ),
                   ),
@@ -331,7 +338,7 @@ class _MainSecondState extends State<MainSecond> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
-                    fontFamily: "UberMove",
+                    
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

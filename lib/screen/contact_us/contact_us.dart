@@ -110,7 +110,7 @@ class _Contact_usState extends State<Contact_us> {
                     
                     ),
                   const
-                    Text("I have read and accept the privacy policy.",style: TextStyle(fontSize: 15,fontFamily: "UberMove",color: Colors.black, fontWeight: FontWeight.w600),)
+                    Text("I have read and accept the privacy policy.",style: TextStyle(fontSize: 15,color: Colors.black, fontWeight: FontWeight.w600),)
                   ],
                 ),
                    GestureDetector(
@@ -136,9 +136,9 @@ class _Contact_usState extends State<Contact_us> {
                         "Send",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "UberMove",
+                            
                             fontSize: 20,
-                            fontWeight: FontWeight.w800),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),

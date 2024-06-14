@@ -28,11 +28,11 @@ class IntroductionPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const Text("Looking for a vehicle?\nYou're at the right\rplace.",
-            style: TextStyle(fontFamily: "UberMove",
+            style: TextStyle(
               color: Colors.black,fontSize: 35,fontWeight: FontWeight.bold),),
              const SizedBox(height: 20,),
               const Text(" Rent a Car Online Today & Enjoy The Best \r Deals Rates And Accessories",
-            style: TextStyle(fontFamily: "UberMove",
+            style: TextStyle(
               color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
               const SizedBox(height: 40,),
               GestureDetector(
@@ -48,7 +48,7 @@ class IntroductionPage extends StatelessWidget {
                       color: Color(0xffff36a21),
                     ),
                     child: const  Center(child: Text("Let's Go!",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",color: Colors.black),)),
+                      color: Colors.black),)),
                   ),
                 ),
               ),

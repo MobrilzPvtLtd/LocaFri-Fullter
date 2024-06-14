@@ -47,7 +47,7 @@ class buttonprofile extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 25,
                       color: Colors.black,
-                      fontFamily: "UberMove"),
+                      ),
                 ),
               ],
             ),

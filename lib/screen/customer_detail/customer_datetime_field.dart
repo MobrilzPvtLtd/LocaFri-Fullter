@@ -66,7 +66,7 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
     final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700),),
+         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w700),),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -82,7 +82,7 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
                 onPressed: () {
                   _pickDateTime(context);
                 },
-                child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
               ),
           SizedBox(
             width: width*0.40,
@@ -95,7 +95,7 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
                 onPressed: () {
                   _picktime();
                 },
-                child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
           ),
           
             ],
@@ -108,14 +108,14 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
             children: [
               Text("Date: ${picktdatetime.toLocal().day}-"
               "${picktdatetime.toLocal().month}-"
-              "${picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),),
-              Text("Time: ${picktime.hour}:""${picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),)
+              "${picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500,),),
+              Text("Time: ${picktime.hour}:""${picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500,),)
             ],
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700,),),
+          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w700,),),
           SizedBox(
             width: width,
             child: Row(
@@ -133,7 +133,7 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
                   onPressed: () {
                     _returnDateTime(context);
                   },
-                  child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                  child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
                 ),
             SizedBox(
               width: width*0.40,
@@ -146,7 +146,7 @@ class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
                   onPressed: () {
                     _returntime();
                   },
-                  child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                  child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
             ),
             
               ],

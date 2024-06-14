@@ -70,7 +70,7 @@ class _CarlistState extends State<Carlist> {
                           overflow: TextOverflow.ellipsis,
                           product["name"],
                           style:
-                              const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                              const TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),
                         ),
                       ),
                       //  Icon(Icons.favorite_outline_sharp,size: 25,)
@@ -87,12 +87,12 @@ class _CarlistState extends State<Carlist> {
                       Text(
                         "\$${product["Price"]}/day",
                         style:
-                            const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                            const TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),
                       ),
                      Text(
                         product["Rating"],
                         style:
-                            const TextStyle(fontSize: 18,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                            const TextStyle(fontSize: 18,fontWeight: FontWeight.w600,),
                       ),
                     ],
                   ),

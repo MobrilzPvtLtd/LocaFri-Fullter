@@ -39,7 +39,7 @@ class _Find_A_VehicalState extends State<Find_A_Vehical> {
                     "Find Vehical",
                     style: TextStyle(
                         color: Colors.white,
-                        fontFamily: "UberMove",
+                        
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),

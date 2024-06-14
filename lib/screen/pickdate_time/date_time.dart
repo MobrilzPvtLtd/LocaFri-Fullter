@@ -64,7 +64,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
-            fontFamily: "UberMove",
+            
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -113,7 +113,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -121,7 +121,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -157,7 +157,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
+                            
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -165,7 +165,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
+                          
                         ),
                       ),
                     ),
@@ -190,7 +190,7 @@ class _Date_Time_PickerState extends State<Date_Time_Picker> {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
-                      fontFamily: "UberMove",
+                      
                     ),
                   ),
                   style: ElevatedButton.styleFrom(

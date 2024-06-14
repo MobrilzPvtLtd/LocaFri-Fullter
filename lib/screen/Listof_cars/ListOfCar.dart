@@ -91,7 +91,7 @@ class _ListOfCarState extends State<ListOfCar> {
                             child: Text(overflow: TextOverflow.ellipsis,maxLines: 1,textAlign: TextAlign.end,
                               product["name"],
                               style:  TextStyle(overflow: TextOverflow.ellipsis,
-                                  fontSize: 25, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                                  fontSize: 25, fontWeight: FontWeight.w500,),
                             ),
                           ),
                          
@@ -113,7 +113,7 @@ class _ListOfCarState extends State<ListOfCar> {
                           overflow: TextOverflow.ellipsis,
                           "\$${product["Price"]}/day",
                           style: const TextStyle(
-                              fontSize: 20, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                              fontSize: 20, fontWeight: FontWeight.w600,),
                         ),
                       ),
                     const    SizedBox(
@@ -124,7 +124,7 @@ class _ListOfCarState extends State<ListOfCar> {
                           Text(
                             product["Rating"],
                             style: const TextStyle(
-                                fontSize: 20, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                                fontSize: 20, fontWeight: FontWeight.w600,),
                           ),
                           Icon(Icons.star,color: Colors.amber,)
                         ],
