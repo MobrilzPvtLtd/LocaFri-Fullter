@@ -23,7 +23,7 @@ class _Product_detailState extends State<Product_detail> {
         body: SingleChildScrollView(
       child: SafeArea(
         
-        minimum: EdgeInsets.all(20),
+        minimum: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,6 @@ class _Product_detailState extends State<Product_detail> {
             ),
           ),
           Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,8 +73,8 @@ class _Product_detailState extends State<Product_detail> {
                 "Farreri Car",
                 style: TextStyle(
                     fontSize: 30,
-                    fontFamily: "UberMove",
-                    fontWeight: FontWeight.w900),
+                    
+                    fontWeight: FontWeight.bold),
               ),
               TextButton.icon(
                   onPressed: () {},
@@ -90,12 +89,13 @@ class _Product_detailState extends State<Product_detail> {
                     style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,
-                      fontFamily: "UberMove",
+                      
                       fontWeight: FontWeight.bold,
                     ),
                   ))
             ],
           ),
+        
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +104,7 @@ class _Product_detailState extends State<Product_detail> {
                 "\$499",
                 style: TextStyle(
                     fontSize: 30,
-                    fontFamily: "UberMove",
+                    
                     fontWeight: FontWeight.bold),
               ),
               GestureDetector(
@@ -115,8 +115,9 @@ class _Product_detailState extends State<Product_detail> {
                 child: Container(
                   margin: const EdgeInsets.all(20),
                   height: height * 0.06,
-                  width: width * 0.40,
+                  width: width * 0.50,
                   decoration: BoxDecoration(
+
                       borderRadius: BorderRadius.circular(10),
                       color: Color(0xffff36a21),),
                   child: const Center(
@@ -124,7 +125,7 @@ class _Product_detailState extends State<Product_detail> {
                       "Rent",
                       style: TextStyle(
                           color: Colors.white,
-                          fontFamily: "UberMove",
+                          
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -138,8 +139,8 @@ class _Product_detailState extends State<Product_detail> {
             "Detail",
             style: TextStyle(
                 fontSize: 30,
-                fontFamily: "UberMove",
-                fontWeight: FontWeight.w800),
+                
+                fontWeight: FontWeight.w600),
           ),
           Text(
             "The (car name) is the high-performance version of the 2 Series 2-door coupé. The first generation of the M2 is the F87 coupé and is powered by turbocharged.",
@@ -157,11 +158,11 @@ class _Product_detailState extends State<Product_detail> {
                         builder: (context) => const Specifications_page()));
               },
 
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w600,
               fontSize: 30,
               leadingText: "Specifications",
               ButtonText: "ViewsAll",
-              FontFamily: "UberMove"),
+              ),
           SizedBox(
             height: height * 0.20,
             width: width,
@@ -187,13 +188,13 @@ class _Product_detailState extends State<Product_detail> {
                       Text("Body",
                           style: TextStyle(
                               fontSize: 25,
-                              fontFamily: "UberMove",
-                              fontWeight: FontWeight.w800)),
+                              
+                              fontWeight: FontWeight.w600)),
                       Text("Hatchback",
                           style: TextStyle(
                               fontSize: 20,
-                              fontFamily: "UberMove",
-                              fontWeight: FontWeight.w800)),
+                              
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
                 );

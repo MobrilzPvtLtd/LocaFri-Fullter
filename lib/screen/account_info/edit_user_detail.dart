@@ -126,9 +126,9 @@ class Edit_Account_info extends StatelessWidget {
                         "Save Changes",
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "UberMove",
+                            
                             fontSize: 20,
-                            fontWeight: FontWeight.w800),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),

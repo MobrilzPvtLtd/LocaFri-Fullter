@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
               //     const Text(
               //       "Brands",
               //       style: TextStyle(
-              //         fontWeight: FontWeight.w800,
+              //         fontWeight: FontWeight.w600,
               //         fontSize: 20,fontFamily: "UberMove"),
               //     ),
               //     const SizedBox(
@@ -101,8 +101,8 @@ class _HomeState extends State<Home> {
                 fontSize: 20,
                 leadingText: "Avaliable Cars",
                 ButtonText: "More",
-                FontFamily: "UberMove",
-                fontWeight: FontWeight.w800,
+                
+                fontWeight: FontWeight.w600,
               ),
               //  const  SizedBox(height: 20,),
 
@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
               const Carlist(),
 
               // const SizedBox(height: 10,),
-              // const SectionWidget(leadingText: "PROMO",fontSize: 20, ButtonText: "",FontFamily: "UberMove",fontWeight: FontWeight.w800,),
+              // const SectionWidget(leadingText: "PROMO",fontSize: 20, ButtonText: "",fontWeight: FontWeight.w600,),
               // Container(
               //   height: height*0.25 ,
               //   width: width*0.90,

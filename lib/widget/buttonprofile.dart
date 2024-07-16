@@ -21,7 +21,6 @@ class buttonprofile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
-         
         children: [
           Container(
             height: height * 0.08,

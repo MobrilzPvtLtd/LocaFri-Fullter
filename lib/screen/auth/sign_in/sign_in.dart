@@ -95,9 +95,8 @@ class _Sign_inState extends State<Sign_in> {
 
                     GestureDetector(
                       onTap: () {
-                        // signinGetxController.requestotp();
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => Otp_screen()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => BottomNav()));
                       },
                       child: Container(
                         margin: const EdgeInsets.all(20),
@@ -109,7 +108,7 @@ class _Sign_inState extends State<Sign_in> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Verfiy Email",
+                            "LOGIN",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "UberMove",
@@ -119,61 +118,61 @@ class _Sign_inState extends State<Sign_in> {
                         ),
                       ),
                     ),
-                    // const Divider(
-                    //   endIndent: 50,
-                    //   indent: 50,
-                    // ),
-                    // const Center(
-                    //   child: Text(
-                    //     "Don't Have an Account Yet",
-                    //     style: TextStyle(
-                    //         fontSize: 15,
-                    //         color: Colors.black,
-                    //         fontFamily: "UberMove",
-                    //         fontWeight: FontWeight.bold),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 5,
-                    // ),
+                    const Divider(
+                      endIndent: 50,
+                      indent: 50,
+                    ),
+                    const Center(
+                      child: Text(
+                        "Don't Have an Account Yet",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
 
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(context,
-                    //         MaterialPageRoute(builder: (_) => Sign_up()));
-                    //   },
-                    //   child: Container(
-                    //     margin: const EdgeInsets.all(20),
-                    //     height: height * 0.08,
-                    //     width: width * 0.90,
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(20),
-                    //       color: Color(0xffff36a21),
-                    //     ),
-                    //     child: const Center(
-                    //       child: Text(
-                    //         "SIGN UP",
-                    //         style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontFamily: "UberMove",
-                    //             fontSize: 20,
-                    //             fontWeight: FontWeight.w900),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Center(
-                    //   child: TextButton(
-                    //     onPressed: () {},
-                    //     child: const Text(
-                    //         "If You have Any Query Click Here Contact US!",
-                    //         style: TextStyle(
-                    //             fontSize: 13,
-                    //             color: Colors.white,
-                    //             fontFamily: "UberMove",
-                    //             fontWeight: FontWeight.bold)),
-                    //   ),
-                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => Sign_up()));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        height: height * 0.08,
+                        width: width * 0.90,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xffff36a21),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "SIGN UP",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "UberMove",
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                            "If You have Any Query Click Here Contact US!",
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.white,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
                   ]),
             )));
   }

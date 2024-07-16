@@ -37,7 +37,7 @@ class Profile extends StatelessWidget {
                 radius: 100,
                 backgroundImage: AssetImage("assets/images/person.jpg"),
               ),
-              const Text("Mobrilz",style: TextStyle(color: Colors.black,fontSize: 30,fontFamily: "UberMove",fontWeight: FontWeight.bold),),
+              const Text("Mobrilz",style: TextStyle(color: Colors.black,fontSize: 30,fontWeight: FontWeight.bold),),
              const  SizedBox(height: 20,
               ),
               // Profile_Button( onPressed: () {

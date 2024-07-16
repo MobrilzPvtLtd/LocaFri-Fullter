@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 
 class SectionWidget extends StatelessWidget {
   const SectionWidget(
-      {super.key, required this.leadingText, required this.ButtonText, required this.FontFamily, required this.fontSize, this.fontWeight, this.onpressed});
+      {super.key, required this.leadingText, required this.ButtonText, required this.fontSize, this.fontWeight, this.onpressed});
   final String leadingText;
   final String ButtonText;
-  final String FontFamily;
   final double fontSize;
   final FontWeight? fontWeight;
   final void Function()? onpressed;
@@ -21,7 +20,7 @@ class SectionWidget extends StatelessWidget {
         Text(
           leadingText,
           style:  TextStyle(
-              fontSize: fontSize, color: Colors.black, fontFamily: FontFamily,fontWeight: fontWeight),
+              fontSize: fontSize, color: Colors.black,fontWeight: fontWeight),
         ),
         TextButton(
             onPressed: onpressed,
@@ -31,7 +30,7 @@ class SectionWidget extends StatelessWidget {
                 
                   fontSize: 20,
                   color: Color(0xffff36a21),
-                  fontFamily: FontFamily ),
+                  ),
             ))
       ],
     );

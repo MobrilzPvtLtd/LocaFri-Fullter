@@ -34,7 +34,8 @@ class _homewidgetState extends State<homewidget> {
     ];
   }
 
-  Future<void> _cupertinoDateTimePicker(BuildContext context, bool isPickUp) async {
+  Future<void> _cupertinoDateTimePicker(
+      BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
     DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
 
@@ -138,7 +139,7 @@ class _homewidgetState extends State<homewidget> {
           updatedDateTime.month,
           updatedDateTime.day,
         ).add(selectedDuration!);
-        
+
         if (isPickUp) {
           _pickUpDate = updatedDateTime;
           _pickUpTime = TimeOfDay.fromDateTime(updatedDateTime);
@@ -169,7 +170,8 @@ class _homewidgetState extends State<homewidget> {
           IconButton(
             icon: Icon(Icons.person, color: Colors.black, size: 30),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => Profile()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => Profile()));
             },
           ),
         ],
@@ -301,7 +303,8 @@ class _homewidgetState extends State<homewidget> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ListOfCar()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ListOfCar()));
                   },
                   child: Text(
                     'Search',

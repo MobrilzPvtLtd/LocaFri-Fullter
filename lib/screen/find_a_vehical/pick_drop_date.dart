@@ -66,7 +66,7 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
     final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontFamily: "UberMove",fontWeight: FontWeight.w700),),
+         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontWeight: FontWeight.w700),),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,7 +85,7 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
                 onPressed: () {
                   _pickDateTime(context);
                 },
-                child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
               ),
           SizedBox(
             width: width*0.40,
@@ -98,7 +98,7 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
                 onPressed: () {
                   _pick_time();
                 },
-                child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
           ),
           
             ],
@@ -111,14 +111,14 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
             children: [
               Text("Date: ${_picktdatetime.toLocal().day}-"
               "${_picktdatetime.toLocal().month}-"
-              "${_picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),),
-              Text("Time: ${_picktime.hour}:""${_picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),)
+              "${_picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500,),),
+              Text("Time: ${_picktime.hour}:""${_picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.w500,),)
             ],
           ),
           const SizedBox(
             height: 20,
           ),
-          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontFamily: "UberMove",fontWeight: FontWeight.w700,),),
+          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black54,fontWeight: FontWeight.w700,),),
           SizedBox(
             width: width,
             child: Row(
@@ -136,7 +136,7 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
                   onPressed: () {
                     _return_Date_Time(context);
                   },
-                  child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                  child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
                 ),
             SizedBox(
               width: width*0.40,
@@ -149,7 +149,7 @@ class _Pick_Drop_DateState extends State<Pick_Drop_Date> {
                   onPressed: () {
                     _return_time();
                   },
-                  child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                  child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontWeight: FontWeight.w600,),)),
             ),
             
               ],
