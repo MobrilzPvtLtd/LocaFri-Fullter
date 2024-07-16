@@ -1,168 +1,296 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Customer_DateTime_Field extends StatefulWidget {
   const Customer_DateTime_Field({super.key});
 
   @override
-  State<Customer_DateTime_Field> createState() => _Customer_DateTime_FieldState();
+  State<Customer_DateTime_Field> createState() =>
+      _Customer_DateTime_FieldState();
 }
 
 class _Customer_DateTime_FieldState extends State<Customer_DateTime_Field> {
-    DateTime picktdatetime = DateTime.now();
-  DateTime returnedateTime = DateTime.now();
-  TimeOfDay picktime = TimeOfDay.now();
-  TimeOfDay returntime = TimeOfDay.now();
+  DateTime _pickUpDate = DateTime(2024, 6, 7);
+  TimeOfDay _pickUpTime = TimeOfDay(hour: 17, minute: 0);
+  DateTime _dropOffDate = DateTime(2024, 6, 14);
+  TimeOfDay _dropOffTime = TimeOfDay(hour: 17, minute: 0);
+  String? selectedValue;
+  String? _selectedValue;
 
-  Future<void> _pickDateTime(BuildContext context) async {
-    DateTime? picker = await showDatePicker(
+  List<DropdownMenuItem<String>> get dropdownItems {
+    return [
+      DropdownMenuItem(
+        child: Text(
+          "Romont Gare",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontFamily: "UberMove",
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        value: "Romont Gare",
+      ),
+    ];
+  }
+
+  Future<void> _cupertinoDateTimePicker(
+      BuildContext context, bool isPickUp) async {
+    DateTime now = DateTime.now();
+    DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
+
+    if (initialDateTime.isBefore(now)) {
+      initialDateTime = now;
+    }
+
+    DateTime? selectedDate;
+
+    var screenHeight = MediaQuery.of(context).size.height;
+    await showCupertinoModalPopup(
       context: context,
-      initialDate: picktdatetime,
-      firstDate: DateTime.now(),
-      onDatePickerModeChange: (value) {
-        DatePickerEntryMode.calendar;
+      builder: (BuildContext context) {
+        return Container(
+          height: screenHeight * 0.35,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 250,
+                child: CupertinoDatePicker(
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    selectedDate = newDateTime;
+                  },
+                  initialDateTime: initialDateTime,
+                  maximumDate: DateTime(2035),
+                  minimumDate: now,
+                  mode: CupertinoDatePickerMode.date,
+                ),
+              ),
+              CupertinoButton(
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: "UberMove"),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ),
+        );
       },
-      lastDate: DateTime(2099),
     );
-    if (picker != null && picker != picktdatetime) {
+
+    if (selectedDate != null) {
       setState(() {
-        picktdatetime = picker;
+        if (isPickUp) {
+          _pickUpDate = selectedDate!;
+          _pickUpTime = TimeOfDay.fromDateTime(selectedDate!);
+        } else {
+          _dropOffDate = selectedDate!;
+          _dropOffTime = TimeOfDay.fromDateTime(selectedDate!);
+        }
       });
     }
   }
-   Future<void> _returnDateTime(BuildContext context) async {
-    DateTime? returnpicker = await showDatePicker(
-      context: context,
-      initialDate: returnedateTime,
-      firstDate: DateTime.now(),
-      onDatePickerModeChange: (value) {
-        DatePickerEntryMode.calendar;
-      },
-      lastDate: DateTime(2099),
+
+  Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
+    DateTime now = DateTime.now();
+    DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
+
+    Duration initialTimerDuration = Duration(
+      hours: initialDateTime.hour,
+      minutes: initialDateTime.minute,
     );
-    if (returnpicker != null && returnpicker != returnedateTime) {
+
+    Duration? selectedDuration;
+
+    var screenHeight = MediaQuery.of(context).size.height;
+    await showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: screenHeight * 0.35,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 250,
+                child: CupertinoTimerPicker(
+                  initialTimerDuration: initialTimerDuration,
+                  mode: CupertinoTimerPickerMode.hm,
+                  onTimerDurationChanged: (Duration newDuration) {
+                    selectedDuration = newDuration;
+                  },
+                ),
+              ),
+              CupertinoButton(
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: "UberMove"),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
+
+    if (selectedDuration != null) {
       setState(() {
-        returnedateTime = returnpicker;
+        DateTime updatedDateTime = isPickUp ? _pickUpDate : _dropOffDate;
+        updatedDateTime = DateTime(
+          updatedDateTime.year,
+          updatedDateTime.month,
+          updatedDateTime.day,
+        ).add(selectedDuration!);
+
+        if (isPickUp) {
+          _pickUpDate = updatedDateTime;
+          _pickUpTime = TimeOfDay.fromDateTime(updatedDateTime);
+        } else {
+          _dropOffDate = updatedDateTime;
+          _dropOffTime = TimeOfDay.fromDateTime(updatedDateTime);
+        }
       });
     }
   }
 
-  void _picktime() {
-    showTimePicker(context: context, initialTime: picktime,
-    )
-        .then((value) => setState(() {
-              picktime = value!;
-            }));
-  }
-  void _returntime() {
-    showTimePicker(context: context, initialTime: returntime,
-    )
-        .then((value) => setState(() {
-              returntime = value!;
-            }));
-  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-         const  Text("Pick Up Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700),),
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              width: width * 0.90,
+              child: _buildDateTimePicker(
+                context,
+                'Pick up day',
+                _pickUpDate,
+                'Pick up hour',
+                _pickUpTime,
+                true,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        SizedBox(
+          width: width,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
-                 width: width*0.40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xffff36a21),
-                elevation: 0,
-                shape:  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
-                            ),
-                onPressed: () {
-                  _pickDateTime(context);
-                },
-                child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
-              ),
-          SizedBox(
-            width: width*0.40,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xffff36a21),
-                elevation: 0,
-                shape:  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
-              ),
-                onPressed: () {
-                  _picktime();
-                },
-                child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
-          ),
-          
-            ],
-            
-          ),
-          
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text("Date: ${picktdatetime.toLocal().day}-"
-              "${picktdatetime.toLocal().month}-"
-              "${picktdatetime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),),
-              Text("Time: ${picktime.hour}:""${picktime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w500,),)
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text("Return Date & Time",style:  TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove",fontWeight: FontWeight.w700,),),
-          SizedBox(
-            width: width,
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: width*0.40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffff36a21),
-                  elevation: 0,
-                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
-                                ),
-                  onPressed: () {
-                    _returnDateTime(context);
-                  },
-                  child: const Text("Select the date",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
+                width: width * 0.90,
+                child: _buildDateTimePicker(
+                  context,
+                  'Drop off day',
+                  _dropOffDate,
+                  'Drop off hour',
+                  _dropOffTime,
+                  false,
                 ),
-            SizedBox(
-              width: width*0.40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffff36a21),
-                  elevation: 0,
-                  shape:const  RoundedRectangleBorder(side: BorderSide(width: 20,color: Colors.transparent,style: BorderStyle.none))
-                ),
-                  onPressed: () {
-                    _returntime();
-                  },
-                  child: const Text("Select the Time",style:  TextStyle(fontSize: 15,color: Colors.white,fontFamily: "UberMove",fontWeight: FontWeight.w600,),)),
-            ),
-            
-              ],
-              
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text("Date: ${returnedateTime.toLocal().day}-"
-              "${returnedateTime.toLocal().month}-"
-              "${returnedateTime.toLocal().year}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),),
-              Text("Time: ${returntime.hour}:""${returntime.minute}",style: const TextStyle(fontSize: 20,color: Colors.black,fontFamily: "UberMove"),)
+              ),
             ],
-          )
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateTimePicker(
+    BuildContext context,
+    String dateLabel,
+    DateTime dateValue,
+    String timeLabel,
+    TimeOfDay timeValue,
+    bool isPickUp,
+  ) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                dateLabel,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.02),
+            Expanded(
+              child: Text(
+                timeLabel,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () => _cupertinoDateTimePicker(context, isPickUp),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    DateFormat('dd/MM/yyyy').format(dateValue),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.02),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => _cupertinoTimePicker(context, isPickUp),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    timeValue.format(context),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

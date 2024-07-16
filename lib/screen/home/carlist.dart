@@ -43,7 +43,8 @@ class _CarlistState extends State<Carlist> {
           final product = productlist[index];
           return InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Product_detail()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Product_detail()));
             },
             child: Container(
               height: height * 0.78,
@@ -57,7 +58,9 @@ class _CarlistState extends State<Carlist> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: 2,),
+                  SizedBox(
+                    height: 2,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,38 +68,49 @@ class _CarlistState extends State<Carlist> {
                       Container(
                         width: 120,
                         child: Text(
-                           textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                           product["name"],
-                          style:
-                              const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
                       //  Icon(Icons.favorite_outline_sharp,size: 25,)
                       // Text("")
                     ],
                   ),
-                  Image.asset(product['image'],fit: BoxFit.cover,
-                  height: height*0.20,
-                  width: width*0.45,),
+                  Image.asset(
+                    product['image'],
+                    fit: BoxFit.cover,
+                    height: height * 0.20,
+                    width: width * 0.45,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         "\$${product["Price"]}/day",
-                        style:
-                            const TextStyle(fontSize: 20,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontFamily: "UberMove",
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                     Text(
+                      Text(
                         product["Rating"],
-                        style:
-                            const TextStyle(fontSize: 18,fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: "UberMove",
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ],
                   ),
-                        
                 ],
               ),
             ),

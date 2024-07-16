@@ -1,37 +1,52 @@
-
 import 'dart:async';
+import 'package:carapp/screen/auth/Otp/otp.dart';
+import 'package:carapp/screen/auth/sign_in/sign_in.dart';
+import 'package:carapp/screen/contract/checkin_contract.dart';
+import 'package:carapp/screen/customer_detail/additional_options/selectdays.dart';
+import 'package:carapp/screen/image.dart';
 
-import 'package:carapp/screen/Introduction/introduction.dart';
-import 'package:carapp/screen/contact_us/contact_us.dart';
-import 'package:carapp/screen/find_a_vehical/find_a_vehical.dart';
-import 'package:carapp/screen/home/home.dart';
-import 'package:carapp/screen/mainpage/main-2.dart';
-import 'package:carapp/screen/mainpage/mainpage.dart';
-import 'package:carapp/widget/bottomnavigation.dart';
-import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-void main()async{
+
+import 'widget/bottomnavigation.dart';
+
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Future.delayed(Duration(seconds: 5));
-   FlutterNativeSplash.remove();
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
- 
   @override
   Widget build(BuildContext context) {
-   
     return GetMaterialApp(
-      
+      initialRoute: "/",
+      getPages: [
+        GetPage(
+          name: "/",
+          page: () => BottomNavigator(),
+        ),
+        GetPage(
+          name: "/login",
+          page: () => const Sign_in(),
+        ),
+        GetPage(
+          name: "/otp",
+          page: () => const Otp_screen(),
+        ),
+        GetPage(
+          name: "/contract",
+          page: () => const checkin_contract(),
+        ),
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // home: Contact_us(),
+      // home: checkin_contract()
       home: BottomNavigator(),
       // home: BottomNav(),
     );

@@ -7,6 +7,7 @@ import 'package:carapp/screen/pickdate_time/date_time.dart';
 import 'package:carapp/screen/whistlist/whistlist.dart';
 import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:carapp/widget/categories.dart';
+import 'package:carapp/widget/homewidget.dart';
 import 'package:carapp/widget/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -89,7 +90,9 @@ class _HomeState extends State<Home> {
               //     )
               //   ],
               // ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               SectionWidget(
                 onpressed: () {
                   Navigator.push(context,
@@ -130,18 +133,22 @@ class _HomeState extends State<Home> {
   }
 
   Widget topAppbar() {
-    
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(height: height*0.08,width: width*0.25,
-        decoration: BoxDecoration(
-          // color: Colors.black,
-          image: DecorationImage(image: AssetImage("assets/logo/Final-1.png"),fit: BoxFit.cover,)
-        ),),
+        Container(
+          height: height * 0.08,
+          width: width * 0.25,
+          decoration: BoxDecoration(
+              // color: Colors.black,
+              image: DecorationImage(
+            image: AssetImage("assets/logo/Final-1.png"),
+            fit: BoxFit.cover,
+          )),
+        ),
         // Image.asset(
         //           "assets/logo/Final-1.png",
         //           height: 50,

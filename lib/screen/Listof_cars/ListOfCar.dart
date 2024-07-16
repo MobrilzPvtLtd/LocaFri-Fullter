@@ -21,9 +21,9 @@ class _ListOfCarState extends State<ListOfCar> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(90),
           child: AppBar(
-            leading: const Text(""),
-            scrolledUnderElevation: 0,
-            elevation: 0,
+              leading: const Text(""),
+              scrolledUnderElevation: 0,
+              elevation: 0,
               backgroundColor: Colors.white70,
               bottom: AppBar(
                 // leading: Text(""),s
@@ -52,32 +52,30 @@ class _ListOfCarState extends State<ListOfCar> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Product_detail()));
             },
-          child:  Container(
+            child: Container(
               height: height * 0.18,
               width: width * 0.50,
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                shape: BoxShape.rectangle,
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black,
-                    spreadRadius: 1,
-                    blurStyle: BlurStyle.outer,
-                    blurRadius: 1
-                  )
-                ]
-              ),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+                  borderRadius: BorderRadius.circular(10),
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                        blurRadius: 1)
+                  ]),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    product['image'],fit: BoxFit.cover,
-                    height: height*0.20,
-                    width: width*0.35
-                  ),
-                //
+                  Image.asset(product['image'],
+                      fit: BoxFit.cover,
+                      height: height * 0.20,
+                      width: width * 0.35),
+                  //
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,/
@@ -88,55 +86,69 @@ class _ListOfCarState extends State<ListOfCar> {
                         children: [
                           Container(
                             width: 200,
-                            child: Text(overflow: TextOverflow.ellipsis,maxLines: 1,textAlign: TextAlign.end,
+                            child: Text(
                               product["name"],
-                              style:  TextStyle(overflow: TextOverflow.ellipsis,
-                                  fontSize: 25, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 25,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
-                         
-                       
                         ],
                       ),
-                    SizedBox(
-                      height: height*0.02,
-                    ),
-                  
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(width: width*0.01,),
-                      Container(
-                        width: 100,
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          "\$${product["Price"]}/day",
-                          style: const TextStyle(
-                              fontSize: 20, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
-                        ),
+                      SizedBox(
+                        height: height * 0.02,
                       ),
-                    const    SizedBox(
-                        width: 20,
-                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            product["Rating"],
-                            style: const TextStyle(
-                                fontSize: 20, fontFamily: "UberMove",fontWeight: FontWeight.w800,),
+                          SizedBox(
+                            width: width * 0.01,
                           ),
-                          Icon(Icons.star,color: Colors.amber,)
+                          Container(
+                            width: 100,
+                            child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              "\$${product["Price"]}/day",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                product["Rating"],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: "UberMove",
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              )
+                            ],
+                          ),
                         ],
                       ),
+                      const Text(
+                        "Avaliable Cars",
+                        style: TextStyle(
+                            color: Color(0xffff36a21),
+                            fontSize: 15,
+                            fontFamily: "UberMove"),
+                      )
                     ],
-                  ),
-                  const Text("Avaliable Cars",style: TextStyle(
-                    color: Color(0xffff36a21),
-                    fontSize: 15,
-                    fontFamily: "UberMove"
-                  ),)
-                  ],
                   ),
                 ],
               ),

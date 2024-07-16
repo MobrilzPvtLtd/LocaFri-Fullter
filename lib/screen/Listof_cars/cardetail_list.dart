@@ -1,4 +1,4 @@
- class Product {
+class Product {
   final List<Map<String, dynamic>> productlist = [
     {
       "name": "car",
@@ -17,7 +17,7 @@
       "image": "assets/images/car3.png",
       "Price": "214",
       "Rating": "4.0",
-    } ,
+    },
     {
       "name": "car",
       "image": "assets/images/car4.png",
@@ -66,12 +66,11 @@
       "Price": "234",
       "Rating": "4.5",
     },
-       {
+    {
       "name": "car",
       "image": "assets/images/car12.png",
       "Price": "800",
       "Rating": "4.9",
     },
-    
   ];
- }
+}
