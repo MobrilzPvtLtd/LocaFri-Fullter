@@ -42,10 +42,10 @@ class _CarlistState extends State<Carlist> {
         itemBuilder: (context, index) {
           final product = productlist[index];
           return InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Product_detail()));
-            },
+            // onTap: () {
+            //   Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => Product_detail()));
+            // },
             child: Container(
               height: height * 0.78,
               width: width * 0.50,

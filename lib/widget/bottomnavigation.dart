@@ -9,21 +9,22 @@ import 'package:carapp/screen/mainpage/mainpage.dart';
 import 'package:carapp/screen/whistlist/whistlist.dart';
 import 'package:flutter/material.dart';
 
+import '../screen/Listof_cars/All_CarsList.dart';
+import '../screen/contract/checkin_contract.dart';
+
 class BottomNavigator extends StatefulWidget {
   BottomNavigator({super.key});
-
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
 }
-
 class _BottomNavigatorState extends State<BottomNavigator> {
   int _currentindex = 0;
 
   List<Widget> pages = [
     MainSecond(),
-    ListOfCar(),
-    KeyBox(),
-    checkout_contract()
+    AllCarList(),
+    checkin_contract(),
+    checkout_contract(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,10 +32,10 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       _currentindex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.orange,
             currentIndex: _currentindex,
@@ -44,13 +45,22 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             elevation: 0,
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Search'),
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.search),
+                  label: 'Search'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.directions_car), label: 'Mobility'),
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.directions_car),
+                  label: 'Mobility'),
               // room_service
-              BottomNavigationBarItem(icon: Icon(Icons.wifi), label: 'KeyBox'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.check_box_outlined), label: 'Checkout'),
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.wifi),
+                  label: 'KeyBox'),
+              BottomNavigationBarItem(
+                  backgroundColor: Colors.white,
+                  icon: Icon(Icons.check_box_outlined),
+                  label: 'Checkout'),
 
               // selectedItemColor: Colors.orange,
             ]),

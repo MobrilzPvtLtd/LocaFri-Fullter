@@ -7,18 +7,21 @@ import 'package:carapp/screen/image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
+import 'Controllers/locationScreen_controller.dart';
 import 'widget/bottomnavigation.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  Get.put(AvailableCarsController());
   await Future.delayed(Duration(seconds: 5));
   FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/contract",
-          page: () => const checkin_contract(),
+          page: () =>  checkin_contract(),
         ),
       ],
       debugShowCheckedModeBanner: false,

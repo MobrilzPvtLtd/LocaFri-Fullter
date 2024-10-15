@@ -104,7 +104,8 @@ class Edit_Account_info extends StatelessWidget {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          )),
+                          ),
+                      ),
                     ),
                   ),
 

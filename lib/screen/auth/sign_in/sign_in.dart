@@ -5,6 +5,7 @@ import 'package:carapp/widget/bottomnavigationbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../Controllers/signIn_controller.dart';
 import '../auth_controller/signin_controller.dart';
 
 class Sign_in extends StatefulWidget {
@@ -16,11 +17,13 @@ class Sign_in extends StatefulWidget {
 
 class _Sign_inState extends State<Sign_in> {
   SigninGetxController signinGetxController = Get.put(SigninGetxController());
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
         ),
@@ -49,28 +52,53 @@ class _Sign_inState extends State<Sign_in> {
 
                     // Email Field
 
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        onChanged: (value) =>
-                            signinGetxController.email.value = value,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintText: "Email ID",
-                            hintStyle: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "UberMove"),
-                            focusColor: Colors.white,
-                            disabledBorder: InputBorder.none,
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )),
+                    Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+
+                          onChanged: (value) =>
+                              signinGetxController.email.value = value,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+
+                              hintText: "Email ID",
+                              hintStyle: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: "UberMove"),
+                              focusColor: Colors.white,
+                              disabledBorder: InputBorder.none,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your E-mail';
+                            }
+                            return null;
+                          },
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return 'Email cannot be empty';
+                          //   }
+                          //   // Simple email validation
+                          //   String pattern =
+                          //       r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+                          //   RegExp regex = RegExp(pattern);
+                          //   if (!regex.hasMatch(value)) {
+                          //     return 'Enter a valid email address';
+                          //   }
+                          //   return null; // Return null if no error
+                          // },
+                        ),
                       ),
                     ),
 
@@ -94,14 +122,26 @@ class _Sign_inState extends State<Sign_in> {
                     // Signup button
 
                     GestureDetector(
-                      onTap: () {
-                        // signinGetxController.requestotp();
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => Otp_screen()));
+                      // onTap: () {
+                      //   signinGetxController.requestotp();
+                      //   Get.to(const Otp_screen());
+                      //
+                      // },
+                      onTap: () async {
+                        // Call the requestotp method and await its completion
+                        bool success = await signinGetxController.requestotp();
+
+                        if (success) {
+                          // Navigate to OTP screen if the request was successful
+                          Get.to(const Otp_screen());
+                        } else {
+                          // Show an error message if the request fails
+                          Get.snackbar("Error", "Failed to request OTP. Please try again.");
+                        }
                       },
                       child: Container(
-                        margin: const EdgeInsets.all(20),
-                        height: height * 0.08,
+                        margin: const EdgeInsets.all(15),
+                        height: height * 0.06,
                         width: width * 0.90,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -109,7 +149,7 @@ class _Sign_inState extends State<Sign_in> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Verfiy Email",
+                            "Verify Email",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "UberMove",

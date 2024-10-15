@@ -35,7 +35,7 @@ class buttonprofile extends StatelessWidget {
           ),
           Container(
             height: height * 0.08,
-            width: width * 0.60,
+            width: width * 0.58,
             // color: Colors.black,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

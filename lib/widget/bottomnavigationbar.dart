@@ -16,11 +16,11 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
 int _currentindex = 0;
 
-  List<Widget> pages= const [
-    Home(),
+  List<Widget> pages= [
+    const Home(),
     ListOfCar(),
     // whistlist(),
-    KeyBox()
+    const KeyBox()
     // Profile(),
   ];
 

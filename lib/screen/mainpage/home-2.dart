@@ -1,8 +1,12 @@
 import 'package:carapp/screen/Listof_cars/ListOfCar.dart';
 import 'package:carapp/screen/auth/Profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../Controllers/locationScreen_controller.dart';
 
 class MainSecond extends StatefulWidget {
   @override
@@ -10,48 +14,56 @@ class MainSecond extends StatefulWidget {
 }
 
 class _MainSecondState extends State<MainSecond> {
-  DateTime _pickUpDate = DateTime(2024, 6, 7);
-  TimeOfDay _pickUpTime = TimeOfDay(hour: 17, minute: 0);
-  DateTime _dropOffDate = DateTime(2024, 6, 14);
-  TimeOfDay _dropOffTime = TimeOfDay(hour: 17, minute: 0);
-  String? selectedValue;
-  String? _selectedValue;
+  final AvailableCarsController availableCarsController =
+      Get.put(AvailableCarsController());
 
-  List<DropdownMenuItem<String>> get dropdownItems {
-    return [
-      DropdownMenuItem(
-        child: Text(
-          "Romont Gare",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontFamily: "UberMove",
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        value: "Romont Gare",
-      ),
-    ];
-  }
+  String _location = "";
+  String _availability = "available"; // or "unavailable"
+
+  DateTime _pickUpDate = DateTime.now();
+  TimeOfDay _pickUpTime = TimeOfDay.now();
+  DateTime _dropOffDate = DateTime.now();
+  TimeOfDay _dropOffTime = TimeOfDay.now();
+
+  // DateTime _pickUpDate = DateTime(2024, 6, 7);
+  // TimeOfDay _pickUpTime = TimeOfDay(hour: 17, minute: 0);
+  // DateTime _dropOffDate = DateTime(2024, 6, 14);
+  // TimeOfDay _dropOffTime = TimeOfDay(hour: 17, minute: 0);
+  // String? selectedValue;
+  // String? _selectedValue;
+
+  // List<DropdownMenuItem<String>> get dropdownItems {
+  //   return [
+  //     const DropdownMenuItem(
+  //       child: Text(
+  //         "Romont Gare",
+  //         style: TextStyle(
+  //           color: Colors.black,
+  //           fontSize: 20,
+  //           fontFamily: "UberMove",
+  //           fontWeight: FontWeight.w500,
+  //         ),
+  //       ),
+  //       value: "Romont Gare",
+  //     ),
+  //   ];
+  // }
 
   Future<void> _cupertinoDateTimePicker(
       BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
     DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
-
     if (initialDateTime.isBefore(now)) {
       initialDateTime = now;
     }
-
     DateTime? selectedDate;
-
     var screenHeight = MediaQuery.of(context).size.height;
     await showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
         return Container(
           height: screenHeight * 0.35,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
@@ -105,9 +117,7 @@ class _MainSecondState extends State<MainSecond> {
       hours: initialDateTime.hour,
       minutes: initialDateTime.minute,
     );
-
     Duration? selectedDuration;
-
     var screenHeight = MediaQuery.of(context).size.height;
     await showCupertinoModalPopup(
       context: context,
@@ -153,7 +163,6 @@ class _MainSecondState extends State<MainSecond> {
           updatedDateTime.month,
           updatedDateTime.day,
         ).add(selectedDuration!);
-
         if (isPickUp) {
           _pickUpDate = updatedDateTime;
           _pickUpTime = TimeOfDay.fromDateTime(updatedDateTime);
@@ -171,195 +180,307 @@ class _MainSecondState extends State<MainSecond> {
     var screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(90),
-          child: Container(
-            width: screenWidth,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: screenHeight,
-                  width: screenWidth * 0.30,
-                  padding: const EdgeInsets.all(28.0),
-                  child: Image.asset(
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                    'assets/logo/Final-1.png', // Ensure you have this asset in your project
-                    // height: screenHeight * 0.00,
-                  ),
+        preferredSize: const Size.fromHeight(90),
+        child: Container(
+          width: screenWidth,
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: screenHeight,
+                width: screenWidth * 0.35,
+                padding: const EdgeInsets.all(28.0),
+                child: Image.asset(
+                  // height: 300,
+                  // width: 300,
+                  fit: BoxFit.cover,
+                  'assets/logo/Final-1.png', // Ensure you have this asset in your project
+                  // height: screenHeight * 0.00,
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Profile()));
-                  },
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.person,
+                  color: Colors.black,
+                  size: 30,
                 ),
-              ],
-            ),
-          )),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Profile()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
-        minimum: EdgeInsets.symmetric(horizontal: 10),
+        minimum: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: screenHeight * 0.02),
-            Container(
-              height: screenHeight * 0.45,
-              width: screenWidth * 1,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Pick up office',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",
-                    ),
-                  ),
-                  SizedBox(
-                    width: screenWidth * 0.85,
-                    child: DropdownButton<String>(
-                      icon: Icon(
-                        Icons.arrow_outward,
-                        color: Colors.amber,
-                      ),
-                      value: selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue;
-                        });
-                      },
-                      items: dropdownItems,
-                      hint: Text(
-                        "Select Your Pickup Location",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      isExpanded: true,
+            // SizedBox(height: screenHeight * 0.02),
+            Card(
+              elevation: 3,
+              child: Container(
+                height: screenHeight * 0.47,
+                width: screenWidth * 1,
+                decoration: BoxDecoration(
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //       color: Colors.black26,
+                  //       blurRadius: 1,
+                  //       offset: Offset(2, 2,))
+                  // ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pick up office',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.045,
+                        fontSize: screenWidth * 0.05,
+                        fontWeight: FontWeight.bold,
                         fontFamily: "UberMove",
                       ),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  SizedBox(
-                    width: screenWidth * 0.88,
-                    child: _buildDateTimePicker(
-                      context,
-                      'Pick up day',
-                      _pickUpDate,
-                      'Pick up hour',
-                      _pickUpTime,
-                      true,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    'Drop off office',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "UberMove",
-                    ),
-                  ),
-                  SizedBox(
-                    width: screenWidth * 0.85,
-                    child: DropdownButton<String>(
-                      icon: Icon(
-                        Icons.arrow_outward,
-                        color: Colors.amber,
-                      ),
-                      value: _selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedValue = newValue;
-                        });
-                      },
-                      items: dropdownItems,
-                      hint: Text(
-                        "Select Your Drop-off Location",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                          fontFamily: "UberMove",
-                          fontWeight: FontWeight.w500,
+                    Obx(() {
+                      if (availableCarsController.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: SizedBox(
+                          // width: screenWidth * 0.85,
+                          child: DropdownButton<String>(
+                            icon: const Icon(
+                              Icons.arrow_outward,
+                              color: Colors.amber,
+                            ),
+                            value: availableCarsController
+                                    .selectedValue.value.isEmpty
+                                ? null
+                                : availableCarsController.selectedValue.value,
+                            onChanged: (String? newValue) {
+                              availableCarsController.selectedValue.value =
+                                  newValue!;
+                            },
+                            items: availableCarsController.locations
+                                .map<DropdownMenuItem<String>>((location) {
+                              return DropdownMenuItem<String>(
+                                value: location,
+                                child: Text(
+                                  location,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.045,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "Select Your Pickup Location",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.045,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.045,
+                              fontFamily: "UberMove",
+                            ),
+                          ),
                         ),
+                      );
+                    }),
+                    SizedBox(height: screenHeight * 0.01),
+                    SizedBox(
+                      width: screenWidth * 0.88,
+                      child: _buildDateTimePicker(
+                        context,
+                        'Pick up day',
+                        _pickUpDate,
+                        'Pick up hour',
+                        _pickUpTime,
+                        true,
                       ),
-                      isExpanded: true,
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    Text(
+                      'Drop off office',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.045,
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.bold,
                         fontFamily: "UberMove",
                       ),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  SizedBox(
-                    width: screenWidth * 0.88,
-                    child: _buildDateTimePicker(
-                      context,
-                      'Drop off day',
-                      _dropOffDate,
-                      'Drop off hour',
-                      _dropOffTime,
-                      false,
+                    Obx(() {
+                      if (availableCarsController.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: SizedBox(
+                          // width: screenWidth * 0.85,
+                          child: DropdownButton<String>(
+                            icon: const Icon(
+                              Icons.arrow_outward,
+                              color: Colors.amber,
+                            ),
+                            value: availableCarsController
+                                    .selectedValue1.value.isEmpty
+                                ? null
+                                : availableCarsController.selectedValue1.value,
+                            onChanged: (String? newValue) {
+                              availableCarsController.selectedValue1.value =
+                                  newValue!;
+                            },
+                            items: availableCarsController.locations
+                                .map<DropdownMenuItem<String>>((location) {
+                              return DropdownMenuItem<String>(
+                                value: location,
+                                child: Text(
+                                  location,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.045,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "Select Your Pickup Location",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.045,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.045,
+                              fontFamily: "UberMove",
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                    SizedBox(height: screenHeight * 0.01),
+                    SizedBox(
+                      width: screenWidth * 0.88,
+                      child: _buildDateTimePicker(
+                        context,
+                        'Drop off day',
+                        _dropOffDate,
+                        'Drop off hour',
+                        _dropOffTime,
+                        false,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+
             SizedBox(height: screenHeight * 0.02),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Loading_Screen(redirect: ListOfCar());
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ListOfCar()));
-                },
-                child: Text(
-                  'Search',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "UberMove",
-                  ),
+            // TextField(
+            //   decoration: InputDecoration(labelText: 'Location'),
+            //   onChanged: (value) {
+            //     _location = value;
+            //   },
+            // ),
+
+            // Center(
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       // Loading_Screen(redirect: ListOfCar());
+            //       Navigator.push(context,
+            //           MaterialPageRoute(builder: (context) => ListOfCar()));
+            //     },
+            //     child: Text(
+            //       'Search',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.w600,
+            //         fontFamily: "UberMove",
+            //       ),
+            //     ),
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: const Color(0xffff36a21),
+            //       padding: EdgeInsets.symmetric(
+            //         horizontal: screenWidth * 0.3,
+            //         vertical: screenHeight * 0.02,
+            //       ),
+            //       textStyle: const TextStyle(fontSize: 20),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(20),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            ElevatedButton(
+              onPressed: () {
+                availableCarsController.fetchAvailableCars(
+                    _location, _availability);
+                if (!availableCarsController.isLoading.value &&
+                    availableCarsController.availableCars.isNotEmpty) {
+                  // Navigate to ListOfCar without passing arguments
+                  Get.to(() => ListOfCar());
+                }
+              },
+              child: Text(
+                'Search',
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffff36a21),
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.3,
+                  vertical: screenHeight * 0.02,
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.3,
-                    vertical: screenHeight * 0.02,
-                  ),
-                  textStyle: TextStyle(fontSize: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                textStyle: const TextStyle(fontSize: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-            ),
+             ),
+
+            // Obx(() {
+            //   if (availableCarsController.isLoading.value) {
+            //     return CircularProgressIndicator();
+            //   }
+            //
+            //   // Display the fetched cars
+            //   return Expanded(
+            //     child: ListView.builder(
+            //       itemCount: availableCarsController.availableCars.length,
+            //       itemBuilder: (context, index) {
+            //         var car = availableCarsController.availableCars[index];
+            //         return ListTile(
+            //           title: Text('Car ${car['name']}'),
+            //           subtitle: Text('Location: ${car['location']}'),
+            //         );
+            //       },
+            //     ),
+            //   );
+            // }),
           ],
         ),
       ),
@@ -376,7 +497,6 @@ class _MainSecondState extends State<MainSecond> {
   ) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
-
     return Column(
       children: [
         Row(
@@ -444,4 +564,7 @@ class _MainSecondState extends State<MainSecond> {
       ],
     );
   }
+
+// Existing Cupertino date/time picker methods
+// _cupertinoDateTimePicker and _cupertinoTimePicker methods go here
 }

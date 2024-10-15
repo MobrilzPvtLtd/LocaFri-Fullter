@@ -15,7 +15,9 @@ class _Sign_upState extends State<Sign_up> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white,),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+        ),
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -25,7 +27,7 @@ class _Sign_upState extends State<Sign_up> {
               const Text(
                 "Sign up",
                 style: TextStyle(
-                  fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w900,
                     fontSize: 40,
                     color: Colors.black,
                     fontFamily: "UberMove"),
@@ -38,25 +40,22 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   // Validator
-
-                  // decoration
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      hintText: "First Name",
-                      hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily:"UberMove"
-                      ),
-                      focusColor: Colors.white,
-                      disabledBorder: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: "First Name",
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
               ),
 
@@ -66,15 +65,13 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      hintText: "Last Name",
-                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily:"UberMove"
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                      hintText: "Last Name",
+                      hintStyle: const TextStyle(
+                          fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -91,15 +88,13 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       hintText: "Email Id",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily:"UberMove"
-                      ),
+                          fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -107,7 +102,6 @@ class _Sign_upState extends State<Sign_up> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       )),
-                      
                 ),
               ),
 
@@ -118,22 +112,20 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   // password TextEditingController
-
                   // obscureText: obscureText.obscureText.value,
                   decoration: InputDecoration(
 
                       // suffixIcon: IconButton(onPressed: (){
                       //   obscureText.obscureText.value = !obscureText.obscureText.value;
                       // }, icon: Icon(obscureText.obscureText.value?Icons.visibility:Icons.visibility_off),),
+
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       hintText: "password",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily:"UberMove"
-                      ),
+                          fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -150,15 +142,13 @@ class _Sign_upState extends State<Sign_up> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       hintText: "Confirm Password",
                       hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily:"UberMove"
-                      ),
+                          fontWeight: FontWeight.w800, fontFamily: "UberMove"),
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -177,17 +167,17 @@ class _Sign_upState extends State<Sign_up> {
 
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => BottomNav()));
                 },
                 child: Container(
                   margin: const EdgeInsets.all(20),
                   height: height * 0.08,
                   width: width * 0.90,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffff36a21),
-
-),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xffff36a21),
+                  ),
                   child: const Center(
                     child: Text(
                       "SIGN UP ",
@@ -208,7 +198,7 @@ class _Sign_upState extends State<Sign_up> {
                 child: Text(
                   "Already have an account?",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       fontSize: 15,
                       color: Colors.black,
                       fontFamily: "UberMove"),
@@ -220,25 +210,24 @@ class _Sign_upState extends State<Sign_up> {
 
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => const  Sign_in()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const Sign_in()));
                 },
                 child: Container(
                   margin: const EdgeInsets.all(20),
                   height: height * 0.08,
                   width: width * 0.90,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffff36a21),
-
-),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xffff36a21),
+                  ),
                   child: const Center(
                     child: Text(
                       "SIGN IN",
                       style: TextStyle(
                           color: Colors.white,
-                           fontFamily: "UberMove",
-                           fontWeight: FontWeight.w900,
+                          fontFamily: "UberMove",
+                          fontWeight: FontWeight.w900,
                           fontSize: 20),
                     ),
                   ),

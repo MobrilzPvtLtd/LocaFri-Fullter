@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class additional_options extends StatefulWidget {
   additional_options(
-      {super.key, required this.switchvalue, required this.text});
+      {super.key, required this.switchvalue, required this.text, required onChanged});
 
   @override
   State<additional_options> createState() => _additional_optionsState();

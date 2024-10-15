@@ -24,12 +24,12 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.carapp"
-    compileSdk flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -45,10 +45,10 @@ android {
         applicationId "com.example.carapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        minSdkVersion 26 // Change this to 26 or higher
+        targetSdkVersion 34 // You can also update this as needed
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
@@ -64,4 +64,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'org.codehaus.groovy:groovy:3.0.13' // Ensure this is compatible with your Java version
+}
+

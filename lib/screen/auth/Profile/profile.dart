@@ -6,6 +6,8 @@ import 'package:carapp/widget/profile_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../key_box/keybox.dart';
+
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
@@ -53,7 +55,7 @@ class Profile extends StatelessWidget {
              const  buttonprofile(Icons: Icons.article_rounded, Icons2:  Icons.arrow_right, text: "Term&Condition"),
              const  buttonprofile(Icons: Icons.article_rounded, Icons2:  Icons.arrow_right, text: "Privacy & Policy"),
              const  buttonprofile(Icons: Icons.settings_applications_outlined, Icons2:  Icons.arrow_right, text: "Maintenance"),
-             const  buttonprofile(Icons: Icons.article_rounded, Icons2:  Icons.arrow_right, text: "Key-Box"),
+              buttonprofile(Icons: Icons.article_rounded, Icons2:  Icons.arrow_right, text: "Key-Box",onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=> const KeyBox()));},),
                buttonprofile(Icons: Icons.article_rounded, Icons2:  Icons.arrow_right, text: "Contact us",onPressed:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> const Contact_us()));},),
 
             ],

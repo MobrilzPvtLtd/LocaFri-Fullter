@@ -6,7 +6,6 @@ class Categories extends StatelessWidget {
   final String image;
   final void Function()? ontap;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

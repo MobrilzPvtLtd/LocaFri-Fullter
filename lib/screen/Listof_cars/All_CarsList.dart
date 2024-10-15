@@ -177,9 +177,9 @@ import 'package:intl/intl.dart';
 import '../../Controllers/carList_controller.dart';
 import '../../Controllers/locationScreen_controller.dart';
 
-class ListOfCar extends StatelessWidget {
+class AllCarList extends StatelessWidget {
   final CarListController carListController = Get.put(CarListController());
-  final AvailableCarsController availableCarsController = Get.find();
+  // final AvailableCarsController availableCarsController = Get.find();
   // final AvailableCarsController availableCarsController = Get.
   String formatDateTime(String dateTime) {
     DateTime parsedDate = DateTime.parse(dateTime);
@@ -187,26 +187,29 @@ class ListOfCar extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final availableCars = availableCarsController.availableCars;
+    // final availableCars = availableCarsController.availableCars;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar( backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Row(
+        title: const Row(
           children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 30,
-                  color: Colors.black,
-                )),
-            const Text(
-              "Search Cars",
+
+            // IconButton(
+            //     onPressed: () {
+            //       Navigator.pop(context);
+            //     },
+            //     icon: const Icon(
+            //       Icons.arrow_back_ios,
+            //       size: 30,
+            //       color: Colors.black,
+            //     ),
+            // ),
+
+            Text(
+              "All Cars ",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
@@ -226,14 +229,14 @@ class ListOfCar extends StatelessWidget {
         if (carListController.carList.isEmpty) {
           return const Center(
               child: Text('No cars available')); // Show if no data
-           }
-          return ListView.builder(
-          itemCount: availableCars.length,
-          // itemCount: carListController.carList.length,
+        }
+        return ListView.builder(
+          // itemCount: availableCars.length,
+          itemCount: carListController.carList.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            var product = availableCars[index];
-            // final product = carListController.carList[index];
+            // var product = availableCars[index];
+            final product = carListController.carList[index];
             return InkWell(
               onTap: () {
                 Navigator.push(
@@ -317,8 +320,8 @@ class ListOfCar extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 20),
-                             ],
-                          ),
+                          ],
+                        ),
                         Text(
                           product["location"],
                           style: const TextStyle(
@@ -348,13 +351,13 @@ class ListOfCar extends StatelessWidget {
                           ),
                           child: Center(
                               child: Text(
-                            'Detail',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                                fontFamily: "UberMove",
-                                fontWeight: FontWeight.w600),
-                          )),
+                                'Detail',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w600),
+                              )),
                         )
 
                         // Available features like "bluetooth", "sunroof"
@@ -389,7 +392,7 @@ class ListOfCar extends StatelessWidget {
             );
           },
         );
-       }),
-      );
-    }
+      }),
+    );
   }
+}
