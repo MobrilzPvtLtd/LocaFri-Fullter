@@ -222,7 +222,6 @@ class ListOfCar extends StatelessWidget {
           return const Center(
               child: CircularProgressIndicator()); // Show loading
         }
-
         if (carListController.carList.isEmpty) {
           return const Center(
               child: Text('No cars available')); // Show if no data
@@ -346,7 +345,7 @@ class ListOfCar extends StatelessWidget {
                             color: Color(0xffff36a21),
                             border: Border.all(width: 1, color: Color(0xffff36a21),),
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text(
                             'Detail',
                             style: TextStyle(

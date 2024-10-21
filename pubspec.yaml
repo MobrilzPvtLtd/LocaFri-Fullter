@@ -44,7 +44,7 @@ dependencies:
   dio: ^5.7.0
   path_provider: ^2.1.4
   syncfusion_flutter_gauges: ^27.1.50
-
+  syncfusion_flutter_signaturepad: ^27.1.53
 
 
 

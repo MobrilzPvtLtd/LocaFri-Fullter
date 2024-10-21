@@ -320,6 +320,8 @@
 //   }
 // }
 
+import 'dart:developer';
+
 import 'package:carapp/screen/customer_detail/additional_options/Other_RequestWidget.dart';
 import 'package:carapp/screen/customer_detail/additional_options/additional_options.dart';
 import 'package:carapp/screen/customer_detail/additional_options/selectdays.dart';
@@ -442,15 +444,16 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                   ),
                   // Update phone number
                 ),
-
                 const SizedBox(
                   height: 15,
                 ),
-
                 TextFormField(
-                  onChanged: controller.updateEmail,
+                  onChanged: (value){
+                    controller.updateEmail(value, context);
+                  },
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,
+                  validator: controller.validateEmail,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Colors.black),
@@ -461,6 +464,9 @@ class _Customer_Detail_oneState extends State<Customer_Detail_one> {
                     hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
+                    suffix: GestureDetector(child: const Text("verify"), onTap: (){
+                      controller.verifyEmail(controller.email.value, context);
+                    },),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(

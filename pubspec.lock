@@ -505,10 +505,10 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: efbc44bdef33bf8f469c5ac7830df9631972721e157021db14bd78cdb1047fe1
+      sha256: becd190595cba56feac5ec17b805b35df9f006171c131c209f79b5c58fc780eb
       url: "https://pub.dev"
     source: hosted
-    version: "27.1.50"
+    version: "27.1.53"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
@@ -517,6 +517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "27.1.50"
+  syncfusion_flutter_signaturepad:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_signaturepad
+      sha256: "15d43c6b94448f77ab62733dbef8a1f8c3f2d5e800d32ccc87e0954e53e8f72c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "27.1.53"
   term_glyph:
     dependency: transitive
     description:

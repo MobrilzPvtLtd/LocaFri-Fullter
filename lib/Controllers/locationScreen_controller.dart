@@ -8,7 +8,7 @@ class AvailableCarsController  extends GetxController {
   var locations = <String>[].obs;
   var availableCars = [].obs;  // Observable list for dropdown items
   var selectedValue = ''.obs;
-  var selectedValue1 = ''.obs;// Selected value in dropdown
+  var selectedValue1 = ''.obs; // Selected value in dropdown
   var isLoading = true.obs;
 
   // var isLoading = false.obs;

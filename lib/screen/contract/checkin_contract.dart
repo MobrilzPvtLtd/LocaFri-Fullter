@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import '../../Controllers/checkinContract_controller.dart';
 import '../auth/sign_in/sign_in.dart';
 
@@ -9,8 +10,14 @@ class checkin_contract extends StatelessWidget {
   checkin_contract({super.key});
 
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
   final CheckinContractController controller =
       Get.put(CheckinContractController());
+
+  void _handleClearButtonPressed() {
+    signatureGlobalKey.currentState!.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -70,6 +77,51 @@ class checkin_contract extends StatelessWidget {
                 ),
                 _vehicleDamage(controller.vehicleImages),
                 _odometerImage(controller.odometerImage),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Upload Signature",
+                        style: TextStyle(
+                          fontFamily: "UberMove",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: SfSignaturePad(
+                            key: signatureGlobalKey,
+                            backgroundColor: Colors.white,
+                            strokeColor: Colors.black,
+                            minimumStrokeWidth: 1.0,
+                            maximumStrokeWidth: 4.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(children: <Widget>[
+                        // TextButton(
+                        //   child: const Text('ToImage'),
+                        //   onPressed: (){
+                        //
+                        //   },
+                        // ),
+                        TextButton(
+                          child: const Text('Clear'),
+                          onPressed: _handleClearButtonPressed,
+                        )
+                      ], mainAxisAlignment: MainAxisAlignment.spaceEvenly)
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -293,8 +345,8 @@ class checkin_contract extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
-                ),
-                hintStyle: const TextStyle(
+              ),
+              hintStyle: const TextStyle(
                 fontWeight: FontWeight.w800,
                 fontFamily: "UberMove",
               ),
@@ -316,7 +368,6 @@ class checkin_contract extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _emailAndLicense(Rx<File?> image) {
     final height = MediaQuery.of(Get.context!).size.height;
