@@ -107,20 +107,24 @@
 // }
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+import 'package:carapp/utils/shared_prefs.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import '../widget/bottomnavigation.dart';
 
   class CheckinContractController extends GetxController {
-  var isLoading = false.obs;
   RxBool isChecked = false.obs;
+  var isLoading = false.obs;
+  var statusCode = ''.obs;
 
   void toggleCheckbox(bool value) {
     isChecked.value = value;
   }
+
   // License Image
   Rx<File?> licenceImage = Rx<File?>(null);
   Future<void> pickImageFromCamera1() async {
@@ -188,26 +192,42 @@ import '../widget/bottomnavigation.dart';
   }
 
   // API call to upload check-in contract
-  Future<void> uploadCheckinContract(String recordKilometers, String fuelLevel,
-      String vehicleDamageComments, String customerSignature) async {
+  Future<void> uploadCheckinContract(String name, String address, String postalCode, String email, String recordKilometers, String fuelLevel,
+      String vehicleDamageComments, Rx<File?> signatureImage, BuildContext context) async {
+    isLoading.value = true;
+    showDialogBox();
 
     var request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://your-api-endpoint.com/api/checkin')
+        Uri.parse('https://locafri.ultimatetrueweb.com/api/checkin'),
     );
 
+    request.headers.addAll({
+      "Content-Type": "application/form-data",
+    });
+
     // Add text fields
+    request.fields['name'] = name;
+    request.fields['address'] = address;
+    request.fields['postal_code'] = postalCode;
+    request.fields['email'] = email;
     request.fields['record_kilometers'] = recordKilometers;
     request.fields['fuel_level'] = fuelLevel;
     request.fields['vehicle_damage_comments'] = vehicleDamageComments;
-    request.fields['customer_signature'] = customerSignature;
+
+    // Add Customer Signature Image
+    if(signatureImage.value != null){
+      request.files.add(await http.MultipartFile.fromPath(
+        'customer_signature', signatureImage.value!.path,
+        // filename: basename(signatureImage.value!.path),
+      ));
+    }
 
     // Add license image
-
     if (licenceImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
         'license_photo', licenceImage.value!.path,
-        filename: basename(licenceImage.value!.path),
+        // filename: basename(licenceImage.value!.path),
       ));
     }
 
@@ -215,7 +235,7 @@ import '../widget/bottomnavigation.dart';
     if (odometerImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
         'odometer_image', odometerImage.value!.path,
-        filename: basename(odometerImage.value!.path),
+        // filename: basename(odometerImage.value!.path),
       ));
     }
 
@@ -224,26 +244,53 @@ import '../widget/bottomnavigation.dart';
       if (vehicleImages[i] != null) {
         request.files.add(await http.MultipartFile.fromPath(
           'vehicle_images[]', vehicleImages[i]!.path,
-          filename: basename(vehicleImages[i]!.path),
+          // filename: basename(vehicleImages[i]!.path),
         ));
       }
     }
 
     try {
       var response = await request.send();
+      log(response.statusCode.toString());
+      statusCode.value = response.statusCode.toString();
       if (response.statusCode == 201) {
         var responseBody = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseBody);
-
+        await SharedPrefs.setContractId(jsonResponse["id"]);
         print('Check-in completed: ${jsonResponse['message']}');
-        isLoading(false);
-        Get.offAll(() => BottomNavigator());
-      } else {
-        // Get.to(Sign_in());
-        // print('Failed to upload contract. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error uploading contract: $e'); 
+      print('Error uploading contract: $e');
+    } finally {
+      isLoading.value = false;
+      Get.back();
+      if(statusCode.value == "201") {
+        Get.snackbar("Success", "Check in form submitted.");
+      } else {
+        Get.snackbar("Failure", "Something went wrong pls try again..");
+      }
     }
   }
+
+  void showDialogBox() {
+    if (isLoading.value) {
+      Get.dialog(
+        Center(
+          child: Container(
+            width: 100.0,
+            height: 100.0,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ),
+        barrierDismissible: false,
+      );
+    }
+  }
+
 }

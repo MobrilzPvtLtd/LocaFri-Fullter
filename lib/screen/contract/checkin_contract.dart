@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import '../../Controllers/checkinContract_controller.dart';
@@ -10,12 +12,38 @@ class checkin_contract extends StatelessWidget {
   checkin_contract({super.key});
 
   final _formKey = GlobalKey<FormState>();
+  final fullNameController = TextEditingController();
+  final addressController = TextEditingController();
+  final postalCodeController = TextEditingController();
+  final emailController = TextEditingController();
+  final kilometerController = TextEditingController();
+  Rx<File?> customerSignatureFile = Rx<File?>(null);
+
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
+
   final CheckinContractController controller =
       Get.put(CheckinContractController());
 
-  void _handleClearButtonPressed() {
+  void handleClearButtonPressed() {
     signatureGlobalKey.currentState!.clear();
+  }
+
+  void handleSaveButtonPressed() async {
+    final data =
+    await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
+    final byteData = await data.toByteData(format: ui.ImageByteFormat.png);
+    final buffer = byteData!.buffer.asUint8List();
+
+    // Get the application directory
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/signature.png';
+    final file = File(filePath);
+
+    // Write the bytes to the file
+    await file.writeAsBytes(buffer);
+
+    // Update the Rx variable
+    customerSignatureFile.value = file;
   }
 
   @override
@@ -43,10 +71,10 @@ class checkin_contract extends StatelessWidget {
             key: _formKey,
             child: Column(
               children: [
-                _fullName(),
-                _addressAndPostalCode(),
-                _emailAndLicense(controller.licenceImage),
-                _kilometerAndFuelLevel(),
+                _fullName(fullNameController),
+                _addressAndPostalCode(addressController, postalCodeController),
+                _emailAndLicense(controller.licenceImage, emailController),
+                _kilometerAndFuelLevel(kilometerController),
                 const Padding(
                   padding: EdgeInsets.only(left: 15, right: 15.0),
                   child: Align(
@@ -77,9 +105,6 @@ class checkin_contract extends StatelessWidget {
                 ),
                 _vehicleDamage(controller.vehicleImages),
                 _odometerImage(controller.odometerImage),
-                const SizedBox(
-                  height: 10,
-                ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -96,29 +121,40 @@ class checkin_contract extends StatelessWidget {
                         height: 10,
                       ),
                       Container(
-                        child: SfSignaturePad(
-                            key: signatureGlobalKey,
-                            backgroundColor: Colors.white,
-                            strokeColor: Colors.black,
-                            minimumStrokeWidth: 1.0,
-                            maximumStrokeWidth: 4.0),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
+                          border: Border.all(color: Colors.grey, width: 2),
+                          // borderRadius: BorderRadius.circular(12)
+                        ),
+                        child: SfSignaturePad(
+                          key: signatureGlobalKey,
+                          backgroundColor: Colors.white,
+                          strokeColor: Colors.black,
+                          minimumStrokeWidth: 2.0,
+                          maximumStrokeWidth: 4.0,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Row(children: <Widget>[
-                        // TextButton(
-                        //   child: const Text('ToImage'),
-                        //   onPressed: (){
-                        //
-                        //   },
-                        // ),
-                        TextButton(
-                          child: const Text('Clear'),
-                          onPressed: _handleClearButtonPressed,
-                        )
-                      ], mainAxisAlignment: MainAxisAlignment.spaceEvenly)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                            onPressed: handleSaveButtonPressed,
+                            child: const Text(
+                              'Capture Signature',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: handleClearButtonPressed,
+                            child: const Text(
+                              'Clear',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -145,7 +181,7 @@ class checkin_contract extends StatelessWidget {
                     ], //
                   ),
                 ),
-                _submitButton(),
+                _submitButton(context),
               ],
             ),
           ),
@@ -249,8 +285,7 @@ class checkin_contract extends StatelessWidget {
     );
   }
 
-  Widget _fullName() {
-    final fullNameController = TextEditingController();
+  Widget _fullName(TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(
         right: 15,
@@ -260,7 +295,7 @@ class checkin_contract extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
-            controller: fullNameController,
+            controller: controller,
             keyboardType: TextInputType.name,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -291,9 +326,7 @@ class checkin_contract extends StatelessWidget {
     );
   }
 
-  Widget _addressAndPostalCode() {
-    final addressController = TextEditingController();
-    final postalCodeController = TextEditingController();
+  Widget _addressAndPostalCode(TextEditingController addressController, TextEditingController postalCodeController) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -369,7 +402,7 @@ class checkin_contract extends StatelessWidget {
     );
   }
 
-  Widget _emailAndLicense(Rx<File?> image) {
+  Widget _emailAndLicense(Rx<File?> image, TextEditingController emailController) {
     final height = MediaQuery.of(Get.context!).size.height;
     final width = MediaQuery.of(Get.context!).size.width;
     return Column(
@@ -377,6 +410,7 @@ class checkin_contract extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15, left: 15, top: 5),
           child: TextFormField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -458,8 +492,7 @@ class checkin_contract extends StatelessWidget {
     );
   }
 
-  Widget _kilometerAndFuelLevel() {
-    final kilometerController = TextEditingController();
+  Widget _kilometerAndFuelLevel(TextEditingController kilometerController) {
     return Padding(
       padding: const EdgeInsets.only(right: 15, left: 15, bottom: 15.0),
       child: TextFormField(
@@ -612,23 +645,25 @@ class checkin_contract extends StatelessWidget {
     );
   }
 
-  Widget _submitButton() {
+  Widget _submitButton(BuildContext context) {
     final height = MediaQuery.of(Get.context!).size.height;
     final width = MediaQuery.of(Get.context!).size.width;
     return GestureDetector(
       onTap: () {
         if (_formKey.currentState!.validate()) {
           controller.uploadCheckinContract(
-              '100', // record_kilometers
+            fullNameController.text, // name
+              addressController.text, // address
+              postalCodeController.text, // postal_code
+              emailController.text, // email
+              kilometerController.text, // record_kilometers
               'full', // fuel_level
               'no damages in car', // vehicle_damage_comments
-              'customer_signature_path' // customer_signature
+              customerSignatureFile, // customer_signature
+              context,
               );
-          // Get.to(Sign_in());
           print('Form submitted');
-          // Get.to(Sign_in());
         } else {
-          // Get.to(Sign_in());
           print('Form is not valid');
         }
       },

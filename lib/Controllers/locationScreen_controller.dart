@@ -70,7 +70,6 @@ class AvailableCarsController  extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-
         print('AvailbaleCar${data}');
         availableCars.assignAll(data['data']);
         Get.snackbar("Success", "Cars fetched successfully!");

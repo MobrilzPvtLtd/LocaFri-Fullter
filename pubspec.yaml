@@ -45,8 +45,7 @@ dependencies:
   path_provider: ^2.1.4
   syncfusion_flutter_gauges: ^27.1.50
   syncfusion_flutter_signaturepad: ^27.1.53
-
-
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

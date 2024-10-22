@@ -2,8 +2,7 @@ import 'dart:async';
 import 'package:carapp/screen/auth/Otp/otp.dart';
 import 'package:carapp/screen/auth/sign_in/sign_in.dart';
 import 'package:carapp/screen/contract/checkin_contract.dart';
-import 'package:carapp/screen/customer_detail/additional_options/selectdays.dart';
-import 'package:carapp/screen/image.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -20,6 +19,7 @@ void main() async {
   Get.put(AvailableCarsController());
   await Future.delayed(const Duration(seconds: 5));
   FlutterNativeSplash.remove();
+  await SharedPrefs.init();
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // home: checkin_contract()
       home: BottomNavigator(),
       // home: BottomNav(),
     );
