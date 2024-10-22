@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import '../../Controllers/checkinContract_controller.dart';
-import '../auth/sign_in/sign_in.dart';
 
 class checkin_contract extends StatelessWidget {
   checkin_contract({super.key});

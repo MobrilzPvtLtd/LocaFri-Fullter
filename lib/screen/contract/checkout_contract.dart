@@ -1,11 +1,13 @@
-import 'dart:ffi';
 import 'dart:io';
-
+import 'dart:ui' as ui;
+import 'package:carapp/Controllers/checkout_controller.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class checkout_contract extends StatefulWidget {
   const checkout_contract({super.key});
@@ -15,6 +17,41 @@ class checkout_contract extends StatefulWidget {
 }
 
 class _checkout_contractState extends State<checkout_contract> {
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final postalCodeController = TextEditingController();
+  final emailController = TextEditingController();
+  final kilometerController = TextEditingController();
+
+  Rx<File?> customerSignatureFile = Rx<File?>(null);
+
+  final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
+
+  final CheckOutContractController controller =
+      Get.put(CheckOutContractController());
+
+  void handleClearButtonPressed() {
+    signatureGlobalKey.currentState!.clear();
+  }
+
+  void handleSaveButtonPressed() async {
+    final data =
+        await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
+    final byteData = await data.toByteData(format: ui.ImageByteFormat.png);
+    final buffer = byteData!.buffer.asUint8List();
+
+    // Get the application directory
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/signature.png';
+    final file = File(filePath);
+
+    // Write the bytes to the file
+    await file.writeAsBytes(buffer);
+
+    // Update the Rx variable
+    customerSignatureFile.value = file;
+  }
+
   File? _image;
   bool value = false;
   File? licenseimage;
@@ -173,11 +210,12 @@ class _checkout_contractState extends State<checkout_contract> {
           padding: const EdgeInsets.only(left: 15, right: 15.0),
           child: Column(
             children: [
-              _firstandlastname(),
-              _addressandPostalcode(),
-              _emailandLicense(licenseimage),
-              _kilometerandFuelLevelandVehicalDamage(_image),
-              Text(
+              _firstandlastname(nameController),
+              _addressandPostalcode(addressController, postalCodeController),
+              _emailandLicense(licenseimage, emailController),
+              _kilometerandFuelLevelandVehicalDamage(
+                  _image, kilometerController),
+              const Text(
                 "Upload Vehical/Damages ",
                 style: TextStyle(
                     fontFamily: "UberMove",
@@ -189,6 +227,59 @@ class _checkout_contractState extends State<checkout_contract> {
               ),
               _VehicalDamage(vehicalimage),
               _odometerimage(odometre),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Upload Signature",
+                      style: TextStyle(
+                        fontFamily: "UberMove",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 2),
+                        // borderRadius: BorderRadius.circular(12)
+                      ),
+                      child: SfSignaturePad(
+                        key: signatureGlobalKey,
+                        backgroundColor: Colors.white,
+                        strokeColor: Colors.black,
+                        minimumStrokeWidth: 2.0,
+                        maximumStrokeWidth: 4.0,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton(
+                          onPressed: handleSaveButtonPressed,
+                          child: const Text(
+                            'Capture Signature',
+                            style:
+                            TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: handleClearButtonPressed,
+                          child: const Text(
+                            'Clear',
+                            style:
+                            TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -204,7 +295,7 @@ class _checkout_contractState extends State<checkout_contract> {
                       },
                     ),
                     const Text(
-                      "I am 18 years of age or older and agree to the terms \n of the Contract and the Valve Privacy Policy",
+                      "I am 18 years of age or older and agree to the \n terms of the Contract and the  Valve Privacy \n Policy",
                       style: TextStyle(fontFamily: "Ubermove"),
                     )
                   ], //I am 13 years of age or older and agree to the terms of the Steam Subscriber Agreement and the Valve Privacy Policy
@@ -215,8 +306,18 @@ class _checkout_contractState extends State<checkout_contract> {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (_) => Sign_in()));
+                  controller.uploadCheckOutContract(
+                      name: nameController.text,
+                      address: addressController.text,
+                      postalCode: postalCodeController.text,
+                      email: emailController.text,
+                      recordKilometers: kilometerController.text,
+                      signatureImage: customerSignatureFile,
+                      fuelLevel: "75",
+                      comment: "Good",
+                      contractId: SharedPrefs.getContractId.toString(),
+                      context: context,
+                  );
                 },
                 child: Container(
                   height: height * 0.06,
@@ -246,11 +347,11 @@ class _checkout_contractState extends State<checkout_contract> {
     );
   }
 
-  _firstandlastname() {
+  _firstandlastname(TextEditingController nameController) {
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          controller: nameController,
           keyboardType: TextInputType.name,
           cursorColor: Colors.black,
           decoration: InputDecoration(
@@ -269,51 +370,31 @@ class _checkout_contractState extends State<checkout_contract> {
                 borderRadius: BorderRadius.circular(10),
               )),
         ),
-        // const SizedBox(
-        //   height: 10,
-        // ),
-        // TextFormField(
-        //   keyboardType: TextInputType.name,
-        //   cursorColor: Colors.black,
-        //   decoration: InputDecoration(
-        //       focusedBorder: OutlineInputBorder(
-        //         borderSide: BorderSide(color: Colors.black),
-        //         borderRadius: BorderRadius.circular(10),
-        //       ),
-        //       hintStyle: const TextStyle(
-        //           fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-        //       hintText: "Last Name",
-        //       focusColor: Colors.white,
-        //       disabledBorder: InputBorder.none,
-        //       filled: true,
-        //       fillColor: Colors.white,
-        //       border: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(10),
-        //       )),
-        // ),
       ],
     );
   }
 
-  _addressandPostalcode() {
+  _addressandPostalcode(TextEditingController addressController,
+      TextEditingController postalCodeController) {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "Address",
             style: TextStyle(
                 fontFamily: "UberMove",
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           TextFormField(
+            controller: addressController,
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -332,10 +413,11 @@ class _checkout_contractState extends State<checkout_contract> {
                   borderRadius: BorderRadius.circular(10),
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
+            controller: postalCodeController,
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -354,7 +436,7 @@ class _checkout_contractState extends State<checkout_contract> {
                   borderRadius: BorderRadius.circular(10),
                 )),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
         ],
@@ -362,14 +444,13 @@ class _checkout_contractState extends State<checkout_contract> {
     );
   }
 
-  _emailandLicense(
-    File? images1,
-  ) {
+  _emailandLicense(File? images1, TextEditingController emailController) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         TextFormField(
+          controller: emailController,
           keyboardType: TextInputType.emailAddress,
           cursorColor: Colors.black,
           decoration: InputDecoration(
@@ -451,7 +532,8 @@ class _checkout_contractState extends State<checkout_contract> {
     );
   }
 
-  _kilometerandFuelLevelandVehicalDamage(File? image) {
+  _kilometerandFuelLevelandVehicalDamage(
+      File? image, TextEditingController kilometerController) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -466,6 +548,7 @@ class _checkout_contractState extends State<checkout_contract> {
           height: 10,
         ),
         TextFormField(
+          controller: kilometerController,
           keyboardType: TextInputType.emailAddress,
           cursorColor: Colors.black,
           decoration: InputDecoration(
@@ -680,7 +763,7 @@ class _checkout_contractState extends State<checkout_contract> {
         const SizedBox(
           height: 20,
         ),
-        Text(
+        const Text(
           "Upload odometer with kms and fuel image",
           style: TextStyle(
               fontFamily: "UberMove",
