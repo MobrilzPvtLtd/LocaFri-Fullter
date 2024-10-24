@@ -1,3 +1,4 @@
+import 'package:carapp/Controllers/search/searchController.dart';
 import 'package:carapp/ui/customerdetail/widget/other_request_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/additional_option_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/select_days_widget.dart';
@@ -14,13 +15,18 @@ class CustomerDetailScreen extends StatefulWidget {
 }
 
 class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
+  final SearchCarsController availableCarsController =
+      Get.put(SearchCarsController());
+  
   final CustomerDetailController controller =
       Get.put(CustomerDetailController());
+  
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -72,7 +78,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
+                  ),  
+                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your full name';
+              }
+              return null;
+            },
                 ),
                 const SizedBox(
                   height: 15,
@@ -96,7 +108,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
+                  ), 
+                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your full name';
+              }
+              return null;
+            },
                 ),
                 const SizedBox(height: 15),
                 TextFormField(
@@ -118,7 +136,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
+                  ), 
+                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your full name';
+              }
+              return null;
+            },
                 ),
                 const SizedBox(
                   height: 15,
@@ -148,7 +172,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
+                  ), 
+                  
                 ),
                 const SizedBox(
                   height: 15,
@@ -190,17 +215,28 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       Icons.arrow_outward,
                       color: Colors.amber,
                     ),
-                    value: controller.selectedPickUpLocation.value.isEmpty
-                        ? null
-                        : controller.selectedPickUpLocation.value,
+                     value: availableCarsController
+                                    .pickUpLocationValue.value.isEmpty
+                                ? null
+                                : availableCarsController.pickUpLocationValue.value,
                     onChanged: (String? newValue) {
                       controller.selectedPickUpLocation.value = newValue!;
                     },
-                    items: const [
-                      DropdownMenuItem(
-                         value: "Romont Gare", 
-                          child: Text("Romont Gare"),),
-                    ],
+                   items: availableCarsController.locations
+                                .map<DropdownMenuItem<String>>((location) {
+                              return DropdownMenuItem<String>(
+                                value: location,
+                                child: Text(
+                                  location,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.045,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                     hint: const Text(
                       "Select Your Pickup Location",
                       style: TextStyle(
@@ -233,17 +269,28 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       color: Colors.amber,
                     ),
                     isDense: false,
-                    value: controller.selectedDropOffLocation.value.isEmpty
-                        ? null
-                        : controller.selectedDropOffLocation.value,
+                    value: availableCarsController
+                                    .selectedValue1.value.isEmpty
+                                ? null
+                                : availableCarsController.selectedValue1.value,
                     onChanged: (String? newValue) {
                       controller.selectedDropOffLocation.value = newValue!;
                     },
-                    items: const [
-                      DropdownMenuItem(
-                        value: "Romont Gare", 
-                          child: Text("Romont Gare"), ),
-                    ],
+                    items: availableCarsController.locations
+                                .map<DropdownMenuItem<String>>((location) {
+                              return DropdownMenuItem<String>(
+                                value: location,
+                                child: Text(
+                                  location,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.045,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                     hint: const Text(
                       "Select Your Drop Off Location",
                       style: TextStyle(
