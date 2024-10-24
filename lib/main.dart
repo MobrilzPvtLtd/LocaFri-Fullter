@@ -1,25 +1,21 @@
 import 'dart:async';
-import 'package:carapp/screen/auth/Otp/otp.dart';
-import 'package:carapp/screen/auth/sign_in/sign_in.dart';
-import 'package:carapp/screen/contract/checkin_contract.dart';
+import 'package:carapp/utils/constants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-
-import 'Controllers/locationScreen_controller.dart';
+import 'Controllers/search/searchController.dart';
 import 'widget/bottomnavigation.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  Get.put(AvailableCarsController());
+  Get.put(SearchCarsController());
   await Future.delayed(const Duration(seconds: 5));
   FlutterNativeSplash.remove();
   await SharedPrefs.init();
+  Stripe.publishableKey = stripePublishableKey;
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -27,30 +23,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      initialRoute: "/",
-      getPages: [
-        GetPage(
-          name: "/",
-          page: () => BottomNavigator(),
-        ),
-        GetPage(
-          name: "/login",
-          page: () => const Sign_in(),
-        ),
-        GetPage(
-          name: "/otp",
-          page: () => const Otp_screen(),
-        ),
-        GetPage(
-          name: "/contract",
-          page: () =>  checkin_contract(),
-        ),
-      ],
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'LocaFri',
       home: BottomNavigator(),
-      // home: BottomNav(),
     );
   }
 }

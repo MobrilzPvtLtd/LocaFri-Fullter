@@ -1,13 +1,17 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class SectionWidget extends StatelessWidget {
   const SectionWidget(
-      {super.key, required this.leadingText, required this.ButtonText, required this.FontFamily, required this.fontSize, this.fontWeight, this.onpressed});
+      {super.key,
+      required this.leadingText,
+      required this.buttonText,
+      required this.fontFamily,
+      required this.fontSize,
+      this.fontWeight,
+      this.onpressed});
   final String leadingText;
-  final String ButtonText;
-  final String FontFamily;
+  final String buttonText;
+  final String fontFamily;
   final double fontSize;
   final FontWeight? fontWeight;
   final void Function()? onpressed;
@@ -20,19 +24,22 @@ class SectionWidget extends StatelessWidget {
       children: [
         Text(
           leadingText,
-          style:  TextStyle(
-              fontSize: fontSize, color: Colors.black, fontFamily: FontFamily,fontWeight: fontWeight),
+          style: TextStyle(
+              fontSize: fontSize,
+              color: Colors.black,
+              fontFamily: fontFamily,
+              fontWeight: fontWeight),
         ),
         TextButton(
-            onPressed: onpressed,
-            child: Text(
-              ButtonText,
-              style: TextStyle(
-                
-                  fontSize: 20,
-                  color: Color(0xffff36a21),
-                  fontFamily: FontFamily ),
-            ))
+          onPressed: onpressed,
+          child: Text(
+            buttonText,
+            style: TextStyle(
+                fontSize: 20,
+                color: const Color(0xffff36a21),
+                fontFamily: fontFamily),
+          ),
+        ),
       ],
     );
   }

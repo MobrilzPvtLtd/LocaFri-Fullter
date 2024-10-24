@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class buttonprofile extends StatelessWidget {
-  const buttonprofile(
-      {super.key,
-      this.onPressed,
-      required this.Icons,
-      required this.Icons2,
-      required this.text});
+class Buttonprofile extends StatelessWidget {
+  const Buttonprofile({
+    super.key,
+    this.onPressed,
+    required this.icon,
+    required this.icon2,
+    required this.text,
+  });
   final void Function()? onPressed;
-  final IconData Icons;
-  final IconData Icons2;
+  final IconData icon;
+  final IconData icon2;
   final String text;
 
   @override
@@ -21,22 +22,19 @@ class buttonprofile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
-         
         children: [
-          Container(
+          SizedBox(
             height: height * 0.08,
             width: width * 0.15,
-            // color: Colors.amber,
             child: Icon(
-              Icons,
+              icon,
               color: Colors.black,
               size: 35,
             ),
           ),
-          Container(
+          SizedBox(
             height: height * 0.08,
             width: width * 0.58,
-            // color: Colors.black,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,12 +50,11 @@ class buttonprofile extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: height * 0.08,
             width: width * 0.15,
-            // color: Colors.amber,
             child: Icon(
-              Icons2,
+              icon2,
               color: Colors.black,
               size: 30,
             ),
