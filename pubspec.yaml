@@ -46,6 +46,7 @@ dependencies:
   syncfusion_flutter_signaturepad: ^27.1.53
   shared_preferences: ^2.3.2
   flutter_stripe: ^11.2.0
+  flutter_inappwebview: ^6.1.5
 
 dev_dependencies:
   flutter_test:

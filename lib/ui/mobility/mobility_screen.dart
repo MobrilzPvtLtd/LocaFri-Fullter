@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:carapp/ui/cardetail/car_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import '../../Controllers/mobility/mobility_controller.dart';
 
 class MobilityScreen extends StatelessWidget {
   final MobilityController mobilityController = Get.put(MobilityController());
+  
   String formatDateTime(String dateTime) {
     DateTime parsedDate = DateTime.parse(dateTime);
     return DateFormat('yyyy-MM-dd HH:mm').format(parsedDate);

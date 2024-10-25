@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
-import 'Controllers/search/searchController.dart';
+import 'Controllers/search/search_controller.dart';
 import 'widget/bottomnavigation.dart';
 
 void main() async {

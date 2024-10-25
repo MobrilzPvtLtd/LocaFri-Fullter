@@ -68,41 +68,44 @@ class CarDetailScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: height * 0.30,
-                    child: Obx(() {
-                      if (controller.carDetails.isEmpty ||
-                          controller.carDetails['images'] == null ||
-                          controller.carDetails['images'].isEmpty) {
-                        return const Center(child: Text('No images available'));
-                      }
-                      return PageView.builder(
-                        controller: _pageController,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: controller.carDetails['images'].length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              currentIndex.value = index;
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(10),
-                              width: width * 0.90,
-                              height: height * 0.30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      controller.carDetails['images'][index]),
-                                  fit: BoxFit.fill,
+                    child: Obx(
+                      () {
+                        if (controller.carDetails.isEmpty ||
+                            controller.carDetails['images'] == null ||
+                            controller.carDetails['images'].isEmpty) {
+                          return const Center(
+                              child: Text('No images available'));
+                        }
+                        return PageView.builder(
+                          controller: _pageController,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.carDetails['images'].length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                currentIndex.value = index;
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                width: width * 0.90,
+                                height: height * 0.30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        controller.carDetails['images'][index]),
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                        onPageChanged: (int index) {
-                          currentIndex.value = index;
-                        },
-                      );
-                    }),
+                            );
+                          },
+                          onPageChanged: (int index) {
+                            currentIndex.value = index;
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Obx(() {
                     return Row(
@@ -142,7 +145,7 @@ class CarDetailScreen extends StatelessWidget {
                             onPressed: () {},
                             icon: const Icon(
                               Icons.star,
-                              color: Color(0xffff36a21),
+                              color: const Color(0xffff36a21),
                               size: 30,
                             ),
                             label: const Text(
@@ -161,20 +164,48 @@ class CarDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "\$${carDetails['Dprice']}",
-                            style: const TextStyle(
-                                fontSize: 25,
-                                color: const Color(0xffff36a21),
-                                fontFamily: "UberMove",
-                                fontWeight: FontWeight.w600),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start, 
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "\$${carDetails['Dprice']}/day",
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: const Color(0xffff36a21),
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w600),
+                              ), 
+                              Text(
+                                "\$${carDetails['wprice']}/week",
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: const Color(0xffff36a21),
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "\$${carDetails['mprice']}/month",
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: const Color(0xffff36a21),
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 10,), 
+                            ],
                           ),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => CustomerDetailScreen(vehicleName: carDetails['name'], dPrice: carDetails['Dprice'], mPrice: carDetails['mprice'], wPrice: carDetails['wprice'],),
+                                  builder: (_) => CustomerDetailScreen(
+                                    vehicleName: carDetails['name'],
+                                    dPrice: carDetails['Dprice'],
+                                    mPrice: carDetails['mprice'],
+                                    wPrice: carDetails['wprice'],
+                                  ),
                                 ),
                               );
                             },

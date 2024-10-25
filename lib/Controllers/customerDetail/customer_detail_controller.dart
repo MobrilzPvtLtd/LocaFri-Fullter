@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:carapp/models/create_contract_data.dart';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,15 @@ class CustomerDetailController extends GetxController {
   var selectedDropOffLocation = ''.obs;
   var otp = ''.obs;
   var verifyOtpStatus = false.obs;
-  var pickUpDate = ''.obs; 
-  var pickUpTime = ''.obs; 
-  var dropOfDate = ''.obs; 
-  var dropOfTime = ''.obs; 
+  var pickUpDate = ''.obs;
+  var pickUpTime = ''.obs;
+  var dropOfDate = ''.obs;
+  var dropOfTime = ''.obs;
+  var month = '0'.obs;
+  var week = '0'.obs;
+  var days = '0'.obs;
+  var paymentRedirectUrl = ''.obs;
+  CreateContractData? createContractData;
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
@@ -61,6 +67,18 @@ class CustomerDetailController extends GetxController {
 
   void updateDropOfTime(String value) {
     dropOfTime.value = value;
+  }
+
+  void updateMonth(String value) {
+    month.value = value;
+  }
+
+  void updateWeek(String value) {
+    week.value = value;
+  }
+
+  void updateDays(String value) {
+    days.value = value;
   }
 
   void toggleAdditionalOption(bool value) {
@@ -210,6 +228,40 @@ class CustomerDetailController extends GetxController {
     return false;
   }
 
+  Map<String, int> calculateDateDifference(
+      DateTime pickupDate, DateTime dropOffDate) {
+    if (pickupDate.isAfter(dropOffDate)) {
+      throw ArgumentError("Pickup date must be before drop-off date.");
+    }
+
+    int totalDays = dropOffDate.difference(pickupDate).inDays;
+
+    int months = 0;
+    int weeks = 0;
+
+    DateTime currentDate = pickupDate;
+
+    while (currentDate.year < dropOffDate.year ||
+        (currentDate.year == dropOffDate.year &&
+            currentDate.month < dropOffDate.month)) {
+      months++;
+      currentDate = DateTime(currentDate.year, currentDate.month + 1, 1);
+    }
+
+    currentDate = pickupDate;
+    weeks = totalDays ~/ 7;
+
+    updateMonth(months.toString());
+    updateWeek(weeks.toString());
+    updateDays(days.toString());
+
+    return {
+      'months': months,
+      'weeks': weeks,
+      'days': totalDays,
+    };
+  }
+
   Future<void> submitForm(
     BuildContext context,
     String vehicleName,
@@ -222,26 +274,26 @@ class CustomerDetailController extends GetxController {
         'first_name': firstName.value,
         'last_name': lastName.value,
         'phone': phoneNumber.value,
-        'email': email.value, 
-        'address_first' : '', // optional  
-        'address_last' : '', // optional
+        'email': email.value,
+        'address_first': '', // optional
+        'address_last': '', // optional
         'vehicle_name': vehicleName,
         'Dprice': dprice,
         'wprice': wprice,
         'mprice': mprice,
         'pickUpLocation': selectedPickUpLocation.value,
-        'dropOffLocation': selectedDropOffLocation.value, 
-        'pickUpDate' : pickUpDate.value, 
-        'pickUpTime' : pickUpTime.value,  
-        'collectionDate' : dropOfDate.value, 
-        'collectionTime' : dropOfTime.value, 
-        'month_count' : '1', 
-        'week_count' : '2', 
-        'day_count' : '4', 
+        'dropOffLocation': selectedDropOffLocation.value,
+        'pickUpDate': pickUpDate.value,
+        'pickUpTime': pickUpTime.value,
+        'collectionDate': dropOfDate.value,
+        'collectionTime': dropOfTime.value,
+        'month_count': month.value,
+        'week_count': week.value,
+        'day_count': days.value,
         'additional_driver': isAdditionalDriver.value ? '1' : '0', // optional
         'booster_seat': isChildBoosterSeat.value ? '1' : '0', // optional
-        'child_seat' : isChildSeat.value ? '1' : '0', // optional
-        'exit_permit' : isExitPermit.value ? '1' : '0', // optional
+        'child_seat': isChildSeat.value ? '1' : '0', // optional
+        'exit_permit': isExitPermit.value ? '1' : '0', // optional
         'payment_type': '1'
       };
 
@@ -260,9 +312,11 @@ class CustomerDetailController extends GetxController {
 
       if (response.statusCode == 201) {
         var responseData = jsonDecode(response.body);
+        createContractData = CreateContractData.fromJson(responseData); 
+        log(responseData.toString());  
+        stripePaymentCall(createContractData!);
         print('Success: ${responseData}');
         Get.snackbar("Success", "Detail Form Submitted..");
-        // Get.to(() => const SigninScreen());
       } else {
         print('Error: ${response.statusCode}');
         Get.snackbar("Failed", "Something went wrong..");
@@ -270,6 +324,36 @@ class CustomerDetailController extends GetxController {
     } catch (e) {
       print('Exception: $e');
       Get.snackbar("Failed", "Something went wrong..");
+    }
+  }
+
+  // Stripe Payment API Call
+  Future<void> stripePaymentCall(CreateContractData createContractData) async {
+
+    try {
+      var paymentBody = {
+        "price": createContractData.price.toString(),
+        "vehicle_name": createContractData.vehicleName ?? "",
+        "customer_email": createContractData.vehicleName ?? "",
+        "booking_id": createContractData.bookingId.toString(),
+        "payment_type": createContractData.paymentType ?? ""
+      }; 
+
+      var response = await http.post(
+        Uri.parse(ApiConstants.stripePaymentEndPoint),
+        body: paymentBody,
+      );
+
+      log(response.statusCode.toString());
+
+      if(response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        paymentRedirectUrl.value = responseData["redirectUrl"]; 
+        log(responseData["redirectUrl"]);
+      }
+
+    } catch (e) {
+      print(e);
     }
   }
 }

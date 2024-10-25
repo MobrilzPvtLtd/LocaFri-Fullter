@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../Controllers/mobility/mobility_controller.dart';
-import '../../Controllers/search/searchController.dart';
+import '../../Controllers/search/search_controller.dart';
 
 class SearchCars extends StatelessWidget {
   final MobilityController carListController = Get.put(MobilityController());

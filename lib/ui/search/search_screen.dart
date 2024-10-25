@@ -1,4 +1,4 @@
-import 'package:carapp/Controllers/search/searchController.dart';
+import 'package:carapp/Controllers/search/search_controller.dart';
 import 'package:carapp/ui/mobility/search_cars.dart';
 import 'package:carapp/ui/Profile/profile.dart';
 import 'package:flutter/material.dart';
