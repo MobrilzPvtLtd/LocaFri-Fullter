@@ -3,13 +3,22 @@ import 'package:carapp/ui/customerdetail/widget/other_request_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/additional_option_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/select_days_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/customer_datetime_field_widget.dart';
-import 'package:carapp/services/stripe_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Controllers/customerDetail/customer_detail_controller.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
-  const CustomerDetailScreen({super.key});
+  final String vehicleName;
+  final String dPrice;
+  final String wPrice;
+  final String mPrice;
+
+  const CustomerDetailScreen(
+      {super.key,
+      required this.vehicleName,
+      required this.dPrice,
+      required this.wPrice,
+      required this.mPrice});
   @override
   State<CustomerDetailScreen> createState() => _CustomerDetailScreenState();
 }
@@ -17,16 +26,20 @@ class CustomerDetailScreen extends StatefulWidget {
 class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
   final SearchCarsController availableCarsController =
       Get.put(SearchCarsController());
-  
+
   final CustomerDetailController controller =
-      Get.put(CustomerDetailController());
-  
+      Get.put(CustomerDetailController()); 
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-     var screenWidth = MediaQuery.of(context).size.width;
+    var screenWidth = MediaQuery.of(context).size.width;
+    controller.selectedPickUpLocation.value =
+        availableCarsController.pickUpLocationValue.value; 
+    controller.selectedDropOffLocation.value = availableCarsController.dropOffLocationValue.value; 
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -78,13 +91,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),  
+                  ),
                   validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
-              }
-              return null;
-            },
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your full name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -108,13 +121,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ), 
+                  ),
                   validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
-              }
-              return null;
-            },
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your full name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 15),
                 TextFormField(
@@ -136,19 +149,19 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ), 
+                  ),
                   validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
-              }
-              return null;
-            },
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your full name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 TextFormField(
-                  onChanged: (value){
+                  onChanged: (value) {
                     controller.updateEmail(value, context);
                   },
                   keyboardType: TextInputType.emailAddress,
@@ -164,21 +177,22 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
-                    suffix: GestureDetector(child: const Text("verify"), onTap: (){
-                      controller.verifyEmail(controller.email.value, context);
-                    },),
+                    suffix: GestureDetector(
+                      child: const Text("verify"),
+                      onTap: () {
+                        controller.verifyEmail(controller.email.value, context);
+                      },
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ), 
-                  
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-
                 Obx(
                   () => SwitchListTile(
                     title: const Text(
@@ -215,28 +229,28 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       Icons.arrow_outward,
                       color: Colors.amber,
                     ),
-                     value: availableCarsController
-                                    .pickUpLocationValue.value.isEmpty
-                                ? null
-                                : availableCarsController.pickUpLocationValue.value,
+                    value: availableCarsController
+                            .pickUpLocationValue.value.isEmpty
+                        ? null
+                        : availableCarsController.pickUpLocationValue.value,
                     onChanged: (String? newValue) {
                       controller.selectedPickUpLocation.value = newValue!;
                     },
-                   items: availableCarsController.locations
-                                .map<DropdownMenuItem<String>>((location) {
-                              return DropdownMenuItem<String>(
-                                value: location,
-                                child: Text(
-                                  location,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.045,
-                                    fontFamily: "UberMove",
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                    items: availableCarsController.locations
+                        .map<DropdownMenuItem<String>>((location) {
+                      return DropdownMenuItem<String>(
+                        value: location,
+                        child: Text(
+                          location,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.045,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }).toList(),
                     hint: const Text(
                       "Select Your Pickup Location",
                       style: TextStyle(
@@ -269,28 +283,27 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       color: Colors.amber,
                     ),
                     isDense: false,
-                    value: availableCarsController
-                                    .selectedValue1.value.isEmpty
-                                ? null
-                                : availableCarsController.selectedValue1.value,
+                    value: availableCarsController.dropOffLocationValue.value.isEmpty
+                        ? null
+                        : availableCarsController.dropOffLocationValue.value,
                     onChanged: (String? newValue) {
                       controller.selectedDropOffLocation.value = newValue!;
                     },
                     items: availableCarsController.locations
-                                .map<DropdownMenuItem<String>>((location) {
-                              return DropdownMenuItem<String>(
-                                value: location,
-                                child: Text(
-                                  location,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.045,
-                                    fontFamily: "UberMove",
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                        .map<DropdownMenuItem<String>>((location) {
+                      return DropdownMenuItem<String>(
+                        value: location,
+                        child: Text(
+                          location,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.045,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }).toList(),
                     hint: const Text(
                       "Select Your Drop Off Location",
                       style: TextStyle(
@@ -312,28 +325,33 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   height: height * 0.08,
                   width: width * 0.50,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(width: 1, color: Colors.black26)),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(width: 1, color: Colors.black26),
+                  ),
                   child: const Padding(
                     padding: EdgeInsets.all(25.0),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.black,
-
                     ),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      StripeService.instance.makePayment(context).whenComplete(() {
-                        controller.submitForm(context);
-                      });
-
+                        controller.submitForm(
+                          context,
+                          widget.vehicleName,
+                          widget.dPrice,
+                          widget.wPrice,
+                          widget.mPrice, 
+                          
+                        );
                     }
                   },
-
                   child: Container(
                     height: height * 0.06,
                     width: width * 0.90,

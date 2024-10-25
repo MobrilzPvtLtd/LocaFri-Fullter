@@ -10,7 +10,7 @@ class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
       builder: (BuildContext context) {
         return Container(
           height: screenHeight * 0.35,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
@@ -307,11 +307,11 @@ class _SearchScreenState extends State<SearchScreen> {
                               color: Colors.amber,
                             ),
                             value: availableCarsController
-                                    .selectedValue1.value.isEmpty
+                                    .dropOffLocationValue.value.isEmpty
                                 ? null
-                                : availableCarsController.selectedValue1.value,
+                                : availableCarsController.dropOffLocationValue.value,
                             onChanged: (String? newValue) {
-                              availableCarsController.selectedValue1.value =
+                              availableCarsController.dropOffLocationValue.value =
                                   newValue!;
                             },
                             items: availableCarsController.locations
@@ -369,7 +369,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ElevatedButton(
               onPressed: () {
                 availableCarsController.fetchAvailableCars(
-                    pickUpLoaction, _pickUpDate.toString());
+                    pickUpLoaction, _pickUpDate.toString(), _dropOffDate.toString());
                 if (!availableCarsController.isLoading.value &&
                     availableCarsController.availableCars.isNotEmpty) {
                   Get.to(() => SearchCars());

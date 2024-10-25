@@ -1,20 +1,71 @@
+import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
+import 'package:carapp/Controllers/search/searchController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CustomerDateTimeField extends StatefulWidget {
   const CustomerDateTimeField({super.key});
 
   @override
-  State<CustomerDateTimeField> createState() =>
-      _CustomerDateTimeFieldState();
+  State<CustomerDateTimeField> createState() => _CustomerDateTimeFieldState();
 }
 
 class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
-  DateTime _pickUpDate = DateTime(2024, 6, 7);
-  TimeOfDay _pickUpTime = const TimeOfDay(hour: 17, minute: 0);
-  DateTime _dropOffDate = DateTime(2024, 6, 14);
-  TimeOfDay _dropOffTime = const TimeOfDay(hour: 17, minute: 0);
+  final CustomerDetailController controller =
+      Get.put(CustomerDetailController());
+
+  final SearchCarsController searchCarsController =
+      Get.put(SearchCarsController());
+
+  DateTime? convertStringToDateTime(String dateString) {
+  try {
+    final format = DateFormat('dd/MM/yyyy');
+    return format.parse(dateString);
+  } catch (e) {
+    print('Error: $e');
+    return null;
+  }
+}
+
+  TimeOfDay? convertStringToTimeOfDay(String timeString) {
+  try {
+    timeString = timeString.trim().toLowerCase();
+    final isAm = timeString.endsWith('am');
+    final isPm = timeString.endsWith('pm');
+    
+    if (!isAm && !isPm) {
+      throw const FormatException('Invalid time format. Use HH:mm or hh:mm AM/PM.');
+    }
+
+    timeString = timeString.replaceAll('am', '').replaceAll('pm', '').trim();
+
+    final parts = timeString.split(':');
+    int hour = int.parse(parts[0]);
+    int minute = parts.length > 1 ? int.parse(parts[1]) : 0;
+
+    if (isPm && hour < 12) {
+      hour += 12; 
+    } else if (isAm && hour == 12) {
+      hour = 0;
+    }
+
+    if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+      throw RangeError('Hour must be between 0-23 and minutes must be between 0-59.');
+    }
+
+    return TimeOfDay(hour: hour, minute: minute);
+  } catch (e) {
+    print('Error: $e');
+    return null;
+  }
+}
+
+  DateTime _pickUpDate = DateTime.now();
+  TimeOfDay _pickUpTime = TimeOfDay.now();
+  DateTime _dropOffDate = DateTime.now();
+  TimeOfDay _dropOffTime = TimeOfDay.now();
   String? selectedValue;
 
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -51,7 +102,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
       builder: (BuildContext context) {
         return Container(
           height: screenHeight * 0.35,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
@@ -113,7 +164,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
       builder: (BuildContext context) {
         return Container(
           height: screenHeight * 0.35,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
@@ -167,6 +218,16 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    _pickUpDate = convertStringToDateTime(searchCarsController.pickUpDate.value) ?? DateTime.now();
+    _pickUpTime = convertStringToTimeOfDay(searchCarsController.pickUpTime.value) ?? TimeOfDay.now(); 
+    _dropOffDate = convertStringToDateTime(searchCarsController.dropOffDate.value) ?? DateTime.now(); 
+    _dropOffTime = convertStringToTimeOfDay(searchCarsController.dropOffTime.value) ?? TimeOfDay.now();  
+
+    controller.pickUpDate.value = _pickUpDate.toString(); 
+    controller.pickUpTime.value = _pickUpTime.toString(); 
+    controller.dropOfDate.value = _dropOffDate.toString(); 
+    controller.dropOfTime.value = _dropOffTime.toString();   
+
     return Column(
       children: [
         Row(

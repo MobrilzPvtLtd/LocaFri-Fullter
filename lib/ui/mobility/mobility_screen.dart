@@ -41,7 +41,6 @@ class MobilityScreen extends StatelessWidget {
           if (mobilityController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (mobilityController.carList.isEmpty) {
             return const Center(child: Text('No cars available'));
           }

@@ -8,8 +8,12 @@ class SearchCarsController extends GetxController {
   var locations = <String>[].obs;
   var availableCars = [].obs;
   var pickUpLocationValue = ''.obs;
-  var selectedValue1 = ''.obs;
+  var dropOffLocationValue = ''.obs;
   var isLoading = true.obs;
+  var pickUpDate = ''.obs;
+  var pickUpTime = ''.obs;
+  var dropOffDate = ''.obs;
+  var dropOffTime = ''.obs;
 
   @override
   void onInit() {
@@ -20,8 +24,7 @@ class SearchCarsController extends GetxController {
   void fetchLocations() async {
     try {
       isLoading(true);
-      var response = await http
-          .get(Uri.parse(ApiConstants.allCarsEndPoint));
+      var response = await http.get(Uri.parse(ApiConstants.allCarsEndPoint));
       if (response.statusCode == 200) {
         var data = json.decode(response.body)['data'];
 
@@ -37,21 +40,26 @@ class SearchCarsController extends GetxController {
     }
   }
 
-  Future<void> fetchAvailableCars(
-      String pickUpLocation, String pickUpDateAndTime) async {
+  Future<void> fetchAvailableCars(String pickUpLocation,
+      String pickUpDateAndTime, String dropOfDateAndTime) async {
     try {
       isLoading(true);
 
       var body = {
         "location": pickUpLocation,
-        "available_time": pickUpDateAndTime, 
+        "available_time": pickUpDateAndTime,
       };
+
+      pickUpDate.value = formatDate(pickUpDateAndTime); 
+      pickUpTime.value = formatTime(pickUpDateAndTime); 
+      dropOffDate.value = formatDate(dropOfDateAndTime); 
+      dropOffTime.value = formatTime(dropOfDateAndTime); 
 
       var response = await http.post(
         Uri.parse(ApiConstants.availableCarsEndPoint),
         body: body,
       );
-      
+
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         availableCars.assignAll(data['data']);
@@ -65,6 +73,27 @@ class SearchCarsController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  String formatDate(String dateTimeStr) {
+    DateTime dateTime = DateTime.parse(dateTimeStr); 
+
+    String formattedDate = '${dateTime.day.toString().padLeft(2, '0')}/'
+        '${dateTime.month.toString().padLeft(2, '0')}/'
+        '${dateTime.year}';
+    return formattedDate; 
+  }
+
+  String formatTime(String dateTimeStr) {
+    DateTime dateTime = DateTime.parse(dateTimeStr);
+
+    String formattedTime =
+        '${dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12}:'
+        '${dateTime.minute.toString().padLeft(2, '0')} '
+        '${dateTime.hour >= 12 ? 'PM' : 'AM'}';
+
+    return formattedTime; 
+
   }
 
 }

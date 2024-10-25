@@ -57,7 +57,6 @@ class CarDetailScreen extends StatelessWidget {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
-
           final carDetails = controller.carDetails;
 
           return SingleChildScrollView(
@@ -175,7 +174,7 @@ class CarDetailScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => const CustomerDetailScreen(),
+                                  builder: (_) => CustomerDetailScreen(vehicleName: carDetails['name'], dPrice: carDetails['Dprice'], mPrice: carDetails['mprice'], wPrice: carDetails['wprice'],),
                                 ),
                               );
                             },

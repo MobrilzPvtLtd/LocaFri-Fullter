@@ -16,6 +16,10 @@ class CustomerDetailController extends GetxController {
   var selectedDropOffLocation = ''.obs;
   var otp = ''.obs;
   var verifyOtpStatus = false.obs;
+  var pickUpDate = ''.obs; 
+  var pickUpTime = ''.obs; 
+  var dropOfDate = ''.obs; 
+  var dropOfTime = ''.obs; 
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
@@ -41,6 +45,22 @@ class CustomerDetailController extends GetxController {
 
   void updateOtp(String value) {
     otp.value = value;
+  }
+
+  void updatePickUpDate(String value) {
+    pickUpDate.value = value;
+  }
+
+  void updatePickUpTime(String value) {
+    pickUpTime.value = value;
+  }
+
+  void updateDropOfDate(String value) {
+    dropOfDate.value = value;
+  }
+
+  void updateDropOfTime(String value) {
+    dropOfTime.value = value;
   }
 
   void toggleAdditionalOption(bool value) {
@@ -190,18 +210,43 @@ class CustomerDetailController extends GetxController {
     return false;
   }
 
-  Future<void> submitForm(BuildContext context) async {
+  Future<void> submitForm(
+    BuildContext context,
+    String vehicleName,
+    String dprice,
+    String wprice,
+    String mprice,
+  ) async {
     try {
       var formData = {
         'first_name': firstName.value,
         'last_name': lastName.value,
         'phone': phoneNumber.value,
-        'email': email.value,
+        'email': email.value, 
+        'address_first' : '', // optional  
+        'address_last' : '', // optional
+        'vehicle_name': vehicleName,
+        'Dprice': dprice,
+        'wprice': wprice,
+        'mprice': mprice,
         'pickUpLocation': selectedPickUpLocation.value,
-        'dropOffLocation': selectedDropOffLocation.value,
-        'additional_driver': isAdditionalDriver.value ? '1' : '0',
-        'booster_seat': isChildBoosterSeat.value ? '1' : '0',
+        'dropOffLocation': selectedDropOffLocation.value, 
+        'pickUpDate' : pickUpDate.value, 
+        'pickUpTime' : pickUpTime.value,  
+        'collectionDate' : dropOfDate.value, 
+        'collectionTime' : dropOfTime.value, 
+        'month_count' : '1', 
+        'week_count' : '2', 
+        'day_count' : '4', 
+        'additional_driver': isAdditionalDriver.value ? '1' : '0', // optional
+        'booster_seat': isChildBoosterSeat.value ? '1' : '0', // optional
+        'child_seat' : isChildSeat.value ? '1' : '0', // optional
+        'exit_permit' : isExitPermit.value ? '1' : '0', // optional
+        'payment_type': '1'
       };
+
+      log(formData.toString());
+
       var response = await http.post(
         Uri.parse(ApiConstants.createContractEndPoint),
         headers: {
@@ -209,17 +254,22 @@ class CustomerDetailController extends GetxController {
         },
         body: formData,
       );
-      if (response.statusCode == 200) {
+
+      log(response.statusCode.toString());
+      log(response.body.toString());
+
+      if (response.statusCode == 201) {
         var responseData = jsonDecode(response.body);
-
         print('Success: ${responseData}');
-
+        Get.snackbar("Success", "Detail Form Submitted..");
         // Get.to(() => const SigninScreen());
       } else {
         print('Error: ${response.statusCode}');
+        Get.snackbar("Failed", "Something went wrong..");
       }
     } catch (e) {
       print('Exception: $e');
+      Get.snackbar("Failed", "Something went wrong..");
     }
   }
 }
