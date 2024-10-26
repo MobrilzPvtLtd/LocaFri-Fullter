@@ -27,7 +27,7 @@ class CustomerDetailController extends GetxController {
   var days = '0'.obs;
   var paymentRedirectUrl = ''.obs;
   CreateContractData? createContractData;
-  PaymentData? paymentData; 
+  PaymentData? paymentData;
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
@@ -253,9 +253,15 @@ class CustomerDetailController extends GetxController {
     currentDate = pickupDate;
     weeks = totalDays ~/ 7;
 
+    int day = totalDays - (weeks * 7) - (months * 30);
+
+    if (day < 0) {
+      day = 0;
+    }
+
     updateMonth(months.toString());
     updateWeek(weeks.toString());
-    updateDays(days.toString());
+    updateDays(totalDays.toString());
 
     return {
       'months': months,
@@ -292,10 +298,10 @@ class CustomerDetailController extends GetxController {
         'month_count': month.value,
         'week_count': week.value,
         'day_count': days.value,
-        'additional_driver': isAdditionalDriver.value ? '1' : '0', 
+        'additional_driver': isAdditionalDriver.value ? '1' : '0',
         'booster_seat': isChildBoosterSeat.value ? '1' : '0',
-        'child_seat': isChildSeat.value ? '1' : '0', 
-        'exit_permit': isExitPermit.value ? '1' : '0', 
+        'child_seat': isChildSeat.value ? '1' : '0',
+        'exit_permit': isExitPermit.value ? '1' : '0',
         'payment_type': '1'
       };
 
@@ -314,8 +320,8 @@ class CustomerDetailController extends GetxController {
 
       if (response.statusCode == 201) {
         var responseData = jsonDecode(response.body);
-        createContractData = CreateContractData.fromJson(responseData); 
-        log(responseData.toString());  
+        createContractData = CreateContractData.fromJson(responseData);
+        log(responseData.toString());
         await stripePaymentCall(createContractData!);
         print('Success: ${responseData}');
         return true;
@@ -333,7 +339,6 @@ class CustomerDetailController extends GetxController {
 
   // Stripe Payment API Call
   Future<void> stripePaymentCall(CreateContractData createContractData) async {
-
     try {
       var paymentBody = {
         "price": createContractData.price.toString(),
@@ -341,7 +346,7 @@ class CustomerDetailController extends GetxController {
         "customer_email": createContractData.customerEmail ?? "",
         "booking_id": createContractData.bookingId.toString(),
         "payment_type": createContractData.paymentType ?? ""
-      }; 
+      };
 
       var response = await http.post(
         Uri.parse(ApiConstants.stripePaymentEndPoint),
@@ -350,12 +355,11 @@ class CustomerDetailController extends GetxController {
 
       log(response.statusCode.toString());
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
-        paymentRedirectUrl.value = responseData["redirectUrl"]; 
+        paymentRedirectUrl.value = responseData["redirectUrl"];
         log(responseData["redirectUrl"]);
       }
-
     } catch (e) {
       print(e);
     }
@@ -363,30 +367,32 @@ class CustomerDetailController extends GetxController {
 
   Future<void> fetchStripePaymentDetails(String url) async {
     try {
-      var response = await http.get(Uri.parse(url)); 
+      var response = await http.get(Uri.parse(url));
 
-    if(response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-      paymentData = PaymentData.fromJson(responseData);
-      if(paymentData!.data!.status == "complete"){
-        showSuceessDialogBox(Icons.check, Colors.green, "Payment Done \n Sucessfully.."); 
-      } 
-      else {
-        showSuceessDialogBox(Icons.close, Colors.red, "Payment Pending.."); 
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        paymentData = PaymentData.fromJson(responseData);
+        if (paymentData!.data!.status == "complete") {
+          showSuceessDialogBox(
+              Icons.check, Colors.green, "Payment Done \n Sucessfully..");
+        } else {
+          showSuceessDialogBox(Icons.close, Colors.red, "Payment Pending..");
+        }
+      } else {
+        showSuceessDialogBox(
+            Icons.close, Colors.red, "Something went wrong \n pls try again");
       }
-    }else{
-      showSuceessDialogBox(Icons.close, Colors.red, "Something went wrong \n pls try again"); 
-    }
     } catch (e) {
       print("e");
-      showSuceessDialogBox(Icons.close, Colors.red, "Something went wrong \n pls try again"); 
+      showSuceessDialogBox(
+          Icons.close, Colors.red, "Something went wrong \n pls try again");
     }
   }
 
   void showSuceessDialogBox(IconData icon, Color iconColor, String message) {
-      Get.dialog(
-        Center(
-          child: Container(
+    Get.dialog(
+      Center(
+        child: Container(
             width: 150.0,
             height: 150.0,
             decoration: BoxDecoration(
@@ -397,20 +403,27 @@ class CustomerDetailController extends GetxController {
               padding: const EdgeInsets.all(10),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, 
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(icon, color: iconColor, size: 40,), 
-                    const SizedBox(height: 10,), 
-                    Text(message, style: const TextStyle(fontSize: 15, color: Colors.black),), 
+                    Icon(
+                      icon,
+                      color: iconColor,
+                      size: 40,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      message,
+                      style: const TextStyle(fontSize: 15, color: Colors.black),
+                    ),
                   ],
                 ),
               ),
-            )
-          ),
-        ),
-        barrierDismissible: true,
-      ); 
-    }
-
+            )),
+      ),
+      barrierDismissible: true,
+    );
+  }
 }

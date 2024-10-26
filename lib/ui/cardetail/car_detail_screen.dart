@@ -421,8 +421,7 @@ class CarDetailScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.08,
-                    width: width * .90,
+                    height: height * 0.06,
                     child: carDetails["features"] != null &&
                             carDetails["features"].isNotEmpty
                         ? ListView.builder(
@@ -431,7 +430,7 @@ class CarDetailScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               var details = carDetails["features"];
                               return Container(
-                                margin: const EdgeInsets.all(10),
+                                margin: EdgeInsets.only(right: width * 0.02),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
                                   color: Colors.white60,

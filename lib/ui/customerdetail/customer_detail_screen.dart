@@ -87,6 +87,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         searchCarController.pickUpLocationValue.value;
     controller.selectedDropOffLocation.value =
         searchCarController.dropOffLocationValue.value;
+    controller.calculateDateDifference(DateTime.now(), DateTime.now());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -248,48 +249,53 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
-                  height: 55,
-                  width: width * 0.90,
-                  child: DropdownButton<String>(
-                    isDense: false,
-                    icon: const Icon(
-                      Icons.arrow_outward,
-                      color: Colors.amber,
-                    ),
-                    value: searchCarController.pickUpLocationValue.value.isEmpty
-                        ? null
-                        : searchCarController.pickUpLocationValue.value,
-                    onChanged: (String? newValue) {
-                      controller.selectedPickUpLocation.value = newValue!;
-                    },
-                    items: searchCarController.locations
-                        .map<DropdownMenuItem<String>>((location) {
-                      return DropdownMenuItem<String>(
-                        value: location,
-                        child: Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
-                            fontWeight: FontWeight.w500,
+                Obx(
+                  () => SizedBox(
+                    height: 55,
+                    width: width * 0.90,
+                    child: DropdownButton<String>(
+                      isDense: false,
+                      icon: const Icon(
+                        Icons.arrow_outward,
+                        color: Colors.amber,
+                      ),
+                      value:
+                          searchCarController.pickUpLocationValue.value.isEmpty
+                              ? null
+                              : searchCarController.pickUpLocationValue.value,
+                      onChanged: (String? newValue) {
+                        controller.selectedPickUpLocation.value = newValue!;
+                        searchCarController.pickUpLocationValue.value =
+                            newValue;
+                      },
+                      items: searchCarController.locations
+                          .map<DropdownMenuItem<String>>((location) {
+                        return DropdownMenuItem<String>(
+                          value: location,
+                          child: Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.045,
+                              fontFamily: "UberMove",
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Select Your Pickup Location",
-                      style: TextStyle(
+                        );
+                      }).toList(),
+                      hint: const Text(
+                        "Select Your Pickup Location",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: "UberMove"),
+                      ),
+                      isExpanded: true,
+                      style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontFamily: "UberMove"),
                     ),
-                    isExpanded: true,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: "UberMove"),
                   ),
                 ),
                 const Text(
@@ -301,49 +307,53 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
-                  height: 55,
-                  width: width * 0.90,
-                  child: DropdownButton<String>(
-                    icon: const Icon(
-                      Icons.arrow_outward,
-                      color: Colors.amber,
-                    ),
-                    isDense: false,
-                    value:
-                        searchCarController.dropOffLocationValue.value.isEmpty
-                            ? null
-                            : searchCarController.dropOffLocationValue.value,
-                    onChanged: (String? newValue) {
-                      controller.selectedDropOffLocation.value = newValue!;
-                    },
-                    items: searchCarController.locations
-                        .map<DropdownMenuItem<String>>((location) {
-                      return DropdownMenuItem<String>(
-                        value: location,
-                        child: Text(
-                          location,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.045,
-                            fontFamily: "UberMove",
-                            fontWeight: FontWeight.w500,
+                Obx(
+                  () => SizedBox(
+                    height: 55,
+                    width: width * 0.90,
+                    child: DropdownButton<String>(
+                      icon: const Icon(
+                        Icons.arrow_outward,
+                        color: Colors.amber,
+                      ),
+                      isDense: false,
+                      value:
+                          searchCarController.dropOffLocationValue.value.isEmpty
+                              ? null
+                              : searchCarController.dropOffLocationValue.value,
+                      onChanged: (String? newValue) {
+                        controller.selectedDropOffLocation.value = newValue!;
+                        searchCarController.dropOffLocationValue.value =
+                            newValue;
+                      },
+                      items: searchCarController.locations
+                          .map<DropdownMenuItem<String>>((location) {
+                        return DropdownMenuItem<String>(
+                          value: location,
+                          child: Text(
+                            location,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.045,
+                              fontFamily: "UberMove",
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Select Your Drop Off Location",
-                      style: TextStyle(
+                        );
+                      }).toList(),
+                      hint: const Text(
+                        "Select Your Drop Off Location",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: "UberMove"),
+                      ),
+                      isExpanded: true,
+                      style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontFamily: "UberMove"),
                     ),
-                    isExpanded: true,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: "UberMove"),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -518,12 +528,19 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         widget.dPrice,
                         widget.wPrice,
                         widget.mPrice,
-                      ).then((value) {
-                        if(value) {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen(paymentUrl: controller.paymentRedirectUrl.value))); 
-                        }
-                        else{
-                          Get.snackbar("Failed", "Something went wrong"); 
+                      )
+                          .then((value) {
+                        if (value) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(
+                                  paymentUrl:
+                                      controller.paymentRedirectUrl.value),
+                            ),
+                          );
+                        } else {
+                          Get.snackbar("Failed", "Something went wrong");
                         }
                       });
                     }

@@ -55,9 +55,8 @@ class SearchCarsController extends GetxController {
       dropOffDate.value = formatDate(dropOfDateAndTime); 
       dropOffTime.value = formatTime(dropOfDateAndTime); 
 
-      var response = await http.post(
-        Uri.parse(ApiConstants.availableCarsEndPoint),
-        body: body,
+      var response = await http.get(
+        Uri.parse(ApiConstants.allCarsEndPoint),
       );
 
       if (response.statusCode == 200) {
