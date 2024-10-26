@@ -80,9 +80,13 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
         if (isPickUp) {
           _pickUpDate = selectedDate!;
           _pickUpTime = TimeOfDay.fromDateTime(selectedDate!);
+          controller.pickUpDate.value = _pickUpDate.toString(); 
+          controller.pickUpTime.value = _pickUpTime.toString();
         } else {
           _dropOffDate = selectedDate!;
           _dropOffTime = TimeOfDay.fromDateTime(selectedDate!);
+          controller.dropOfDate.value = _dropOffDate.toString(); 
+          controller.dropOfTime.value = _dropOffTime.toString();
         }
       });
     }
@@ -147,9 +151,13 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
         if (isPickUp) {
           _pickUpDate = updatedDateTime;
           _pickUpTime = TimeOfDay.fromDateTime(updatedDateTime);
+          controller.pickUpDate.value = _pickUpDate.toString(); 
+          controller.pickUpTime.value = _pickUpTime.toString();
         } else {
           _dropOffDate = updatedDateTime;
           _dropOffTime = TimeOfDay.fromDateTime(updatedDateTime);
+          controller.dropOfDate.value = _dropOffDate.toString(); 
+          controller.dropOfTime.value = _dropOffTime.toString();
         }
       });
     }

@@ -1,4 +1,5 @@
 import 'package:carapp/Controllers/search/search_controller.dart';
+import 'package:carapp/ui/customerdetail/payment_screen.dart';
 import 'package:carapp/ui/customerdetail/widget/other_request_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/additional_option_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/customer_datetime_field_widget.dart';
@@ -510,14 +511,20 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      controller.submitForm(
+                      controller
+                          .submitForm(
                         context,
                         widget.vehicleName,
                         widget.dPrice,
                         widget.wPrice,
                         widget.mPrice,
-                      ).whenComplete(() {
-                        
+                      ).then((value) {
+                        if(value) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen(paymentUrl: controller.paymentRedirectUrl.value))); 
+                        }
+                        else{
+                          Get.snackbar("Failed", "Something went wrong"); 
+                        }
                       });
                     }
                   },
