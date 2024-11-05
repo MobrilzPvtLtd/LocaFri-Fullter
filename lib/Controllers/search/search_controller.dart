@@ -14,6 +14,8 @@ class SearchCarsController extends GetxController {
   var pickUpTime = ''.obs;
   var dropOffDate = ''.obs;
   var dropOffTime = ''.obs;
+  var pickUpDateAndTime = DateTime.now().obs;
+  var dropOfDateAndTime = DateTime.now().obs;
 
   @override
   void onInit() {

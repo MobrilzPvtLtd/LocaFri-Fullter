@@ -1,3 +1,4 @@
+import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
 import 'package:carapp/Controllers/search/search_controller.dart';
 import 'package:carapp/ui/mobility/search_cars.dart';
 import 'package:carapp/ui/Profile/profile.dart';
@@ -17,6 +18,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   final SearchCarsController availableCarsController =
       Get.put(SearchCarsController());
+  final CustomerDetailController customerDetailController =
+      Get.put(CustomerDetailController());
   
   String pickUpLoaction = "";
   String pickUpDate = ""; 
@@ -368,6 +371,12 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
               onPressed: () {
+                customerDetailController.pickUpDate.value = _pickUpDate;
+                customerDetailController.dropOffDate.value = _dropOffDate;
+                customerDetailController.pickUpTime.value = _pickUpTime;
+                customerDetailController.dropOffTime.value = _dropOffTime;
+                availableCarsController.pickUpDateAndTime.value = _pickUpDate;
+                availableCarsController.dropOfDateAndTime.value = _dropOffDate;
                 availableCarsController.fetchAvailableCars(
                     pickUpLoaction, _pickUpDate.toString(), _dropOffDate.toString());
                 if (!availableCarsController.isLoading.value &&

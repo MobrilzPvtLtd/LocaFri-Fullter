@@ -18,22 +18,26 @@ class CustomerDetailController extends GetxController {
   var selectedDropOffLocation = ''.obs;
   var otp = ''.obs;
   var verifyOtpStatus = false.obs;
-  var pickUpDate = ''.obs;
-  var pickUpTime = ''.obs;
   var dropOfDate = ''.obs;
   var dropOfTime = ''.obs;
   var month = '0'.obs;
   var week = '0'.obs;
   var days = '0'.obs;
+  var totalPrice = Rx<TextEditingController>(TextEditingController());
   var paymentRedirectUrl = ''.obs;
   CreateContractData? createContractData;
   PaymentData? paymentData;
+  RxString endPrice = "0".obs;
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
   var isChildBoosterSeat = false.obs;
   var isChildSeat = false.obs;
   var isExitPermit = false.obs;
+  var pickUpDate = DateTime.now().obs;
+  var pickUpTime = TimeOfDay.now().obs;
+  var dropOffDate = DateTime.now().obs;
+  var dropOffTime = TimeOfDay.now().obs;
 
   void updateFirstName(String value) {
     firstName.value = value;
@@ -53,14 +57,6 @@ class CustomerDetailController extends GetxController {
 
   void updateOtp(String value) {
     otp.value = value;
-  }
-
-  void updatePickUpDate(String value) {
-    pickUpDate.value = value;
-  }
-
-  void updatePickUpTime(String value) {
-    pickUpTime.value = value;
   }
 
   void updateDropOfDate(String value) {
@@ -89,18 +85,22 @@ class CustomerDetailController extends GetxController {
 
   void toggleAdditionalDriver(bool value) {
     isAdditionalDriver.value = value;
+    updateTotalPrice();
   }
 
   void toggleChildBoosterSeat(bool value) {
     isChildBoosterSeat.value = value;
+    updateTotalPrice();
   }
 
   void toggleChildSeat(bool value) {
     isChildSeat.value = value;
+    updateTotalPrice();
   }
 
   void toggleExitPermit(bool value) {
     isExitPermit.value = value;
+    updateTotalPrice();
   }
 
   void updateLoading(bool value) {
@@ -230,43 +230,87 @@ class CustomerDetailController extends GetxController {
     return false;
   }
 
+  double calculateAdditionalOptionPrice() {
+    final int daysCount = int.tryParse(days.value) ?? 0;
+    final int weeksCount = int.tryParse(week.value) ?? 0;
+    final int monthsCount = int.tryParse(month.value) ?? 0;
+
+    double price = 0.0;
+
+    if (isAdditionalDriver.value) {
+      price += 20.0;
+    }
+
+    if (isChildBoosterSeat.value) {
+      price += (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    }
+
+    if (isChildSeat.value) {
+      price += (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    }
+
+    if (isExitPermit.value) {
+      price += 149.0;
+    }
+
+    return price;
+  }
+
+  void updateTotalPrice() {
+    double total = calculateAdditionalOptionPrice();
+    endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+  }
+
+  calculateTotalPrice(
+    String dprice,
+    String wprice,
+    String mprice,
+  ) {
+    double price =
+        (double.parse(days.toString()) * double.parse(dprice.toString())) +
+            (double.parse(week.toString()) * double.parse(wprice.toString())) +
+            (double.parse(month.toString()) * double.parse(month.toString()));
+    totalPrice.value.text = price.toString();
+    endPrice.value = price.toStringAsFixed(2);
+  }
+
   Map<String, int> calculateDateDifference(
-      DateTime pickupDate, DateTime dropOffDate) {
+    DateTime pickupDate,
+    DateTime dropOffDate,
+    String dprice,
+    String wprice,
+    String mprice,
+  ) {
     if (pickupDate.isAfter(dropOffDate)) {
       throw ArgumentError("Pickup date must be before drop-off date.");
     }
 
-    int totalDays = dropOffDate.difference(pickupDate).inDays;
-
     int months = 0;
     int weeks = 0;
+    int days = 0;
 
-    DateTime currentDate = pickupDate;
-
-    while (currentDate.year < dropOffDate.year ||
-        (currentDate.year == dropOffDate.year &&
-            currentDate.month < dropOffDate.month)) {
+    while (pickupDate.year < dropOffDate.year ||
+        (pickupDate.year == dropOffDate.year &&
+            pickupDate.month < dropOffDate.month)) {
       months++;
-      currentDate = DateTime(currentDate.year, currentDate.month + 1, 1);
+      pickupDate = DateTime(pickupDate.year, pickupDate.month + 1, 1);
     }
 
-    currentDate = pickupDate;
-    weeks = totalDays ~/ 7;
+    days = dropOffDate.difference(pickupDate).inDays;
+    weeks = days ~/ 7;
+    days = days % 7;
 
-    int day = totalDays - (weeks * 7) - (months * 30);
-
-    if (day < 0) {
-      day = 0;
-    }
+    log("The days are : $days, weeks are $weeks and the months are $months");
 
     updateMonth(months.toString());
     updateWeek(weeks.toString());
-    updateDays(totalDays.toString());
+    updateDays(days.toString());
+    calculateTotalPrice(dprice, wprice, mprice);
 
     return {
       'months': months,
       'weeks': weeks,
-      'days': totalDays,
+      'days': days,
     };
   }
 

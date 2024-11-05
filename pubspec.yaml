@@ -64,6 +64,11 @@ flutter_icons:
     image_path: "assets/logo/appicon.png"
     adaptive_icon_background : "#ffffff" 
     adaptive_icon_foreground: "assets/logo/fianl-2.png"
+
+flutter_native_splash:
+  color: "#ffffff"  
+  image: assets/logo/splashscreen.png  
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

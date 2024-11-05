@@ -48,6 +48,19 @@ class Profile extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              Buttonprofile(
+                icon: Icons.article_rounded,
+                icon2: Icons.arrow_right,
+                text: "Key-Box",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const KeyBox(),
+                    ),
+                  );
+                },
+              ),
               const Buttonprofile(
                   icon: Icons.article_rounded,
                   icon2: Icons.arrow_right,
@@ -56,28 +69,17 @@ class Profile extends StatelessWidget {
                   icon: Icons.article_rounded,
                   icon2: Icons.arrow_right,
                   text: "Privacy & Policy"),
-              const Buttonprofile(
-                  icon: Icons.settings_applications_outlined,
-                  icon2: Icons.arrow_right,
-                  text: "Maintenance"),
-              Buttonprofile(
-                icon: Icons.article_rounded,
-                icon2: Icons.arrow_right,
-                text: "Key-Box",
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const KeyBox()));
-                },
-              ),
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
                 text: "Contact us",
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ContactUsScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ContactUsScreen(),
+                    ),
+                  );
                 },
               ),
             ],

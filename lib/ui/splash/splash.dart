@@ -8,21 +8,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScrenState extends State<SplashScreen> {
+  
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         child: Center(
-            child: Image.asset(
-          "assets/logo/Final-1.png",
-          fit: BoxFit.cover,
-        )),
+          child: Image.asset(
+            "assets/logo/Final-1.png",
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

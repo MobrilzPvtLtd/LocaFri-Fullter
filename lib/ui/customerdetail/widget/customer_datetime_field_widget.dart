@@ -5,30 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class CustomerDateTimeField extends StatefulWidget {
-  const CustomerDateTimeField({super.key});
+class CustomerDateTimeField extends StatelessWidget {
+  final String dPrice;
+  final String wPrice;
+  final String mPrice;
+  CustomerDateTimeField({super.key, required this.dPrice, required this.wPrice, required this.mPrice});
 
-  @override
-  State<CustomerDateTimeField> createState() => _CustomerDateTimeFieldState();
-}
+  final CustomerDetailController controller = Get.put(CustomerDetailController());
+  final SearchCarsController searchCarsController = Get.put(SearchCarsController());
 
-class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
-  final CustomerDetailController controller =
-      Get.put(CustomerDetailController());
-
-  final SearchCarsController searchCarsController =
-      Get.put(SearchCarsController());
-
-  DateTime _pickUpDate = DateTime.now();
-  TimeOfDay _pickUpTime = TimeOfDay.now();
-  DateTime _dropOffDate = DateTime.now();
-  TimeOfDay _dropOffTime = TimeOfDay.now();
-  String? selectedValue;
-
-  Future<void> _cupertinoDateTimePicker(
-      BuildContext context, bool isPickUp) async {
+  Future<void> _cupertinoDateTimePicker(BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
-    DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
+    DateTime initialDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
 
     if (initialDateTime.isBefore(now)) {
       initialDateTime = now;
@@ -60,10 +48,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
               CupertinoButton(
                 child: const Text(
                   'OK',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: "UberMove"),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -76,32 +61,21 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
     );
 
     if (selectedDate != null) {
-      setState(() {
-        if (isPickUp) {
-          _pickUpDate = selectedDate!;
-          _pickUpTime = TimeOfDay.fromDateTime(selectedDate!);
-          controller.pickUpDate.value = _pickUpDate.toString(); 
-          controller.pickUpTime.value = _pickUpTime.toString();
-          controller.calculateDateDifference(_pickUpDate, _dropOffDate);
-        } else {
-          _dropOffDate = selectedDate!;
-          _dropOffTime = TimeOfDay.fromDateTime(selectedDate!);
-          controller.dropOfDate.value = _dropOffDate.toString(); 
-          controller.dropOfTime.value = _dropOffTime.toString();
-          controller.calculateDateDifference(_pickUpDate, _dropOffDate);
-        }
-      });
+      if (isPickUp) {
+        controller.pickUpDate.value = selectedDate!;
+        controller.pickUpTime.value = TimeOfDay.fromDateTime(selectedDate!);
+      } else {
+        controller.dropOffDate.value = selectedDate!;
+        controller.dropOffTime.value = TimeOfDay.fromDateTime(selectedDate!);
+      }
+      controller.calculateDateDifference(controller.pickUpDate.value, controller.dropOffDate.value, dPrice, wPrice, mPrice);
     }
   }
 
   Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
-    DateTime initialDateTime = isPickUp ? _pickUpDate : _dropOffDate;
+    DateTime initialDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
 
-    Duration initialTimerDuration = Duration(
-      hours: initialDateTime.hour,
-      minutes: initialDateTime.minute,
-    );
-
+    Duration initialTimerDuration = Duration(hours: initialDateTime.hour, minutes: initialDateTime.minute);
     Duration? selectedDuration;
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -126,10 +100,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
               CupertinoButton(
                 child: const Text(
                   'OK',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: "UberMove"),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -142,34 +113,27 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
     );
 
     if (selectedDuration != null) {
-      setState(() {
-        DateTime updatedDateTime = isPickUp ? _pickUpDate : _dropOffDate;
-        updatedDateTime = DateTime(
-          updatedDateTime.year,
-          updatedDateTime.month,
-          updatedDateTime.day,
-        ).add(selectedDuration!);
+      DateTime updatedDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+      updatedDateTime = DateTime(
+        updatedDateTime.year,
+        updatedDateTime.month,
+        updatedDateTime.day,
+      ).add(selectedDuration!);
 
-        if (isPickUp) {
-          _pickUpDate = updatedDateTime;
-          _pickUpTime = TimeOfDay.fromDateTime(updatedDateTime);
-          controller.pickUpDate.value = _pickUpDate.toString(); 
-          controller.pickUpTime.value = _pickUpTime.toString();
-          controller.calculateDateDifference(_pickUpDate, _dropOffDate);
-        } else {
-          _dropOffDate = updatedDateTime;
-          _dropOffTime = TimeOfDay.fromDateTime(updatedDateTime);
-          controller.dropOfDate.value = _dropOffDate.toString(); 
-          controller.dropOfTime.value = _dropOffTime.toString();
-          controller.calculateDateDifference(_pickUpDate, _dropOffDate);
-        }
-      });
+      if (isPickUp) {
+        controller.pickUpDate.value = updatedDateTime;
+        controller.pickUpTime.value = TimeOfDay.fromDateTime(updatedDateTime);
+      } else {
+        controller.dropOffDate.value = updatedDateTime;
+        controller.dropOffTime.value = TimeOfDay.fromDateTime(updatedDateTime);
+      }
+      controller.calculateDateDifference(controller.pickUpDate.value, controller.dropOffDate.value, dPrice, wPrice, mPrice);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;  
+    final width = MediaQuery.of(context).size.width;
 
     return Column(
       children: [
@@ -179,20 +143,11 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
           children: [
             SizedBox(
               width: width * 0.90,
-              child: _buildDateTimePicker(
-                context,
-                'Pick up day',
-                _pickUpDate,
-                'Pick up hour',
-                _pickUpTime,
-                true,
-              ),
+              child: _buildDateTimePicker(context, 'Pick up day', true),
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         SizedBox(
           width: width,
           child: Row(
@@ -201,14 +156,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
             children: [
               SizedBox(
                 width: width * 0.90,
-                child: _buildDateTimePicker(
-                  context,
-                  'Drop off day',
-                  _dropOffDate,
-                  'Drop off hour',
-                  _dropOffTime,
-                  false,
-                ),
+                child: _buildDateTimePicker(context, 'Drop off day', false),
               ),
             ],
           ),
@@ -217,14 +165,7 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
     );
   }
 
-  Widget _buildDateTimePicker(
-    BuildContext context,
-    String dateLabel,
-    DateTime dateValue,
-    String timeLabel,
-    TimeOfDay timeValue,
-    bool isPickUp,
-  ) {
+  Widget _buildDateTimePicker(BuildContext context, String dateLabel, bool isPickUp) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
 
@@ -235,20 +176,14 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
             Expanded(
               child: Text(
                 dateLabel,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: screenWidth * 0.04,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
               ),
             ),
             SizedBox(width: screenWidth * 0.02),
             Expanded(
               child: Text(
-                timeLabel,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: screenWidth * 0.04,
-                ),
+                isPickUp ? 'Pick up hour' : 'Drop off hour',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
               ),
             ),
           ],
@@ -258,36 +193,42 @@ class _CustomerDateTimeFieldState extends State<CustomerDateTimeField> {
             Expanded(
               child: GestureDetector(
                 onTap: () => _cupertinoDateTimePicker(context, isPickUp),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    DateFormat('dd/MM/yyyy').format(dateValue),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: screenWidth * 0.04),
-                  ),
-                ),
+                child: Obx(() {
+                  DateTime dateValue = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+                  return Container(
+                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      DateFormat('dd/MM/yyyy').format(dateValue),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: screenWidth * 0.04),
+                    ),
+                  );
+                }),
               ),
             ),
             SizedBox(width: screenWidth * 0.02),
             Expanded(
               child: GestureDetector(
                 onTap: () => _cupertinoTimePicker(context, isPickUp),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    timeValue.format(context),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: screenWidth * 0.04),
-                  ),
-                ),
+                child: Obx(() {
+                  TimeOfDay timeValue = isPickUp ? controller.pickUpTime.value : controller.dropOffTime.value;
+                  return Container(
+                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      timeValue.format(context),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: screenWidth * 0.04),
+                    ),
+                  );
+                }),
               ),
             ),
           ],

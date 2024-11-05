@@ -87,7 +87,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         searchCarController.pickUpLocationValue.value;
     controller.selectedDropOffLocation.value =
         searchCarController.dropOffLocationValue.value;
-    controller.calculateDateDifference(DateTime.now(), DateTime.now());
+    controller.calculateDateDifference(searchCarController.pickUpDateAndTime.value, searchCarController.dropOfDateAndTime.value, widget.dPrice, widget.wPrice, widget.mPrice);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -357,7 +357,11 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const CustomerDateTimeField(),
+                CustomerDateTimeField(
+                  dPrice: widget.dPrice,
+                  wPrice: widget.wPrice,
+                  mPrice: widget.mPrice,
+                ),
                 const SizedBox(height: 10),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -499,22 +503,48 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     : Container()),
                 const SizedBox(
                   height: 10,
-                ),
-                Container(
-                  height: height * 0.08,
-                  width: width * 0.50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(width: 1, color: Colors.black26),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(25.0),
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.black,
+                ), 
+                Obx(() {
+                  return Container(
+                    height: height * 0.18,
+                    width: width * 0.70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(width: 1, color: Colors.black26),
                     ),
-                  ),
-                ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Total Price:-",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          const SizedBox(
+                              height: 4),
+                          TextField(
+                            enabled: false,
+                            controller: TextEditingController(text: controller.endPrice.value),
+                            keyboardType: TextInputType.number,
+                            cursorColor:
+                                Colors.black,
+                            textAlign: TextAlign
+                                .center,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Amount',
+                            ),
+                          ),      
+                        ],
+                      ),
+                    ),
+                  );
+                }),
                 const SizedBox(
                   height: 20,
                 ),
@@ -577,22 +607,74 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
       {required CustomerDetailController controller}) {
     return Column(
       children: [
-        Obx(() => AdditionalOptionsWidget(
-            switchvalue: controller.isAdditionalDriver.value,
-            text: "Additional Driver",
-            onChanged: controller.toggleAdditionalDriver)),
-        Obx(() => AdditionalOptionsWidget(
-            switchvalue: controller.isChildBoosterSeat.value,
-            text: "Child Booster Seat",
-            onChanged: controller.toggleChildBoosterSeat)),
-        Obx(() => AdditionalOptionsWidget(
-            switchvalue: controller.isChildSeat.value,
-            text: "Child Seat",
-            onChanged: controller.toggleChildSeat)),
-        Obx(() => AdditionalOptionsWidget(
-            switchvalue: controller.isExitPermit.value,
-            text: "Exit Permit",
-            onChanged: controller.toggleExitPermit)),
+        Obx(() {
+          String additionalDriverText = controller.isAdditionalDriver.value
+              ? "Additional Driver \n(20. -/ per month)"
+              : "Additional Driver";
+          
+          return AdditionalOptionsWidget(
+              switchvalue: controller.isAdditionalDriver.value,
+              text: additionalDriverText,
+              onChanged: (value) {
+                controller.toggleAdditionalDriver(value);
+              });
+        }),
+        const SizedBox(
+          height: 5,
+        ),
+        Obx(() {
+          double calculateChildBoosterSeatPrice() {
+            final int days = int.tryParse(controller.days.value) ?? 0;
+            final int weeks = int.tryParse(controller.week.value) ?? 0;
+            final int months = int.tryParse(controller.month.value) ?? 0;
+            return (days * 5) + (weeks * 30) + (months * 50);
+          }
+
+          String childBoosterSeatText = controller.isChildBoosterSeat.value
+              ? "Child Booster Seat \n(${calculateChildBoosterSeatPrice()})"
+              : "Child Booster Seat";
+
+          return AdditionalOptionsWidget(
+              switchvalue: controller.isChildBoosterSeat.value,
+              text: childBoosterSeatText,
+              onChanged: controller.toggleChildBoosterSeat);
+        }),
+        const SizedBox(
+          height: 5,
+        ),
+        Obx(() {
+          double calculateChildSeatPrice() {
+            final int days = int.tryParse(controller.days.value) ?? 0;
+            final int weeks = int.tryParse(controller.week.value) ?? 0;
+            final int months = int.tryParse(controller.month.value) ?? 0;
+            return (days * 5) + (weeks * 30) + (months * 50);
+          }
+
+          String childSeatText = controller.isChildSeat.value
+              ? "Child Seat \n(${calculateChildSeatPrice()})"
+              : "Child Seat";
+
+          return AdditionalOptionsWidget(
+              switchvalue: controller.isChildSeat.value,
+              text: childSeatText,
+              onChanged: controller.toggleChildSeat);
+        }),
+        const SizedBox(
+          height: 5,
+        ),
+        Obx(() {
+          String exitPermitText = controller.isExitPermit.value
+              ? "Exit Permit \n(149.-/month)"
+              : "Exit Permit";
+
+          return AdditionalOptionsWidget(
+              switchvalue: controller.isExitPermit.value,
+              text: exitPermitText,
+              onChanged: controller.toggleExitPermit);
+        }),
+        const SizedBox(
+          height: 5,
+        ),
         const OtherRequestWidget(),
       ],
     );
