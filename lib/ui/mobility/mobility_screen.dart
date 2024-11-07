@@ -45,7 +45,8 @@ class MobilityScreen extends StatelessWidget {
             return const Center(child: Text('No cars available'));
           }
           return ListView.builder(
-            itemCount: mobilityController.carList.length,
+            // itemCount: mobilityController.carList.length,
+            itemCount: 1,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               final product = mobilityController.carList[index];
@@ -79,9 +80,10 @@ class MobilityScreen extends StatelessWidget {
                         child: SizedBox(
                           height: height * 0.20,
                           width: width * 0.35,
-                          child: Image.network(
-                            product['profile'],
-                          ),
+                          // child: Image.network(
+                          //   product['profile'],
+                          // ), 
+                          child: Image.asset("assets/images/car1.png"),
                         ),
                       ),
                       Column(

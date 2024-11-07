@@ -10,6 +10,18 @@ class CarDetailScreen extends StatelessWidget {
   final PageController _pageController = PageController();
   final RxInt currentIndex = 0.obs;
 
+  final List<Map<String, dynamic>> products = [
+    {
+      "image": "assets/images/car1.png",
+    },
+    {
+      "image": "assets/images/car2.png",
+    },
+    {
+      "image": "assets/images/car3.jpg",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -58,7 +70,6 @@ class CarDetailScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           final carDetails = controller.carDetails;
-
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(right: 15, left: 15.0, bottom: 50),
@@ -79,7 +90,8 @@ class CarDetailScreen extends StatelessWidget {
                         return PageView.builder(
                           controller: _pageController,
                           scrollDirection: Axis.horizontal,
-                          itemCount: controller.carDetails['images'].length,
+                          // itemCount: controller.carDetails['images'].length, 
+                          itemCount: 3,
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
@@ -92,9 +104,9 @@ class CarDetailScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        controller.carDetails['images'][index]),
-                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                        products[index]["image"]),
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),
@@ -296,21 +308,21 @@ class CarDetailScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "Seat",
+                                  "Number of seats",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "Door",
+                                  "Number of doors",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "Luggage",
+                                  "Transmission",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -318,6 +330,34 @@ class CarDetailScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   "Fuel",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "Permitted Kilometer",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "Luggage",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -363,29 +403,57 @@ class CarDetailScreen extends StatelessWidget {
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Text(
-                                  carDetails['seat'],
-                                  style: const TextStyle(
+                                const Text(
+                                  "4",
+                                  style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Text(
-                                  carDetails['door'],
-                                  style: const TextStyle(
+                                const Text(
+                                  "5",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const Text(
+                                  "Manual",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const Text(
+                                  "Petrol",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ), 
+                                 const Text(
+                                  "200kms / 1 day",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const Text(
+                                  "100kms / 1 week",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const Text(
+                                  "300kms / 1 month",
+                                  style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
                                   carDetails['luggage'],
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  carDetails['fuel'],
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
