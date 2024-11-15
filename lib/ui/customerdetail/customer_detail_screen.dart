@@ -87,7 +87,12 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         searchCarController.pickUpLocationValue.value;
     controller.selectedDropOffLocation.value =
         searchCarController.dropOffLocationValue.value;
-    controller.calculateDateDifference(searchCarController.pickUpDateAndTime.value, searchCarController.dropOfDateAndTime.value, widget.dPrice, widget.wPrice, widget.mPrice);
+    controller.calculateDateDifference(
+        searchCarController.pickUpDateAndTime.value,
+        searchCarController.dropOfDateAndTime.value,
+        widget.dPrice,
+        widget.wPrice,
+        widget.mPrice);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -503,7 +508,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     : Container()),
                 const SizedBox(
                   height: 10,
-                ), 
+                ),
                 Obx(() {
                   return Container(
                     height: height * 0.18,
@@ -525,21 +530,19 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
-                          const SizedBox(
-                              height: 4),
+                          const SizedBox(height: 4),
                           TextField(
                             enabled: false,
-                            controller: TextEditingController(text: controller.endPrice.value),
+                            controller: TextEditingController(
+                                text: controller.endPrice.value),
                             keyboardType: TextInputType.number,
-                            cursorColor:
-                                Colors.black,
-                            textAlign: TextAlign
-                                .center,
+                            cursorColor: Colors.black,
+                            textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Amount',
                             ),
-                          ),      
+                          ),
                         ],
                       ),
                     ),
@@ -611,7 +614,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           String additionalDriverText = controller.isAdditionalDriver.value
               ? "Additional Driver \n(20. -/ per month)"
               : "Additional Driver";
-          
+
           return AdditionalOptionsWidget(
               switchvalue: controller.isAdditionalDriver.value,
               text: additionalDriverText,

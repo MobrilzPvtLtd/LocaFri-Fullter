@@ -1,3 +1,4 @@
+import 'package:carapp/Controllers/profile/contact_us_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final commentController = TextEditingController();
+  final ContactUsController controller = ContactUsController();
 
   bool? checkbox = false;
   @override
@@ -30,10 +32,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             title: const Text(
               "Contact us",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "UberMove"),
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                fontFamily: "UberMove",
+              ),
             ),
           ),
         ),
@@ -67,6 +70,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your full name';
                     }
+                    return null;
                   },
                 ),
               ),
@@ -97,6 +101,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     if (!emailRegex.hasMatch(value)) {
                       return "Enter a valid email";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -125,6 +130,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your message';
                     }
+                    return null;
                   },
                 ),
               ),
@@ -150,36 +156,38 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   )
                 ],
               ),
-              GestureDetector(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    Get.showSnackbar(
-                      const GetSnackBar(
-                        title: "Thank you for contacting us.",
-                        message:
-                            "We have sent you an email with the information you have requested.",
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  }
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(20),
-                  height: height * 0.08,
-                  width: width * 0.90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xffff36a21),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Send",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "UberMove",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800),
+              Obx(
+                () => GestureDetector(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      controller.sendRequest(nameController.text,
+                          emailController.text, commentController.text);
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(20),
+                    height: height * 0.08,
+                    width: width * 0.90,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffff36a21),
                     ),
+                    child: controller.isLoading.value
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
+                          )
+                        : const Center(
+                            child: Text(
+                              "Send",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "UberMove",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ),
                   ),
                 ),
               ),

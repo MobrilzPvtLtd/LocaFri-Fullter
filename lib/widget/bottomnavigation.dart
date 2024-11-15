@@ -1,8 +1,7 @@
-import 'package:carapp/ui/checkout/checkout_contract_screen.dart';
+import 'package:carapp/ui/booking/booking_screen.dart';
 import 'package:carapp/ui/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import '../ui/mobility/mobility_screen.dart';
-import '../ui/checkin/checkin_contract_screen.dart';
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({super.key});
@@ -16,8 +15,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   List<Widget> pages = [
     const SearchScreen(),
     MobilityScreen(),
-    CheckinContractScreen(),
-    const CheckoutContractScreen(),
+    const BookingScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -48,12 +46,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
               label: 'Mobility'),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.check_box_outlined),
-              label: 'Checkin'),
-          BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.logout),
-              label: 'Checkout'),
+              icon: Icon(Icons.book_online),
+              label: 'Booking'),
         ],
       ),
       body: IndexedStack(

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:carapp/models/create_contract_data.dart';
 import 'package:carapp/models/payment_data_model.dart';
 import 'package:carapp/utils/api_contants.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -220,6 +221,8 @@ class CustomerDetailController extends GetxController {
       );
       log(response.body.toString());
       if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        SharedPrefs.setToken(data['token']);
         updateVerifyOtpStatus(true);
         return true;
       }
@@ -368,6 +371,10 @@ class CustomerDetailController extends GetxController {
         log(responseData.toString());
         await stripePaymentCall(createContractData!);
         print('Success: ${responseData}');
+        SharedPrefs.setUserFirstName(firstName.value);
+        SharedPrefs.setUserLastName(lastName.value);
+        SharedPrefs.setUserPhoneNumber(phoneNumber.value);
+        SharedPrefs.setUserEmail(email.value);
         return true;
       } else {
         print('Error: ${response.statusCode}');

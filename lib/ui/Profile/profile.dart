@@ -1,8 +1,12 @@
+import 'package:carapp/Controllers/auth/logout_controller.dart';
 import 'package:carapp/ui/Profile/contactUs/contact_us_screen.dart';
 import 'package:carapp/ui/Profile/privacyPolicy/privacy_policy.dart';
+import 'package:carapp/ui/Profile/profile_detail_screen.dart';
 import 'package:carapp/ui/Profile/termsAndCondition/terms_condition.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:carapp/widget/buttonprofile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'keyBox/keybox.dart';
 
 class Profile extends StatelessWidget {
@@ -10,9 +14,10 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LogoutController controller = LogoutController();
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(90),
+        preferredSize: const Size.fromHeight(60),
         child: AppBar(
           leading: const Text(""),
           backgroundColor: Colors.white10,
@@ -20,10 +25,11 @@ class Profile extends StatelessWidget {
             title: const Text(
               "Profile",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "UberMove"),
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                fontFamily: "UberMove",
+              ),
             ),
           ),
         ),
@@ -39,9 +45,9 @@ class Profile extends StatelessWidget {
                 radius: 100,
                 backgroundImage: AssetImage("assets/images/person.jpg"),
               ),
-              const Text(
-                "Mobrilz",
-                style: TextStyle(
+              Text(
+                "${SharedPrefs.getUserFisrtName} ${SharedPrefs.getUserLastName}",
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 30,
                     fontFamily: "UberMove",
@@ -49,6 +55,19 @@ class Profile extends StatelessWidget {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Buttonprofile(
+                icon: Icons.person,
+                icon2: Icons.arrow_right,
+                text: "Profile Detail",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileDetailScreen(),
+                    ),
+                  );
+                },
               ),
               Buttonprofile(
                 icon: Icons.article_rounded,
@@ -64,27 +83,31 @@ class Profile extends StatelessWidget {
                 },
               ),
               Buttonprofile(
-                  icon: Icons.article_rounded,
-                  icon2: Icons.arrow_right,
-                  text: "Term & Condition", onPressed: (){
-                    Navigator.push(
+                icon: Icons.article_rounded,
+                icon2: Icons.arrow_right,
+                text: "Term & Condition",
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const TermAndConditionScreen(),
                     ),
                   );
-                  },),
+                },
+              ),
               Buttonprofile(
-                  icon: Icons.article_rounded,
-                  icon2: Icons.arrow_right,
-                  text: "Privacy & Policy", onPressed: (){
-                    Navigator.push(
+                icon: Icons.article_rounded,
+                icon2: Icons.arrow_right,
+                text: "Privacy & Policy",
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const PrivacyPolicyScreen(),
                     ),
                   );
-                  },),
+                },
+              ),
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
@@ -98,12 +121,17 @@ class Profile extends StatelessWidget {
                   );
                 },
               ),
-              Buttonprofile(
-                icon: Icons.logout,
-                icon2: Icons.arrow_right,
-                text: "Logout",
-                onPressed: () {
-                },
+              Obx(
+                () => Buttonprofile(
+                  icon: Icons.logout,
+                  icon2: controller.isLoading.value
+                      ? Icons.disabled_by_default
+                      : Icons.arrow_right,
+                  text: "Logout",
+                  onPressed: () {
+                    controller.logout(context);
+                  },
+                ),
               ),
             ],
           ),
