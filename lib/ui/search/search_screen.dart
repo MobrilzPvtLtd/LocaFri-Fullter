@@ -1,4 +1,5 @@
-import 'package:carapp/Controllers/search/searchController.dart';
+import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
+import 'package:carapp/Controllers/search/search_controller.dart';
 import 'package:carapp/ui/mobility/search_cars.dart';
 import 'package:carapp/ui/Profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,15 @@ class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
 
   final SearchCarsController availableCarsController =
       Get.put(SearchCarsController());
+  final CustomerDetailController customerDetailController =
+      Get.put(CustomerDetailController());
   
   String pickUpLoaction = "";
   String pickUpDate = ""; 
@@ -101,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
       builder: (BuildContext context) {
         return Container(
           height: screenHeight * 0.35,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               SizedBox(
@@ -307,11 +310,11 @@ class _SearchScreenState extends State<SearchScreen> {
                               color: Colors.amber,
                             ),
                             value: availableCarsController
-                                    .selectedValue1.value.isEmpty
+                                    .dropOffLocationValue.value.isEmpty
                                 ? null
-                                : availableCarsController.selectedValue1.value,
+                                : availableCarsController.dropOffLocationValue.value,
                             onChanged: (String? newValue) {
-                              availableCarsController.selectedValue1.value =
+                              availableCarsController.dropOffLocationValue.value =
                                   newValue!;
                             },
                             items: availableCarsController.locations
@@ -368,8 +371,14 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
               onPressed: () {
+                customerDetailController.pickUpDate.value = _pickUpDate;
+                customerDetailController.dropOffDate.value = _dropOffDate;
+                customerDetailController.pickUpTime.value = _pickUpTime;
+                customerDetailController.dropOffTime.value = _dropOffTime;
+                availableCarsController.pickUpDateAndTime.value = _pickUpDate;
+                availableCarsController.dropOfDateAndTime.value = _dropOffDate;
                 availableCarsController.fetchAvailableCars(
-                    pickUpLoaction, _pickUpDate.toString());
+                    pickUpLoaction, _pickUpDate.toString(), _dropOffDate.toString());
                 if (!availableCarsController.isLoading.value &&
                     availableCarsController.availableCars.isNotEmpty) {
                   Get.to(() => SearchCars());

@@ -9,5 +9,6 @@ class ApiConstants {
   static const String loginEndPoint = "$baseUrl/api/login"; 
   static const String verifyOtpEndPoint = "$baseUrl/api/verify-otp";  
   static const String createContractEndPoint = "$baseUrl/api/create-contract";
+  static const String stripePaymentEndPoint = "$baseUrl/api/stripe-payment"; 
 
 }

@@ -48,11 +48,11 @@ class _BottomNavigatorState extends State<BottomNavigator> {
               label: 'Mobility'),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.wifi),
+              icon: Icon(Icons.check_box_outlined),
               label: 'Checkin'),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.check_box_outlined),
+              icon: Icon(Icons.logout),
               label: 'Checkout'),
         ],
       ),

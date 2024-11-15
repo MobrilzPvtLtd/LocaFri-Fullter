@@ -1,4 +1,6 @@
 import 'package:carapp/ui/Profile/contactUs/contact_us_screen.dart';
+import 'package:carapp/ui/Profile/privacyPolicy/privacy_policy.dart';
+import 'package:carapp/ui/Profile/termsAndCondition/terms_condition.dart';
 import 'package:carapp/widget/buttonprofile.dart';
 import 'package:flutter/material.dart';
 import 'keyBox/keybox.dart';
@@ -48,36 +50,59 @@ class Profile extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Buttonprofile(
-                  icon: Icons.article_rounded,
-                  icon2: Icons.arrow_right,
-                  text: "Term&Condition"),
-              const Buttonprofile(
-                  icon: Icons.article_rounded,
-                  icon2: Icons.arrow_right,
-                  text: "Privacy & Policy"),
-              const Buttonprofile(
-                  icon: Icons.settings_applications_outlined,
-                  icon2: Icons.arrow_right,
-                  text: "Maintenance"),
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
                 text: "Key-Box",
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const KeyBox()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const KeyBox(),
+                    ),
+                  );
                 },
               ),
+              Buttonprofile(
+                  icon: Icons.article_rounded,
+                  icon2: Icons.arrow_right,
+                  text: "Term & Condition", onPressed: (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TermAndConditionScreen(),
+                    ),
+                  );
+                  },),
+              Buttonprofile(
+                  icon: Icons.article_rounded,
+                  icon2: Icons.arrow_right,
+                  text: "Privacy & Policy", onPressed: (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyScreen(),
+                    ),
+                  );
+                  },),
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
                 text: "Contact us",
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ContactUsScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ContactUsScreen(),
+                    ),
+                  );
+                },
+              ),
+              Buttonprofile(
+                icon: Icons.logout,
+                icon2: Icons.arrow_right,
+                text: "Logout",
+                onPressed: () {
                 },
               ),
             ],

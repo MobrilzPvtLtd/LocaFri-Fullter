@@ -34,7 +34,6 @@ class _OtherRequestWidgetState extends State<OtherRequestWidget> {
                   setState(
                     () {
                       _switchcase = value;
-
                       log(_switchcase.toString());
                     },
                   );

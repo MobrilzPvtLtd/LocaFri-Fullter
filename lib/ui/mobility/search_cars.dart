@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../Controllers/mobility/mobility_controller.dart';
-import '../../Controllers/search/searchController.dart';
+import '../../Controllers/search/search_controller.dart';
 
 class SearchCars extends StatelessWidget {
   final MobilityController carListController = Get.put(MobilityController());
@@ -55,7 +55,8 @@ class SearchCars extends StatelessWidget {
             return const Center(child: Text('No cars available'));
           }
           return ListView.builder(
-            itemCount: availableCars.length,
+            // itemCount: availableCars.length,
+            itemCount: 1,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               var product = availableCars[index];
@@ -89,9 +90,10 @@ class SearchCars extends StatelessWidget {
                         child: SizedBox(
                           height: height * 0.20,
                           width: width * 0.35,
-                          child: Image.network(
-                            product['profile'],
-                          ),
+                          // child: Image.network(
+                          //   product['profile'],
+                          // ), 
+                          child: Image.asset("assets/images/car1.png"),
                         ),
                       ),
                       Column(

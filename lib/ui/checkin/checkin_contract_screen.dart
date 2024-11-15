@@ -30,7 +30,7 @@ class CheckinContractScreen extends StatelessWidget {
 
   void handleSaveButtonPressed() async {
     final data =
-    await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
+        await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
     final byteData = await data.toByteData(format: ui.ImageByteFormat.png);
     final buffer = byteData!.buffer.asUint8List();
 
@@ -75,15 +75,16 @@ class CheckinContractScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 15, right: 15.0),
                   child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Niveau de reservoir',
-                        style: TextStyle(
-                          fontFamily: "UberMove",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'Niveau de reservoir',
+                      style: TextStyle(
+                        fontFamily: "UberMove",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
                 _diokilometer(),
                 const Padding(
@@ -205,63 +206,63 @@ class CheckinContractScreen extends StatelessWidget {
                 GaugeRange(
                   startValue: 0,
                   endValue: 1,
-                  color: Colors.lightBlue[100]!,
+                  color: Colors.orange[100]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 1,
                   endValue: 2,
-                  color: Colors.lightBlue[200]!,
+                  color: Colors.orange[200]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 2,
                   endValue: 3,
-                  color: Colors.blue[300]!,
+                  color: Colors.orange[300]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 3,
                   endValue: 4,
-                  color: Colors.blue[400]!,
+                  color: Colors.orange[400]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 4,
                   endValue: 5,
-                  color: Colors.blue[500]!,
+                  color: Colors.orange[500]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 5,
                   endValue: 6,
-                  color: Colors.blue[600]!,
+                  color: Colors.orange[600]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 6,
                   endValue: 7,
-                  color: Colors.blue[700]!,
+                  color: Colors.orange[700]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 7,
                   endValue: 8,
-                  color: Colors.blue[800]!,
+                  color: Colors.orange[800]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
                 GaugeRange(
                   startValue: 8,
                   endValue: 9,
-                  color: Colors.blue[900]!,
+                  color: Colors.orange[900]!,
                   startWidth: 50,
                   endWidth: 50,
                 ),
@@ -322,7 +323,8 @@ class CheckinContractScreen extends StatelessWidget {
     );
   }
 
-  Widget _addressAndPostalCode(TextEditingController addressController, TextEditingController postalCodeController) {
+  Widget _addressAndPostalCode(TextEditingController addressController,
+      TextEditingController postalCodeController) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -398,7 +400,8 @@ class CheckinContractScreen extends StatelessWidget {
     );
   }
 
-  Widget _emailAndLicense(Rx<File?> image, TextEditingController emailController) {
+  Widget _emailAndLicense(
+      Rx<File?> image, TextEditingController emailController) {
     final height = MediaQuery.of(Get.context!).size.height;
     final width = MediaQuery.of(Get.context!).size.width;
     return Column(
@@ -581,7 +584,6 @@ class CheckinContractScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // const SizedBox(height: 40),
         const Padding(
           padding: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Text(
@@ -648,16 +650,16 @@ class CheckinContractScreen extends StatelessWidget {
       onTap: () {
         if (_formKey.currentState!.validate()) {
           controller.uploadCheckinContract(
-            fullNameController.text, 
-              addressController.text, 
-              postalCodeController.text, 
-              emailController.text, 
-              kilometerController.text,
-              'full', 
-              'no damages in car', 
-              customerSignatureFile, 
-              context,
-              );
+            fullNameController.text,
+            addressController.text,
+            postalCodeController.text,
+            emailController.text,
+            kilometerController.text,
+            'full',
+            'no damages in car',
+            customerSignatureFile,
+            context,
+          );
           print('Form submitted');
         } else {
           print('Form is not valid');
