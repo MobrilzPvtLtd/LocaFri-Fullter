@@ -9,14 +9,22 @@ class CustomerDateTimeField extends StatelessWidget {
   final String dPrice;
   final String wPrice;
   final String mPrice;
-  CustomerDateTimeField({super.key, required this.dPrice, required this.wPrice, required this.mPrice});
+  CustomerDateTimeField(
+      {super.key,
+      required this.dPrice,
+      required this.wPrice,
+      required this.mPrice});
 
-  final CustomerDetailController controller = Get.put(CustomerDetailController());
-  final SearchCarsController searchCarsController = Get.put(SearchCarsController());
+  final CustomerDetailController controller =
+      Get.put(CustomerDetailController());
+  final SearchCarsController searchCarsController =
+      Get.put(SearchCarsController());
 
-  Future<void> _cupertinoDateTimePicker(BuildContext context, bool isPickUp) async {
+  Future<void> _cupertinoDateTimePicker(
+      BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
-    DateTime initialDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+    DateTime initialDateTime =
+        isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
 
     if (initialDateTime.isBefore(now)) {
       initialDateTime = now;
@@ -48,7 +56,8 @@ class CustomerDateTimeField extends StatelessWidget {
               CupertinoButton(
                 child: const Text(
                   'OK',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w800),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -68,14 +77,17 @@ class CustomerDateTimeField extends StatelessWidget {
         controller.dropOffDate.value = selectedDate!;
         controller.dropOffTime.value = TimeOfDay.fromDateTime(selectedDate!);
       }
-      controller.calculateDateDifference(controller.pickUpDate.value, controller.dropOffDate.value, dPrice, wPrice, mPrice);
+      controller.calculateDateDifference(controller.pickUpDate.value,
+          controller.dropOffDate.value, dPrice, wPrice, mPrice);
     }
   }
 
   Future<void> _cupertinoTimePicker(BuildContext context, bool isPickUp) async {
-    DateTime initialDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+    DateTime initialDateTime =
+        isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
 
-    Duration initialTimerDuration = Duration(hours: initialDateTime.hour, minutes: initialDateTime.minute);
+    Duration initialTimerDuration =
+        Duration(hours: initialDateTime.hour, minutes: initialDateTime.minute);
     Duration? selectedDuration;
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -90,7 +102,8 @@ class CustomerDateTimeField extends StatelessWidget {
               SizedBox(
                 height: 250,
                 child: CupertinoTimerPicker(
-                  initialTimerDuration: initialTimerDuration,
+                  minuteInterval: 5,
+                  initialTimerDuration: const Duration(minutes: 0),
                   mode: CupertinoTimerPickerMode.hm,
                   onTimerDurationChanged: (Duration newDuration) {
                     selectedDuration = newDuration;
@@ -100,7 +113,8 @@ class CustomerDateTimeField extends StatelessWidget {
               CupertinoButton(
                 child: const Text(
                   'OK',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w800),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -113,7 +127,8 @@ class CustomerDateTimeField extends StatelessWidget {
     );
 
     if (selectedDuration != null) {
-      DateTime updatedDateTime = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+      DateTime updatedDateTime =
+          isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
       updatedDateTime = DateTime(
         updatedDateTime.year,
         updatedDateTime.month,
@@ -127,7 +142,8 @@ class CustomerDateTimeField extends StatelessWidget {
         controller.dropOffDate.value = updatedDateTime;
         controller.dropOffTime.value = TimeOfDay.fromDateTime(updatedDateTime);
       }
-      controller.calculateDateDifference(controller.pickUpDate.value, controller.dropOffDate.value, dPrice, wPrice, mPrice);
+      controller.calculateDateDifference(controller.pickUpDate.value,
+          controller.dropOffDate.value, dPrice, wPrice, mPrice);
     }
   }
 
@@ -165,7 +181,8 @@ class CustomerDateTimeField extends StatelessWidget {
     );
   }
 
-  Widget _buildDateTimePicker(BuildContext context, String dateLabel, bool isPickUp) {
+  Widget _buildDateTimePicker(
+      BuildContext context, String dateLabel, bool isPickUp) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
 
@@ -176,14 +193,16 @@ class CustomerDateTimeField extends StatelessWidget {
             Expanded(
               child: Text(
                 dateLabel,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
               ),
             ),
             SizedBox(width: screenWidth * 0.02),
             Expanded(
               child: Text(
                 isPickUp ? 'Pick up hour' : 'Drop off hour',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: screenWidth * 0.04),
               ),
             ),
           ],
@@ -194,9 +213,12 @@ class CustomerDateTimeField extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => _cupertinoDateTimePicker(context, isPickUp),
                 child: Obx(() {
-                  DateTime dateValue = isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+                  DateTime dateValue = isPickUp
+                      ? controller.pickUpDate.value
+                      : controller.dropOffDate.value;
                   return Container(
-                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                    padding:
+                        EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(5),
@@ -215,9 +237,12 @@ class CustomerDateTimeField extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => _cupertinoTimePicker(context, isPickUp),
                 child: Obx(() {
-                  TimeOfDay timeValue = isPickUp ? controller.pickUpTime.value : controller.dropOffTime.value;
+                  TimeOfDay timeValue = isPickUp
+                      ? controller.pickUpTime.value
+                      : controller.dropOffTime.value;
                   return Container(
-                    padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                    padding:
+                        EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(5),

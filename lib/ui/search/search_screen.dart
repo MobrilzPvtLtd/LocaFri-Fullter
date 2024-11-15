@@ -15,15 +15,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   final SearchCarsController availableCarsController =
       Get.put(SearchCarsController());
   final CustomerDetailController customerDetailController =
       Get.put(CustomerDetailController());
-  
+
   String pickUpLoaction = "";
-  String pickUpDate = ""; 
-  String pickUpHour = ""; 
+  String pickUpDate = "";
+  String pickUpHour = "";
 
   DateTime _pickUpDate = DateTime.now();
   TimeOfDay _pickUpTime = TimeOfDay.now();
@@ -95,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     Duration initialTimerDuration = Duration(
       hours: initialDateTime.hour,
-      minutes: initialDateTime.minute,
+      minutes: initialDateTime.minute + 5,
     );
     Duration? selectedDuration;
     var screenHeight = MediaQuery.of(context).size.height;
@@ -110,7 +109,8 @@ class _SearchScreenState extends State<SearchScreen> {
               SizedBox(
                 height: 250,
                 child: CupertinoTimerPicker(
-                  initialTimerDuration: initialTimerDuration,
+                  minuteInterval: 5,
+                  initialTimerDuration: const Duration(minutes: 0),
                   mode: CupertinoTimerPickerMode.hm,
                   onTimerDurationChanged: (Duration newDuration) {
                     selectedDuration = newDuration;
@@ -188,8 +188,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => const Profile()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const Profile()));
                 },
               ),
             ],
@@ -209,7 +209,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                ), 
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -236,10 +236,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             value: availableCarsController
                                     .pickUpLocationValue.value.isEmpty
                                 ? null
-                                : availableCarsController.pickUpLocationValue.value,
+                                : availableCarsController
+                                    .pickUpLocationValue.value,
                             onChanged: (String? newValue) {
-                              availableCarsController.pickUpLocationValue.value =
-                                  newValue!;
+                              availableCarsController
+                                  .pickUpLocationValue.value = newValue!;
                               pickUpLoaction = newValue;
                             },
                             items: availableCarsController.locations
@@ -312,10 +313,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             value: availableCarsController
                                     .dropOffLocationValue.value.isEmpty
                                 ? null
-                                : availableCarsController.dropOffLocationValue.value,
+                                : availableCarsController
+                                    .dropOffLocationValue.value,
                             onChanged: (String? newValue) {
-                              availableCarsController.dropOffLocationValue.value =
-                                  newValue!;
+                              availableCarsController
+                                  .dropOffLocationValue.value = newValue!;
                             },
                             items: availableCarsController.locations
                                 .map<DropdownMenuItem<String>>((location) {
@@ -367,7 +369,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-
             SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
               onPressed: () {
@@ -377,14 +378,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 customerDetailController.dropOffTime.value = _dropOffTime;
                 availableCarsController.pickUpDateAndTime.value = _pickUpDate;
                 availableCarsController.dropOfDateAndTime.value = _dropOffDate;
-                availableCarsController.fetchAvailableCars(
-                    pickUpLoaction, _pickUpDate.toString(), _dropOffDate.toString());
+                availableCarsController.fetchAvailableCars(pickUpLoaction,
+                    _pickUpDate.toString(), _dropOffDate.toString());
                 if (!availableCarsController.isLoading.value &&
                     availableCarsController.availableCars.isNotEmpty) {
                   Get.to(() => SearchCars());
                 }
               },
-              
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xffff36a21),
                 padding: EdgeInsets.symmetric(
@@ -395,11 +395,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-              ), 
-              child : const Text(
+              ),
+              child: const Text(
                 'Search',
               ),
-             ),
+            ),
           ],
         ),
       ),
