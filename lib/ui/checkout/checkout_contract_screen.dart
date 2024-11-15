@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:carapp/Controllers/checkout/checkout_controller.dart';
 import 'package:carapp/utils/shared_prefs.dart';
@@ -17,13 +18,13 @@ class CheckoutContractScreen extends StatefulWidget {
 }
 
 class _checkoutContractScreenState extends State<CheckoutContractScreen> {
-
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final postalCodeController = TextEditingController();
   final emailController = TextEditingController();
   final kilometerController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   Rx<File?> customerSignatureFile = Rx<File?>(null);
 
@@ -86,6 +87,10 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
+        physics: controller.isGaugeActive.value
+            ? NeverScrollableScrollPhysics()
+            : AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15.0),
           child: Form(
@@ -165,7 +170,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Obx((){
+                      Obx(() {
                         return Checkbox(
                           activeColor: Color(0xffff36a21),
                           value: controller.isChecked.value,
@@ -179,7 +184,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                         "I am 18 years of age or older and agree to the \n terms of the Contract and the  Valve Privacy \n Policy",
                         style: TextStyle(fontFamily: "Ubermove"),
                       )
-                    ], 
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -499,99 +504,82 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               fontWeight: FontWeight.bold),
         ),
         Center(
-          child: SizedBox(
-            height: 220,
-            child: SfRadialGauge(
-              axes: <RadialAxis>[
-                RadialAxis(
-                  minimum: 0,
-                  maximum: 9,
-                  startAngle: 180,
-                  endAngle: 0,
-                  showLabels: false,
-                  showTicks: false,
-                  radiusFactor: 1.0,
-                  canScaleToFit: true,
-                  ranges: <GaugeRange>[
-                    GaugeRange(
-                      startValue: 0,
-                      endValue: 1,
-                      color: Colors.orange[100]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 1,
-                      endValue: 2,
-                      color: Colors.orange[200]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 2,
-                      endValue: 3,
-                      color: Colors.orange[300]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 3,
-                      endValue: 4,
-                      color: Colors.orange[400]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 4,
-                      endValue: 5,
-                      color: Colors.orange[500]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 5,
-                      endValue: 6,
-                      color: Colors.orange[600]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 6,
-                      endValue: 7,
-                      color: Colors.orange[700]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 7,
-                      endValue: 8,
-                      color: Colors.orange[800]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                    GaugeRange(
-                      startValue: 8,
-                      endValue: 9,
-                      color: Colors.orange[900]!,
-                      startWidth: 50,
-                      endWidth: 50,
-                    ),
-                  ],
-                  pointers: const <GaugePointer>[
-                    NeedlePointer(
-                      value: 6, // Points to 3/4
-                      needleColor: Colors.black,
-                      knobStyle: KnobStyle(
-                          color: Colors.black, borderColor: Colors.blue),
+          child: GestureDetector(
+            onPanStart: (_) {
+              controller.isGaugeActive.value = true;
+            },
+            onPanUpdate: (details) {
+              _updateNeedlePosition(details.localPosition, context);
+            },
+            onTapDown: (details) {
+              controller.isGaugeActive.value = true;
+              _updateNeedlePosition(details.localPosition, context);
+            },
+            onPanEnd: (_) {
+              controller.isGaugeActive.value = false;
+            },
+            child: SizedBox(
+              height: 220,
+              child: Obx(
+                () => SfRadialGauge(
+                  axes: <RadialAxis>[
+                    RadialAxis(
+                      minimum: 0,
+                      maximum: 9,
+                      startAngle: 180,
+                      endAngle: 0,
+                      showLabels: false,
+                      showTicks: false,
+                      radiusFactor: 1.0,
+                      canScaleToFit: true,
+                      ranges: <GaugeRange>[
+                        for (int i = 0; i < 9; i++)
+                          GaugeRange(
+                            startValue: i.toDouble(),
+                            endValue: (i + 1).toDouble(),
+                            color: Colors.orange[(i + 1) * 100]!,
+                            startWidth: 50,
+                            endWidth: 50,
+                          ),
+                      ],
+                      pointers: <GaugePointer>[
+                        NeedlePointer(
+                          value: controller.needleValue.value,
+                          needleColor: Colors.black,
+                          knobStyle: const KnobStyle(
+                            color: Colors.black,
+                            borderColor: Colors.blue,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  void _updateNeedlePosition(Offset localPosition, BuildContext context) {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    final Offset center = box.size.center(Offset.zero);
+
+    final Offset position = localPosition - center;
+
+    double angle = atan2(position.dy, position.dx);
+
+    double degrees = angle * 180 / pi;
+    if (degrees < 0) {
+      degrees += 360;
+    }
+
+    if (degrees >= 180 && degrees <= 360) {
+      double value = 9 * (degrees - 180) / 180;
+      controller.updateNeedleValue(value);
+    }
   }
 
   _VehicalDamage(RxList<File?> vehicleImages) {

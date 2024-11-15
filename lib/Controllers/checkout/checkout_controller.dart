@@ -11,6 +11,12 @@ class CheckOutContractController extends GetxController {
   RxBool isChecked = false.obs;
   var isLoading = false.obs;
   var statusCode = ''.obs;
+  var needleValue = 10.0.obs;
+  RxBool isGaugeActive = false.obs;
+
+  void updateNeedleValue(double value) {
+    needleValue.value = value.clamp(0, 9);
+  }
 
   void toggleCheckbox(bool value) {
     isChecked.value = value;
@@ -80,18 +86,16 @@ class CheckOutContractController extends GetxController {
   }
 
   Future<void> uploadCheckOutContract(
-  {
-    required String name,
-    required String address,
-    required String postalCode,
-    required String email,
-    required String recordKilometers,
-    required Rx<File?> signatureImage,
-    required String fuelLevel,
-    required String comment,
-    required String contractId,
-    required BuildContext context
-}) async {
+      {required String name,
+      required String address,
+      required String postalCode,
+      required String email,
+      required String recordKilometers,
+      required Rx<File?> signatureImage,
+      required String fuelLevel,
+      required String comment,
+      required String contractId,
+      required BuildContext context}) async {
     isLoading.value = true;
     showDialogBox();
 
@@ -109,32 +113,36 @@ class CheckOutContractController extends GetxController {
     request.fields['postal_code'] = postalCode;
     request.fields['email'] = email;
     request.fields['record_kilometers'] = recordKilometers;
-    request.fields['fuel_level'] = fuelLevel;
+    request.fields['fuel_level'] = (needleValue.value * 10.0).toString();
     request.fields['vehicle_damage_comments'] = comment;
     request.fields['contract_id'] = contractId;
 
     if (signatureImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
-        'customer_signature', signatureImage.value!.path,
+        'customer_signature',
+        signatureImage.value!.path,
       ));
     }
 
     if (licenceImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
-        'license_photo', licenceImage.value!.path,
+        'license_photo',
+        licenceImage.value!.path,
       ));
     }
 
     if (odometerImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
-        'fuel_image', odometerImage.value!.path,
+        'fuel_image',
+        odometerImage.value!.path,
       ));
     }
 
     for (int i = 0; i < vehicleImages.length; i++) {
       if (vehicleImages[i] != null) {
         request.files.add(await http.MultipartFile.fromPath(
-          'vehicle_images[]', vehicleImages[i]!.path,
+          'vehicle_images[]',
+          vehicleImages[i]!.path,
         ));
       }
     }
