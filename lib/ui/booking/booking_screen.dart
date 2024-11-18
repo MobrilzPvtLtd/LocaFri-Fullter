@@ -3,13 +3,26 @@ import 'package:carapp/ui/booking/user_booking_screen.dart';
 import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 
-class BookingScreen extends StatelessWidget {
+class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return SharedPrefs.getUserEmail.isEmpty
+  State<BookingScreen> createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends State<BookingScreen> {
+  var screen;
+
+  @override
+  void initState() {
+    screen = SharedPrefs.getUserEmail.isEmpty
         ? const LoginScreen()
         : const UserBookingScreen();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return screen;
   }
 }

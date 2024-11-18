@@ -11,7 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class CheckoutContractScreen extends StatefulWidget {
-  const CheckoutContractScreen({super.key});
+  final String paymentStatus;
+  const CheckoutContractScreen({super.key, required this.paymentStatus});
 
   @override
   State<CheckoutContractScreen> createState() => _checkoutContractScreenState();
@@ -166,13 +167,39 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade300),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Pay Pending Amount : ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {}, child: Text("Pay Now ->"))
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       Obx(() {
                         return Checkbox(
-                          activeColor: Color(0xffff36a21),
+                          activeColor: const Color(0xffff36a21),
                           value: controller.isChecked.value,
                           checkColor: Colors.white,
                           onChanged: (newValue) {

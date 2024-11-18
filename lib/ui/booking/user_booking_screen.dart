@@ -1,5 +1,9 @@
 import 'package:carapp/Controllers/booking/booking_controller.dart';
+import 'package:carapp/ui/checkin/checkin_contract_screen.dart';
+import 'package:carapp/ui/checkout/checkout_contract_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class UserBookingScreen extends StatefulWidget {
   const UserBookingScreen({super.key});
@@ -9,7 +13,14 @@ class UserBookingScreen extends StatefulWidget {
 }
 
 class _UserBookingScreenState extends State<UserBookingScreen> {
-  final BookingController controller = BookingController();
+  final BookingController controller = Get.put(BookingController());
+  String? status;
+
+  String foramtDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+    return formattedDate;
+  }
 
   @override
   void initState() {
@@ -26,7 +37,196 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Container(),
+        child: GetBuilder<BookingController>(builder: (context) {
+          if (controller.isLoading.value) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.error != null) {
+            return Center(
+              child: Text("Error : ${controller.error}"),
+            );
+          } else if (controller.bookingData != null) {
+            final data = controller.bookingData;
+            return ListView.builder(
+              itemCount: data!.length,
+              itemBuilder: (context, index) {
+                switch (data[index].statusDescription) {
+                  case "Rejected ":
+                    status = "Rejected";
+                    break;
+                  case "Approved":
+                    status = "Check-in";
+                    break;
+                  case "Check-in submitted ":
+                    status = "Check-out";
+                    break;
+                  case "Booking is yet to approve":
+                    status = "Not Approved";
+                    break;
+                  default:
+                    status = "Completed";
+                }
+                return Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  height: 180,
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blueGrey,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Center(
+                                  child: Text(
+                                    data[index].bookingId.toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                data[index].vehicleName.toString(),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              switch (data[index].statusDescription) {
+                                case "Rejected ":
+                                  break;
+                                case "Approved":
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CheckinContractScreen(),
+                                    ),
+                                  );
+                                  break;
+                                case "Check-in submitted ":
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CheckoutContractScreen(
+                                        paymentStatus:
+                                            data[index].status.toString(),
+                                      ),
+                                    ),
+                                  );
+                                default:
+                              }
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => CheckoutContractScreen(
+                              //       paymentStatus:
+                              //           data[index].status.toString(),
+                              //     ),
+                              //   ),
+                              // );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Text(status ?? "Pending"),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Price : ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            data[index].totalPrice.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Location : ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            "${data[index].pickUpLocation.toString()} to ${data[index].dropOffLocation.toString()}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Date : ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            "${foramtDate(data[index].pickUpDate.toString())} to ${foramtDate(data[index].collectionDate.toString())}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text("No Data to show"),
+            );
+          }
+        }),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
 import 'package:carapp/utils/shared_prefs_keys.dart';
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,9 @@ class LogoutController extends GetxController {
         SharedPrefs.resetValue(SharedPrefsKey.userPhoneNumber);
         SharedPrefs.resetValue(SharedPrefsKey.userEmail);
         SharedPrefs.resetValue(SharedPrefsKey.token);
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const BottomNavigator()));
         Get.snackbar("Success", "Log Out");
         log(response.body.toString());
       } else {

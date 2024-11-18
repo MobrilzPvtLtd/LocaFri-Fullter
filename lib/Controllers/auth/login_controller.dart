@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:carapp/ui/booking/user_booking_screen.dart';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,7 +120,9 @@ class LoginController extends GetxController {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const UserBookingScreen(),
+            builder: (context) => const BottomNavigator(
+              initialIndex: 2,
+            ),
           ),
         );
         updateVerifyOtpStatus(true);

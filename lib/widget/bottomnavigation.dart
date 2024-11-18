@@ -4,19 +4,26 @@ import 'package:flutter/material.dart';
 import '../ui/mobility/mobility_screen.dart';
 
 class BottomNavigator extends StatefulWidget {
-  const BottomNavigator({super.key});
+  final int initialIndex;
+  const BottomNavigator({super.key, this.initialIndex = 0});
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
-  int _currentindex = 0;
+  late int _currentindex;
 
   List<Widget> pages = [
     const SearchScreen(),
     MobilityScreen(),
     const BookingScreen(),
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _currentindex = widget.initialIndex;
+  }
 
   void _onItemTapped(int index) {
     setState(() {
