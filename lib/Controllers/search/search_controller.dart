@@ -52,10 +52,10 @@ class SearchCarsController extends GetxController {
         "available_time": pickUpDateAndTime,
       };
 
-      pickUpDate.value = formatDate(pickUpDateAndTime); 
-      pickUpTime.value = formatTime(pickUpDateAndTime); 
-      dropOffDate.value = formatDate(dropOfDateAndTime); 
-      dropOffTime.value = formatTime(dropOfDateAndTime); 
+      pickUpDate.value = formatDate(pickUpDateAndTime);
+      pickUpTime.value = formatTime(pickUpDateAndTime);
+      dropOffDate.value = formatDate(dropOfDateAndTime);
+      dropOffTime.value = formatTime(dropOfDateAndTime);
 
       var response = await http.get(
         Uri.parse(ApiConstants.allCarsEndPoint),
@@ -77,12 +77,12 @@ class SearchCarsController extends GetxController {
   }
 
   String formatDate(String dateTimeStr) {
-    DateTime dateTime = DateTime.parse(dateTimeStr); 
+    DateTime dateTime = DateTime.parse(dateTimeStr);
 
     String formattedDate = '${dateTime.day.toString().padLeft(2, '0')}/'
         '${dateTime.month.toString().padLeft(2, '0')}/'
         '${dateTime.year}';
-    return formattedDate; 
+    return formattedDate;
   }
 
   String formatTime(String dateTimeStr) {
@@ -93,8 +93,6 @@ class SearchCarsController extends GetxController {
         '${dateTime.minute.toString().padLeft(2, '0')} '
         '${dateTime.hour >= 12 ? 'PM' : 'AM'}';
 
-    return formattedTime; 
-
+    return formattedTime;
   }
-
 }

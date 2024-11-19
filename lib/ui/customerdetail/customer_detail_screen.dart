@@ -549,6 +549,58 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   );
                 }),
                 const SizedBox(
+                  height: 10,
+                ),
+                Obx(
+                  () => Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: SizedBox(
+                      child: DropdownButton<String>(
+                        icon: const Icon(
+                          Icons.arrow_outward,
+                          color: Colors.amber,
+                        ),
+                        value: controller.stripePaymentType.value.isEmpty
+                            ? controller.paymentType.first
+                            : controller.stripePaymentType.value,
+                        onChanged: (String? newValue) {
+                          controller.stripePaymentType.value = newValue!;
+                        },
+                        items: controller.paymentType
+                            .map<DropdownMenuItem<String>>((paymenttype) {
+                          return DropdownMenuItem<String>(
+                            value: paymenttype,
+                            child: Text(
+                              paymenttype,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.045,
+                                fontFamily: "UberMove",
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        hint: Text(
+                          "Select Your Payment Type",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.045,
+                            fontFamily: "UberMove",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        isExpanded: true,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.045,
+                          fontFamily: "UberMove",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(

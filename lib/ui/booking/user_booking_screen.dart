@@ -46,7 +46,8 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
             return Center(
               child: Text("Error : ${controller.error}"),
             );
-          } else if (controller.bookingData != null) {
+          } else if (controller.bookingData != null &&
+              controller.bookingData!.length != 0) {
             final data = controller.bookingData;
             return ListView.builder(
               itemCount: data!.length,
@@ -129,15 +130,6 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                   );
                                 default:
                               }
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => CheckoutContractScreen(
-                              //       paymentStatus:
-                              //           data[index].status.toString(),
-                              //     ),
-                              //   ),
-                              // );
                             },
                             child: Container(
                               padding: const EdgeInsets.all(10),
@@ -223,7 +215,10 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
             );
           } else {
             return const Center(
-              child: Text("No Data to show"),
+              child: Text(
+                "No Booking Available",
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
             );
           }
         }),

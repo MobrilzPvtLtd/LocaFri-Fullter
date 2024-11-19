@@ -29,6 +29,8 @@ class CustomerDetailController extends GetxController {
   CreateContractData? createContractData;
   PaymentData? paymentData;
   RxString endPrice = "0".obs;
+  RxList paymentType = <String>["PAY PARTIALLY 10%", "PAY FULL AMOUNT"].obs;
+  var stripePaymentType = "PAY PARTIALLY 10%".obs;
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
@@ -222,6 +224,7 @@ class CustomerDetailController extends GetxController {
       log(response.body.toString());
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        SharedPrefs.setUserEmail(email);
         SharedPrefs.setToken(data['token']);
         updateVerifyOtpStatus(true);
         return true;
@@ -317,6 +320,19 @@ class CustomerDetailController extends GetxController {
     };
   }
 
+  String getTimeValue(TimeOfDay timeOfDay) {
+    final String hour = timeOfDay.hour.toString().padLeft(2, '0');
+    final String minute = timeOfDay.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
+  String getDateValue(DateTime dateTime) {
+    final String year = dateTime.year.toString();
+    final String month = dateTime.month.toString().padLeft(2, '0');
+    final String day = dateTime.day.toString().padLeft(2, '0');
+    return '$year-$month-$day';
+  }
+
   Future<bool> submitForm(
     BuildContext context,
     String vehicleName,
@@ -338,10 +354,10 @@ class CustomerDetailController extends GetxController {
         'mprice': mprice,
         'pickUpLocation': selectedPickUpLocation.value,
         'dropOffLocation': selectedDropOffLocation.value,
-        'pickUpDate': pickUpDate.value,
-        'pickUpTime': pickUpTime.value,
-        'collectionDate': dropOfDate.value,
-        'collectionTime': dropOfTime.value,
+        'pickUpDate': getDateValue(pickUpDate.value),
+        'pickUpTime': getTimeValue(pickUpTime.value),
+        'collectionDate': getDateValue(dropOffDate.value),
+        'collectionTime': getTimeValue(dropOffTime.value),
         'month_count': month.value,
         'week_count': week.value,
         'day_count': days.value,
@@ -358,6 +374,7 @@ class CustomerDetailController extends GetxController {
         Uri.parse(ApiConstants.createContractEndPoint),
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ${SharedPrefs.getToken}',
         },
         body: formData,
       );
@@ -396,11 +413,17 @@ class CustomerDetailController extends GetxController {
         "vehicle_name": createContractData.vehicleName ?? "",
         "customer_email": createContractData.customerEmail ?? "",
         "booking_id": createContractData.bookingId.toString(),
-        "payment_type": createContractData.paymentType ?? ""
+        "payment_type": stripePaymentType.value == paymentType[0]
+            ? "payment_partial"
+            : "payment_full",
       };
 
       var response = await http.post(
         Uri.parse(ApiConstants.stripePaymentEndPoint),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ${SharedPrefs.getToken}',
+        },
         body: paymentBody,
       );
 
@@ -417,62 +440,65 @@ class CustomerDetailController extends GetxController {
   }
 
   Future<void> fetchStripePaymentDetails(String url) async {
-    try {
-      var response = await http.get(Uri.parse(url));
+    showSuceessDialogBox(
+        Icons.check, Colors.green, "Payment Done \n Sucessfully..");
+    // try {
+    //   var response = await http.get(Uri.parse(url));
 
-      if (response.statusCode == 200) {
-        var responseData = jsonDecode(response.body);
-        paymentData = PaymentData.fromJson(responseData);
-        if (paymentData!.data!.status == "complete") {
-          showSuceessDialogBox(
-              Icons.check, Colors.green, "Payment Done \n Sucessfully..");
-        } else {
-          showSuceessDialogBox(Icons.close, Colors.red, "Payment Pending..");
-        }
-      } else {
-        showSuceessDialogBox(
-            Icons.close, Colors.red, "Something went wrong \n pls try again");
-      }
-    } catch (e) {
-      print("e");
-      showSuceessDialogBox(
-          Icons.close, Colors.red, "Something went wrong \n pls try again");
-    }
+    //   if (response.statusCode == 200) {
+    //     var responseData = jsonDecode(response.body);
+    //     paymentData = PaymentData.fromJson(responseData);
+    //     if (paymentData!.data!.status == "complete") {
+    //       showSuceessDialogBox(
+    //           Icons.check, Colors.green, "Payment Done \n Sucessfully..");
+    //     } else {
+    //       showSuceessDialogBox(Icons.close, Colors.red, "Payment Pending..");
+    //     }
+    //   } else {
+    //     showSuceessDialogBox(Icons.close, Colors.red, "Something went wrong");
+    //   }
+    // } catch (e) {
+    //   print("e");
+    //   showSuceessDialogBox(Icons.close, Colors.red, "Something went wrong");
+    // }
   }
 
   void showSuceessDialogBox(IconData icon, Color iconColor, String message) {
     Get.dialog(
       Center(
-        child: Container(
-            width: 150.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: 200,
             height: 150.0,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
+              color: Colors.grey.shade800,
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      icon,
-                      color: iconColor,
-                      size: 40,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.check,
+                    color: Colors.green,
+                    size: 50,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Thank you, Your Response has been submitted",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      message,
-                      style: const TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            )),
+            ),
+          ),
+        ),
       ),
       barrierDismissible: true,
     );

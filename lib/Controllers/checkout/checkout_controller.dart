@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:carapp/utils/api_contants.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -106,6 +107,7 @@ class CheckOutContractController extends GetxController {
 
     request.headers.addAll({
       "Content-Type": "application/form-data",
+      'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
     request.fields['name'] = name;

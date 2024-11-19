@@ -106,6 +106,7 @@ class CheckinContractController extends GetxController {
 
     request.headers.addAll({
       "Content-Type": "application/form-data",
+      'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
     request.fields['name'] = name;
