@@ -19,13 +19,8 @@ class BookingController extends GetxController {
     error = null;
     update();
     try {
-      var response = await http.get(
-        Uri.parse(
-            "${ApiConstants.bookingHistoryEndPoint}/${SharedPrefs.getUserEmail}"),
-        headers: {
-          'Authorization': 'Bearer ${SharedPrefs.getToken}',
-        },
-      );
+      var response = await http.get(Uri.parse(
+          "${ApiConstants.bookingHistoryEndPoint}/${SharedPrefs.getUserEmail}"));
       log(response.body.toString());
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
