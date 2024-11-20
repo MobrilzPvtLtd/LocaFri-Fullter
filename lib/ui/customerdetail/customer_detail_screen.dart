@@ -385,25 +385,31 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       height: 5,
                     ),
                     Obx(
-                      () => TextFormField(
-                        onChanged: controller.updateMonth,
-                        keyboardType: TextInputType.number,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          hintStyle: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontFamily: "UberMove"),
-                          hintText: controller.month.value,
-                          focusColor: Colors.white,
-                          disabledBorder: InputBorder.none,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      () => Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: controller.updateMonth,
+                          keyboardType: TextInputType.number,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "UberMove"),
+                            hintText: controller.month.value,
+                            focusColor: Colors.white,
+                            disabledBorder: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
@@ -424,25 +430,31 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       height: 5,
                     ),
                     Obx(
-                      () => TextFormField(
-                        onChanged: controller.updateWeek,
-                        keyboardType: TextInputType.number,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          hintStyle: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontFamily: "UberMove"),
-                          hintText: controller.week.value,
-                          focusColor: Colors.white,
-                          disabledBorder: InputBorder.none,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      () => Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: controller.updateWeek,
+                          keyboardType: TextInputType.number,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "UberMove"),
+                            hintText: controller.week.value,
+                            focusColor: Colors.white,
+                            disabledBorder: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
@@ -463,25 +475,31 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       height: 5,
                     ),
                     Obx(
-                      () => TextFormField(
-                        onChanged: controller.updateDays,
-                        keyboardType: TextInputType.number,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          hintStyle: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontFamily: "UberMove"),
-                          hintText: controller.days.value,
-                          focusColor: Colors.white,
-                          disabledBorder: InputBorder.none,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      () => Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                          enabled: false,
+                          onChanged: controller.updateDays,
+                          keyboardType: TextInputType.number,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "UberMove"),
+                            hintText: controller.days.value,
+                            focusColor: Colors.white,
+                            disabledBorder: InputBorder.none,
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
@@ -515,7 +533,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     width: width * 0.70,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(width: 1, color: Colors.black26),
+                      border: Border.all(width: 1, color: Colors.black),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
@@ -531,16 +549,21 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 color: Colors.black),
                           ),
                           const SizedBox(height: 4),
-                          TextField(
-                            enabled: false,
-                            controller: TextEditingController(
-                                text: controller.endPrice.value),
-                            keyboardType: TextInputType.number,
-                            cursorColor: Colors.black,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Amount',
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: TextField(
+                              enabled: false,
+                              controller: TextEditingController(
+                                  text: controller.endPrice.value),
+                              keyboardType: TextInputType.number,
+                              cursorColor: Colors.black,
+                              textAlign: TextAlign.center,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Amount',
+                              ),
                             ),
                           ),
                         ],
@@ -603,48 +626,56 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      controller
-                          .submitForm(
-                        context,
-                        widget.vehicleName,
-                        widget.dPrice,
-                        widget.wPrice,
-                        widget.mPrice,
-                      )
-                          .then((value) {
-                        if (value) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PaymentScreen(
-                                  paymentUrl:
-                                      controller.paymentRedirectUrl.value),
-                            ),
-                          );
-                        } else {
-                          Get.snackbar("Failed", "Something went wrong");
-                        }
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: height * 0.06,
-                    width: width * 0.90,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffff36a21),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Book Now",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "UberMove",
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white),
+                Obx(
+                  () => GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller
+                            .submitForm(
+                          context,
+                          widget.vehicleName,
+                          widget.dPrice,
+                          widget.wPrice,
+                          widget.mPrice,
+                        )
+                            .then(
+                          (value) {
+                            if (value) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentScreen(
+                                      paymentUrl:
+                                          controller.paymentRedirectUrl.value),
+                                ),
+                              );
+                            } else {
+                              Get.snackbar("Failed", "Something went wrong");
+                            }
+                          },
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: height * 0.06,
+                      width: width * 0.90,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffff36a21),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: controller.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Book Now",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "UberMove",
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white),
+                              ),
                       ),
                     ),
                   ),

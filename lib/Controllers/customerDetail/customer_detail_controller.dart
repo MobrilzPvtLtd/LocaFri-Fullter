@@ -4,6 +4,7 @@ import 'package:carapp/models/create_contract_data.dart';
 import 'package:carapp/models/payment_data_model.dart';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class CustomerDetailController extends GetxController {
   RxString endPrice = "0".obs;
   RxList paymentType = <String>["PAY PARTIALLY 10%", "PAY FULL AMOUNT"].obs;
   var stripePaymentType = "PAY PARTIALLY 10%".obs;
+  RxBool loading = false.obs;
 
   var isAdditionalOptionEnabled = false.obs;
   var isAdditionalDriver = false.obs;
@@ -179,7 +181,10 @@ class CustomerDetailController extends GetxController {
                       () {
                         if (verifyOtpStatus.value) {
                           Navigator.pop(context);
+                          Get.snackbar("Success", "Email Verified");
                         } else {
+                          Navigator.pop(context);
+                          Get.snackbar("Failed", "Something went wrong");
                           log("Something went wrong");
                         }
                       },
@@ -340,6 +345,7 @@ class CustomerDetailController extends GetxController {
     String wprice,
     String mprice,
   ) async {
+    loading.value = true;
     try {
       var formData = {
         'first_name': firstName.value,
@@ -386,7 +392,8 @@ class CustomerDetailController extends GetxController {
         var responseData = jsonDecode(response.body);
         createContractData = CreateContractData.fromJson(responseData);
         log(responseData.toString());
-        await stripePaymentCall(createContractData!);
+        loading.value = false;
+        await stripePaymentCall(createContractData!, context);
         print('Success: ${responseData}');
         SharedPrefs.setUserFirstName(firstName.value);
         SharedPrefs.setUserLastName(lastName.value);
@@ -396,17 +403,20 @@ class CustomerDetailController extends GetxController {
       } else {
         print('Error: ${response.statusCode}');
         Get.snackbar("Failed", "Something went wrong..");
+        loading.value = false;
         return false;
       }
     } catch (e) {
       print('Exception: $e');
       Get.snackbar("Failed", "Something went wrong..");
+      loading.value = false;
       return false;
     }
   }
 
   // Stripe Payment API Call
-  Future<void> stripePaymentCall(CreateContractData createContractData) async {
+  Future<void> stripePaymentCall(
+      CreateContractData createContractData, BuildContext context) async {
     try {
       var paymentBody = {
         "price": createContractData.price.toString(),
@@ -433,6 +443,9 @@ class CustomerDetailController extends GetxController {
         var responseData = jsonDecode(response.body);
         paymentRedirectUrl.value = responseData["redirectUrl"];
         log(responseData["redirectUrl"]);
+        Get.offAll(BottomNavigator());
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) => const BottomNavigator()));
       }
     } catch (e) {
       print(e);
@@ -475,8 +488,8 @@ class CustomerDetailController extends GetxController {
               color: Colors.grey.shade800,
               borderRadius: BorderRadius.circular(25),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
+            child: const Padding(
+              padding: EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -485,10 +498,10 @@ class CustomerDetailController extends GetxController {
                     color: Colors.green,
                     size: 50,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Text(
                     "Thank you, Your Response has been submitted",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
                     ),
