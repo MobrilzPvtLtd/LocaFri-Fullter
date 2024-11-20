@@ -31,6 +31,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Booking History"),
         centerTitle: true,
@@ -53,10 +54,13 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
               itemCount: data!.length,
               itemBuilder: (context, index) {
                 switch (data[index].statusDescription) {
+                  case "pending":
+                    status = "Pending";
+                    break;
                   case "Rejected ":
                     status = "Rejected";
                     break;
-                  case "Approved":
+                  case " submit Check-in":
                     status = "Check-in";
                     break;
                   case "Check-in submitted ":
@@ -108,7 +112,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                               switch (data[index].statusDescription) {
                                 case "Rejected ":
                                   break;
-                                case "Approved":
+                                case " submit Check-in":
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -118,7 +122,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                   );
                                   break;
                                 case "Check-in submitted ":
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>

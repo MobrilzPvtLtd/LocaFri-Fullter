@@ -110,6 +110,7 @@ class CheckOutContractController extends GetxController {
       'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
+    request.fields['contract_id'] = SharedPrefs.getContractId.toString();
     request.fields['name'] = name;
     request.fields['address'] = address;
     request.fields['postal_code'] = postalCode;

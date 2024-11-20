@@ -9,17 +9,27 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import '../../Controllers/checkin/checkin_contract_controller.dart';
 
 // ignore: must_be_immutable
-class CheckinContractScreen extends StatelessWidget {
+class CheckinContractScreen extends StatefulWidget {
   CheckinContractScreen({super.key});
 
+  @override
+  State<CheckinContractScreen> createState() => _CheckinContractScreenState();
+}
+
+class _CheckinContractScreenState extends State<CheckinContractScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final fullNameController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final postalCodeController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final kilometerController = TextEditingController();
+
   Rx<File?> customerSignatureFile = Rx<File?>(null);
-  final ScrollController _scrollController = ScrollController();
 
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
 
@@ -66,10 +76,10 @@ class CheckinContractScreen extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          controller: _scrollController,
-          physics: controller.isGaugeActive.value
-              ? NeverScrollableScrollPhysics()
-              : AlwaysScrollableScrollPhysics(),
+          // controller: _scrollController,
+          // physics: controller.isGaugeActive.value
+          //     ? const NeverScrollableScrollPhysics()
+          //     : const AlwaysScrollableScrollPhysics(),
           child: Form(
             key: _formKey,
             child: Column(
@@ -169,7 +179,7 @@ class CheckinContractScreen extends StatelessWidget {
                     children: [
                       Obx(() {
                         return Checkbox(
-                          activeColor: Color(0xffff36a21),
+                          activeColor: const Color(0xffff36a21),
                           value: controller
                               .isChecked.value, // Bind to the reactive boolean
                           checkColor: Colors.white,

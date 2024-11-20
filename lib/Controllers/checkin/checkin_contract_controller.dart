@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -133,7 +134,7 @@ class CheckinContractController extends GetxController {
 
     if (odometerImage.value != null) {
       request.files.add(await http.MultipartFile.fromPath(
-        'odometer_image',
+        'fuel_image',
         odometerImage.value!.path,
       ));
     }
@@ -150,10 +151,18 @@ class CheckinContractController extends GetxController {
     try {
       var response = await request.send();
       log(response.statusCode.toString());
-      statusCode.value = response.statusCode.toString();
+      log(response.stream.bytesToString().toString());
+      var responseBody = await response.stream.bytesToString();
+      var jsonResponse = json.decode(responseBody);
+      log(jsonResponse);
       if (response.statusCode == 201) {
         var responseBody = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseBody);
+        Get.offAll(
+          const BottomNavigator(
+            initialIndex: 2,
+          ),
+        );
         log("The response is : ${jsonResponse}");
         print("Contract id: ${jsonResponse['id']}");
         print('Check-in completed: ${jsonResponse['message']}');
