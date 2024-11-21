@@ -55,8 +55,7 @@ class SearchCars extends StatelessWidget {
             return const Center(child: Text('No cars available'));
           }
           return ListView.builder(
-            // itemCount: availableCars.length,
-            itemCount: 1,
+            itemCount: availableCars.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               var product = availableCars[index];
@@ -65,7 +64,8 @@ class SearchCars extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CarDetailScreen(product['id'])));
+                          builder: (context) =>
+                              CarDetailScreen(product['id'])));
                 },
                 child: Container(
                   height: height * 0.18,
@@ -90,10 +90,9 @@ class SearchCars extends StatelessWidget {
                         child: SizedBox(
                           height: height * 0.20,
                           width: width * 0.35,
-                          // child: Image.network(
-                          //   product['profile'],
-                          // ), 
-                          child: Image.asset("assets/images/car1.png"),
+                          child: Image.network(
+                            product['profile'],
+                          ),
                         ),
                       ),
                       Column(
@@ -161,10 +160,11 @@ class SearchCars extends StatelessWidget {
                               child: Text(
                                 'Detail',
                                 style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontFamily: "UberMove",
-                                    fontWeight: FontWeight.w600),
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontFamily: "UberMove",
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           )

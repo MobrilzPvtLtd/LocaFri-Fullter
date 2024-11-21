@@ -7,7 +7,7 @@ import '../../Controllers/mobility/mobility_controller.dart';
 
 class MobilityScreen extends StatelessWidget {
   final MobilityController mobilityController = Get.put(MobilityController());
-  
+
   String formatDateTime(String dateTime) {
     DateTime parsedDate = DateTime.parse(dateTime);
     return DateFormat('yyyy-MM-dd HH:mm').format(parsedDate);
@@ -45,7 +45,6 @@ class MobilityScreen extends StatelessWidget {
             return const Center(child: Text('No cars available'));
           }
           return ListView.builder(
-            // itemCount: mobilityController.carList.length,
             itemCount: 1,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
@@ -56,7 +55,8 @@ class MobilityScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CarDetailScreen(product['id'])));
+                          builder: (context) =>
+                              CarDetailScreen(product['id'])));
                 },
                 child: Container(
                   width: width * 0.50,
@@ -76,14 +76,14 @@ class MobilityScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: width * 0.01, right: width * 0.005),
+                        padding: EdgeInsets.only(
+                            left: width * 0.01, right: width * 0.005),
                         child: SizedBox(
                           height: height * 0.20,
                           width: width * 0.35,
-                          // child: Image.network(
-                          //   product['profile'],
-                          // ), 
-                          child: Image.asset("assets/images/car1.png"),
+                          child: Image.network(
+                            product['profile'],
+                          ),
                         ),
                       ),
                       Column(
@@ -140,7 +140,8 @@ class MobilityScreen extends StatelessWidget {
                             height: height * 0.04,
                             width: width * 0.30,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(height * 0.01),
+                              borderRadius:
+                                  BorderRadius.circular(height * 0.01),
                               color: const Color(0xffff36a21),
                               border: Border.all(
                                 width: 1,
@@ -151,10 +152,11 @@ class MobilityScreen extends StatelessWidget {
                               child: Text(
                                 'Detail',
                                 style: TextStyle(
-                                    fontSize: height * 0.02,
-                                    color: Colors.white,
-                                    fontFamily: "UberMove",
-                                    fontWeight: FontWeight.w600),
+                                  fontSize: height * 0.02,
+                                  color: Colors.white,
+                                  fontFamily: "UberMove",
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ),

@@ -10,17 +10,17 @@ class CarDetailScreen extends StatelessWidget {
   final PageController _pageController = PageController();
   final RxInt currentIndex = 0.obs;
 
-  final List<Map<String, dynamic>> products = [
-    {
-      "image": "assets/images/car1.png",
-    },
-    {
-      "image": "assets/images/car2.png",
-    },
-    {
-      "image": "assets/images/car3.jpg",
-    },
-  ];
+  // final List<Map<String, dynamic>> products = [
+  //   {
+  //     "image": "assets/images/car1.png",
+  //   },
+  //   {
+  //     "image": "assets/images/car2.png",
+  //   },
+  //   {
+  //     "image": "assets/images/car3.jpg",
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +90,7 @@ class CarDetailScreen extends StatelessWidget {
                         return PageView.builder(
                           controller: _pageController,
                           scrollDirection: Axis.horizontal,
-                          // itemCount: controller.carDetails['images'].length, 
-                          itemCount: 3,
+                          itemCount: controller.carDetails['images'].length,
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
@@ -104,8 +103,8 @@ class CarDetailScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                    image: AssetImage(
-                                        products[index]["image"]),
+                                    image: NetworkImage(
+                                        controller.carDetails['images'][index]),
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -177,7 +176,7 @@ class CarDetailScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.start, 
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -187,7 +186,7 @@ class CarDetailScreen extends StatelessWidget {
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
-                              ), 
+                              ),
                               Text(
                                 "\$${carDetails['wprice']}/week",
                                 style: const TextStyle(
@@ -204,7 +203,9 @@ class CarDetailScreen extends StatelessWidget {
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
                               ),
-                              const SizedBox(height: 10,), 
+                              const SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
                           GestureDetector(
@@ -403,51 +404,51 @@ class CarDetailScreen extends StatelessWidget {
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "4",
-                                  style: TextStyle(
+                                Text(
+                                  carDetails['seat'],
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "5",
-                                  style: TextStyle(
+                                Text(
+                                  carDetails['door'].toString(),
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "Manual",
-                                  style: TextStyle(
+                                Text(
+                                  carDetails['trans'],
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "Petrol",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ), 
-                                 const Text(
-                                  "200kms / 1 day",
-                                  style: TextStyle(
+                                Text(
+                                  carDetails['fuel'],
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "100kms / 1 week",
-                                  style: TextStyle(
+                                Text(
+                                  "${carDetails['permitted_kilometers_day']} / 1 day",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text(
-                                  "300kms / 1 month",
-                                  style: TextStyle(
+                                Text(
+                                  "${carDetails['permitted_kilometers_week']} / 1 week",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "${carDetails['permitted_kilometers_month']} / 1 month",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),

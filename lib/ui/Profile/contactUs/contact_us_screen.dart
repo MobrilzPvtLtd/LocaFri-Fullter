@@ -136,15 +136,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               ),
               Row(
                 children: [
-                  Checkbox(
-                    value: checkbox,
-                    onChanged: (newBool) {
-                      setState(() {
-                        checkbox = newBool;
-                      });
-                    },
-                    tristate: false,
-                    activeColor: const Color(0xffff36a21),
+                  Obx(
+                    () => Checkbox(
+                      value: controller.isChecked.value,
+                      onChanged: (newBool) {
+                        controller.isChecked.value = newBool!;
+                      },
+                      tristate: false,
+                      activeColor: const Color(0xffff36a21),
+                    ),
                   ),
                   const Text(
                     "I have read and accept the privacy policy.",
@@ -159,7 +159,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               Obx(
                 () => GestureDetector(
                   onTap: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate() &&
+                        controller.validateCheckbox()) {
                       controller.sendRequest(nameController.text,
                           emailController.text, commentController.text);
                     }

@@ -15,6 +15,7 @@ class UserBookingScreen extends StatefulWidget {
 class _UserBookingScreenState extends State<UserBookingScreen> {
   final BookingController controller = Get.put(BookingController());
   String? status;
+  Color? color;
 
   String foramtDate(String date) {
     DateTime dateTime = DateTime.parse(date);
@@ -56,21 +57,27 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                 switch (data[index].statusDescription) {
                   case "pending":
                     status = "Pending";
+                    color = Colors.red;
                     break;
                   case "Rejected ":
                     status = "Rejected";
+                    color = Colors.red;
                     break;
                   case " submit Check-in":
                     status = "Check-in";
+                    color = Colors.green;
                     break;
                   case "Check-in submitted ":
                     status = "Check-out";
+                    color = Colors.green;
                     break;
                   case "Booking is yet to approve":
                     status = "Not Approved";
+                    color = Colors.green;
                     break;
                   default:
                     status = "Completed";
+                    color = Colors.red;
                 }
                 return Container(
                   margin: const EdgeInsets.only(top: 10),
@@ -139,9 +146,12 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
+                                color: color,
                               ),
-                              child: Text(status ?? "Pending"),
+                              child: Text(
+                                status ?? "Pending",
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             ),
                           )
                         ],

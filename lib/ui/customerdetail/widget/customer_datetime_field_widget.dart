@@ -20,6 +20,62 @@ class CustomerDateTimeField extends StatelessWidget {
   final SearchCarsController searchCarsController =
       Get.put(SearchCarsController());
 
+  Future<void> _materialDatePicker(BuildContext context, bool isPickUp) async {
+    DateTime now = DateTime.now();
+    DateTime initialDate =
+        isPickUp ? controller.pickUpDate.value : controller.dropOffDate.value;
+
+    if (initialDate.isBefore(now)) {
+      initialDate = now;
+    }
+
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: now,
+      lastDate: DateTime(2035),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate != null) {
+      if (isPickUp) {
+        controller.pickUpDate.value = selectedDate;
+        controller.pickUpTime.value = TimeOfDay.fromDateTime(selectedDate);
+      } else {
+        controller.dropOffDate.value = selectedDate;
+        controller.dropOffTime.value = TimeOfDay.fromDateTime(selectedDate);
+      }
+      controller.calculateDateDifference(
+        controller.pickUpDate.value,
+        controller.dropOffDate.value,
+        dPrice,
+        wPrice,
+        mPrice,
+      );
+    }
+
+    // if (selectedDate != null) {
+    //   if (isPickUp) {
+    //     controller.pickUpDate.value = selectedDate;
+    //   } else {
+    //     controller.dropOffDate.value = selectedDate;
+    //   }
+
+    //   controller.calculateDateDifference(
+    //     controller.pickUpDate.value,
+    //     controller.dropOffDate.value,
+    //     dPrice,
+    //     wPrice,
+    //     mPrice,
+    //   );
+    // }
+  }
+
   Future<void> _cupertinoDateTimePicker(
       BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
@@ -211,7 +267,9 @@ class CustomerDateTimeField extends StatelessWidget {
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: () => _cupertinoDateTimePicker(context, isPickUp),
+                // onTap: () => _cupertinoDateTimePicker(context, isPickUp),
+                onTap: () => _materialDatePicker(context, isPickUp),
+
                 child: Obx(() {
                   DateTime dateValue = isPickUp
                       ? controller.pickUpDate.value

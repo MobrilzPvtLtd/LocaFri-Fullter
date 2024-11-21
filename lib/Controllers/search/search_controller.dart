@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -64,11 +65,12 @@ class SearchCarsController extends GetxController {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         availableCars.assignAll(data['data']);
-        Get.snackbar("Success", "Cars fetched successfully!");
         Get.to(() => SearchCars());
       } else {
         Get.snackbar("Error", "Failed to fetch available cars");
       }
+    } on TimeoutException {
+      Get.snackbar("Error", "Internet connection issue");
     } catch (e) {
       Get.snackbar("Error", "An error occurred: $e");
     } finally {

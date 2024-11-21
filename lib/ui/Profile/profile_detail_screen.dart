@@ -33,8 +33,8 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CircleAvatar(
                   radius: 100,
@@ -43,119 +43,174 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: firstNameController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(20),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      " First Name",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    focusColor: Colors.white,
-                    disabledBorder: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    TextFormField(
+                      controller: firstNameController,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(20),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusColor: Colors.white,
+                        disabledBorder: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter an first name";
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an first name";
-                    }
-                    return null;
-                  },
+                  ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
-                TextFormField(
-                  controller: lastNameController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(20),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      " Last Name",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
                     ),
-                    focusColor: Colors.white,
-                    disabledBorder: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    TextFormField(
+                      controller: lastNameController,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(20),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusColor: Colors.white,
+                        disabledBorder: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter an last name";
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an last name";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: emailController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(20),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusColor: Colors.white,
-                    disabledBorder: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an email";
-                    }
-                    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                    if (!emailRegex.hasMatch(value)) {
-                      return "Enter a valid email";
-                    }
-                    return null;
-                  },
+                  ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
-                TextFormField(
-                  controller: phoneNumberController,
-                  cursorColor: Colors.black,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(20),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      " Email",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    focusColor: Colors.white,
-                    disabledBorder: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    TextFormField(
+                      controller: emailController,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(20),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusColor: Colors.white,
+                        disabledBorder: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter an email";
+                        }
+                        final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                        if (!emailRegex.hasMatch(value)) {
+                          return "Enter a valid email";
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an Phone number";
-                    }
-                    return null;
-                  },
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      " Password",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: phoneNumberController,
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(20),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusColor: Colors.white,
+                        disabledBorder: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter an Phone number";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 30,

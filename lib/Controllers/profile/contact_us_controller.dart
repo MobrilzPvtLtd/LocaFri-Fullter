@@ -1,12 +1,28 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:carapp/utils/api_contants.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ContactUsController extends GetxController {
   RxBool isLoading = false.obs;
   String? error;
+  var isChecked = false.obs;
+
+  bool validateCheckbox() {
+    if (!isChecked.value) {
+      Get.snackbar(
+        "Validation Error",
+        "You must have read the conditions and accept them.",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+    return true;
+  }
 
   Future<void> sendRequest(String name, String email, String message) async {
     isLoading.value = true;

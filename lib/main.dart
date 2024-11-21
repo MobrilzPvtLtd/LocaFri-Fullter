@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_no_internet_widget/flutter_no_internet_widget.dart';
 import 'package:get/get.dart';
 import 'Controllers/search/search_controller.dart';
 import 'widget/bottomnavigation.dart';
@@ -21,10 +22,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'LocaFri',
-      home: BottomNavigator(),
+    return InternetWidget(
+      offline: const FullScreenWidget(),
+      whenOffline: () => print('No Internet'),
+      whenOnline: () => print('Connected to internet'),
+      loadingWidget: const Center(child: Text('Loading')),
+      online: const GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'LocaFri',
+        home: BottomNavigator(),
+      ),
     );
+    // return const GetMaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'LocaFri',
+    //   home: BottomNavigator(),
+    // );
   }
 }

@@ -29,6 +29,40 @@ class _SearchScreenState extends State<SearchScreen> {
   DateTime _dropOffDate = DateTime.now();
   TimeOfDay _dropOffTime = TimeOfDay.now();
 
+  Future<void> _materialDatePicker(BuildContext context, bool isPickUp) async {
+    DateTime now = DateTime.now();
+    DateTime initialDate = isPickUp ? _pickUpDate : _dropOffDate;
+
+    if (initialDate.isBefore(now)) {
+      initialDate = now;
+    }
+
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: now,
+      lastDate: DateTime(2035),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate != null) {
+      setState(() {
+        if (isPickUp) {
+          _pickUpDate = selectedDate;
+          _pickUpTime = TimeOfDay.fromDateTime(selectedDate);
+        } else {
+          _dropOffDate = selectedDate;
+          _dropOffTime = TimeOfDay.fromDateTime(selectedDate);
+        }
+      });
+    }
+  }
+
   Future<void> _cupertinoDateTimePicker(
       BuildContext context, bool isPickUp) async {
     DateTime now = DateTime.now();
@@ -96,6 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
       hours: initialDateTime.hour,
       minutes: initialDateTime.minute + 5,
     );
+
     Duration? selectedDuration;
     var screenHeight = MediaQuery.of(context).size.height;
     await showCupertinoModalPopup(
@@ -445,7 +480,8 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: () => _cupertinoDateTimePicker(context, isPickUp),
+                onTap: () => _materialDatePicker(context, isPickUp),
+                // onTap: () => _cupertinoDateTimePicker(context, isPickUp),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                   decoration: BoxDecoration(
@@ -463,7 +499,8 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(width: screenWidth * 0.02),
             Expanded(
               child: GestureDetector(
-                onTap: () => _cupertinoTimePicker(context, isPickUp),
+                onTap: () => _materialDatePicker(context, isPickUp),
+                // onTap: () => _cupertinoTimePicker(context, isPickUp),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                   decoration: BoxDecoration(

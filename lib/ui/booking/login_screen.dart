@@ -15,20 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          height: screenHeight * 0.15,
-          width: screenWidth * 0.35,
-          padding: const EdgeInsets.all(28.0),
-          child: Image.asset(
-            fit: BoxFit.cover,
-            'assets/logo/Final-1.png',
-          ),
-        ),
-      ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -74,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (!emailRegex.hasMatch(value)) {
                         return "Enter a valid email";
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(

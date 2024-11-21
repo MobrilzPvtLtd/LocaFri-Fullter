@@ -1,6 +1,5 @@
 import 'package:carapp/Controllers/auth/logout_controller.dart';
 import 'package:carapp/ui/Profile/contactUs/contact_us_screen.dart';
-import 'package:carapp/ui/Profile/privacyPolicy/privacy_policy.dart';
 import 'package:carapp/ui/Profile/profile_detail_screen.dart';
 import 'package:carapp/ui/Profile/termsAndCondition/terms_condition.dart';
 import 'package:carapp/utils/shared_prefs.dart';
@@ -91,19 +90,6 @@ class Profile extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const TermAndConditionScreen(),
-                    ),
-                  );
-                },
-              ),
-              Buttonprofile(
-                icon: Icons.article_rounded,
-                icon2: Icons.arrow_right,
-                text: "Privacy & Policy",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PrivacyPolicyScreen(),
                     ),
                   );
                 },
