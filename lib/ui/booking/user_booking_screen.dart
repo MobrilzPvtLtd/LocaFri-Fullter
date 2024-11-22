@@ -126,7 +126,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                             onTap: () {
                               switch (data[index].statusDescription) {
                                 case "Approved" || "Submit Check-in":
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
@@ -187,28 +187,30 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Pending Price : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                      if (data[index].transaction != null) ...{
+                        Row(
+                          children: [
+                            const Text(
+                              "Pending Price : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "${double.parse(data[index].totalPrice.toString()) - double.parse(data[index].transaction!.amount.toString())}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
+                            Text(
+                              "${double.parse(data[index].totalPrice.toString()) - double.parse(data[index].transaction!.amount.toString())}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      },
                       Row(
                         children: [
                           const Text(

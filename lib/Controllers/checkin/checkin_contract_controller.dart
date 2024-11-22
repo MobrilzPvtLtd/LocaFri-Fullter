@@ -98,7 +98,6 @@ class CheckinContractController extends GetxController {
       Rx<File?> signatureImage,
       BuildContext context) async {
     isLoading.value = true;
-    showDialogBox();
 
     var request = http.MultipartRequest(
       'POST',
@@ -106,7 +105,6 @@ class CheckinContractController extends GetxController {
     );
 
     request.headers.addAll({
-      "Content-Type": "application/form-data",
       'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
@@ -115,7 +113,8 @@ class CheckinContractController extends GetxController {
     request.fields['postal_code'] = postalCode;
     request.fields['email'] = email;
     request.fields['record_kilometers'] = recordKilometers;
-    request.fields['fuel_level'] = (needleValue.value * 10.0).toString();
+    // request.fields['fuel_level'] = (needleValue.value * 10.0).toString();
+    request.fields['fuel_level'] = "full";
     request.fields['vehicle_damage_comments'] = vehicleDamageComments;
 
     if (signatureImage.value != null) {
@@ -139,19 +138,25 @@ class CheckinContractController extends GetxController {
       ));
     }
 
-    for (int i = 0; i < vehicleImages.length; i++) {
-      if (vehicleImages[i] != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'vehicle_images[]',
-          vehicleImages[i]!.path,
-        ));
-      }
+    if (vehicleImages[0] != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'vehicle_images[]',
+        vehicleImages[0]!.path,
+      ));
+    }
+    if (vehicleImages[0] != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'vehicle_images[]',
+        vehicleImages[1]!.path,
+      ));
     }
 
     try {
       var response = await request.send();
+      statusCode.value = response.statusCode.toString();
       log(response.statusCode.toString());
       log(response.stream.bytesToString().toString());
+      log(response.headers.toString());
       var responseBody = await response.stream.bytesToString();
       var jsonResponse = json.decode(responseBody);
       log(jsonResponse);
@@ -169,6 +174,7 @@ class CheckinContractController extends GetxController {
         await SharedPrefs.setContractId(jsonResponse["data"]["id"]);
       }
     } catch (e) {
+      log("The error is : $e");
       print('Error uploading contract: $e');
     } finally {
       isLoading.value = false;
@@ -181,24 +187,24 @@ class CheckinContractController extends GetxController {
     }
   }
 
-  void showDialogBox() {
-    if (isLoading.value) {
-      Get.dialog(
-        Center(
-          child: Container(
-            width: 100.0,
-            height: 100.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        ),
-        barrierDismissible: false,
-      );
-    }
-  }
+  // void showDialogBox() {
+  //   if (isLoading.value) {
+  //     Get.dialog(
+  //       Center(
+  //         child: Container(
+  //           width: 100.0,
+  //           height: 100.0,
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(8.0),
+  //           ),
+  //           child: const Center(
+  //             child: CircularProgressIndicator(),
+  //           ),
+  //         ),
+  //       ),
+  //       barrierDismissible: false,
+  //     );
+  //   }
+  // }
 }

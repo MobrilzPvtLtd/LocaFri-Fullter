@@ -33,10 +33,5 @@ class MyApp extends StatelessWidget {
         home: BottomNavigator(),
       ),
     );
-    // return const GetMaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: 'LocaFri',
-    //   home: BottomNavigator(),
-    // );
   }
 }

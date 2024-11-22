@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -56,6 +57,11 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -64,6 +70,18 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigator(
+                      initialIndex: 2,
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.arrow_back)),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           title: const Text(
@@ -646,42 +664,48 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
   Widget _submitButton(BuildContext context) {
     final height = MediaQuery.of(Get.context!).size.height;
     final width = MediaQuery.of(Get.context!).size.width;
-    return GestureDetector(
-      onTap: () {
-        if (_formKey.currentState!.validate()) {
-          controller.uploadCheckinContract(
-            fullNameController.text,
-            addressController.text,
-            postalCodeController.text,
-            emailController.text,
-            kilometerController.text,
-            'full',
-            'no damages in car',
-            customerSignatureFile,
-            context,
-          );
-          print('Form submitted');
-        } else {
-          print('Form is not valid');
-        }
-      },
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
-        child: Container(
-          height: height * 0.06,
-          width: width * 0.90,
-          decoration: BoxDecoration(
-              color: const Color(0xffff36a21),
-              borderRadius: BorderRadius.circular(14)),
-          child: const Center(
-            child: Text(
-              "Submit Form",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+    return Obx(
+      () => GestureDetector(
+        onTap: () {
+          if (_formKey.currentState!.validate()) {
+            controller.uploadCheckinContract(
+              fullNameController.text,
+              addressController.text,
+              postalCodeController.text,
+              emailController.text,
+              kilometerController.text,
+              'full',
+              'no damages in car',
+              customerSignatureFile,
+              context,
+            );
+            print('Form submitted');
+          } else {
+            print('Form is not valid');
+          }
+        },
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
+          child: Container(
+            height: height * 0.06,
+            width: width * 0.90,
+            decoration: BoxDecoration(
+                color: const Color(0xffff36a21),
+                borderRadius: BorderRadius.circular(14)),
+            child: Center(
+              child: controller.isLoading.value
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : const Text(
+                      "Submit Form",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
             ),
           ),
         ),

@@ -734,12 +734,6 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your full name';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
@@ -766,12 +760,6 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
-                    }
-                    return null;
-                  },
                 ),
               }
             ],

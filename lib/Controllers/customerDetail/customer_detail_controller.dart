@@ -408,7 +408,7 @@ class CustomerDetailController extends GetxController {
         SharedPrefs.setUserFirstName(firstName.value);
         SharedPrefs.setUserLastName(lastName.value);
         SharedPrefs.setUserPhoneNumber(phoneNumber.value);
-        SharedPrefs.setUserEmail(email.value);
+        // SharedPrefs.setUserEmail(email.value);
         return true;
       } else {
         print('Error: ${response.statusCode}');
