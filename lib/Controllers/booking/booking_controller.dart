@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:carapp/models/user_booking_data.dart';
+import 'package:carapp/models/user_booking_data_model.dart';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
 import 'package:get/get.dart';
@@ -10,9 +10,9 @@ class BookingController extends GetxController {
   RxBool isLoading = false.obs;
   String? error;
 
-  UserBookingData? userBookingData;
+  UserBookingDataModel? userBookingData;
 
-  List<BookingData>? get bookingData => userBookingData?.data ?? [];
+  List<Data>? get bookingData => userBookingData?.data ?? [];
 
   Future<void> fetchUserBookingData() async {
     isLoading.value = true;
@@ -24,7 +24,7 @@ class BookingController extends GetxController {
       log(response.body.toString());
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        userBookingData = UserBookingData.fromJson(data);
+        userBookingData = UserBookingDataModel.fromJson(data);
         log(response.body.toString());
       }
     } catch (e) {

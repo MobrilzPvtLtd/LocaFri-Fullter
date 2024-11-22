@@ -55,33 +55,41 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
               itemCount: data!.length,
               itemBuilder: (context, index) {
                 switch (data[index].statusDescription) {
-                  case "pending":
+                  case "Pending":
                     status = "Pending";
                     color = Colors.red;
                     break;
-                  case "Rejected ":
-                    status = "Rejected";
-                    color = Colors.red;
-                    break;
-                  case " submit Check-in":
+                  case "Approved":
                     status = "Check-in";
                     color = Colors.green;
                     break;
-                  case "Check-in submitted ":
+                  case "Rejected":
+                    status = "Rejected";
+                    color = Colors.red;
+                    break;
+                  case "Submit Check-in":
+                    status = "Check-in";
+                    color = Colors.green;
+                    break;
+                  case "Check-in Submitted":
                     status = "Check-out";
                     color = Colors.green;
                     break;
-                  case "Booking is yet to approve":
-                    status = "Not Approved";
+                  case "Check-in Approved":
+                    status = "Check-out";
                     color = Colors.green;
                     break;
-                  default:
+                  case "Booking Completed":
                     status = "Completed";
+                    color = Colors.blue;
+                    break;
+                  default:
+                    status = "Pending";
                     color = Colors.red;
                 }
                 return Container(
                   margin: const EdgeInsets.only(top: 10),
-                  height: 180,
+                  height: 230,
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -117,9 +125,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                           GestureDetector(
                             onTap: () {
                               switch (data[index].statusDescription) {
-                                case "Rejected ":
-                                  break;
-                                case " submit Check-in":
+                                case "Approved" || "Submit Check-in":
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -128,7 +134,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                     ),
                                   );
                                   break;
-                                case "Check-in submitted ":
+                                case "Check-in Approved":
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -162,7 +168,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                       Row(
                         children: [
                           const Text(
-                            "Price : ",
+                            "Total Price : ",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -171,6 +177,28 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                           ),
                           Text(
                             data[index].totalPrice.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Pending Price : ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            "${double.parse(data[index].totalPrice.toString()) - double.parse(data[index].transaction!.amount.toString())}",
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -215,6 +243,28 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                           ),
                           Text(
                             "${foramtDate(data[index].pickUpDate.toString())} to ${foramtDate(data[index].collectionDate.toString())}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Status : ",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            data[index].statusDescription.toString(),
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,

@@ -43,6 +43,16 @@ class CustomerDetailController extends GetxController {
   var pickUpTime = TimeOfDay.now().obs;
   var dropOffDate = DateTime.now().obs;
   var dropOffTime = TimeOfDay.now().obs;
+  var driverFirstName = ''.obs;
+  var driverLastName = ''.obs;
+
+  void updateDriverFirstName(String value) {
+    driverFirstName.value = value;
+  }
+
+  void updateDriverLastName(String value) {
+    driverLastName.value = value;
+  }
 
   void updateFirstName(String value) {
     firstName.value = value;
@@ -307,7 +317,7 @@ class CustomerDetailController extends GetxController {
       pickupDate = DateTime(pickupDate.year, pickupDate.month + 1, 1);
     }
 
-    days = dropOffDate.difference(pickupDate).inDays;
+    days = dropOffDate.day - pickupDate.day;
     weeks = days ~/ 7;
     days = days % 7;
 

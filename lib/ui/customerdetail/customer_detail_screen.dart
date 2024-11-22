@@ -88,11 +88,12 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
     controller.selectedDropOffLocation.value =
         searchCarController.dropOffLocationValue.value;
     controller.calculateDateDifference(
-        searchCarController.pickUpDateAndTime.value,
-        searchCarController.dropOfDateAndTime.value,
-        widget.dPrice,
-        widget.wPrice,
-        widget.mPrice);
+      searchCarController.pickUpDateAndTime.value,
+      searchCarController.dropOfDateAndTime.value,
+      widget.dPrice,
+      widget.wPrice,
+      widget.mPrice,
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -698,12 +699,83 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               ? "Additional Driver \n(20. -/ per month)"
               : "Additional Driver";
 
-          return AdditionalOptionsWidget(
-              switchvalue: controller.isAdditionalDriver.value,
-              text: additionalDriverText,
-              onChanged: (value) {
-                controller.toggleAdditionalDriver(value);
-              });
+          return Column(
+            children: [
+              AdditionalOptionsWidget(
+                  switchvalue: controller.isAdditionalDriver.value,
+                  text: additionalDriverText,
+                  onChanged: (value) {
+                    controller.toggleAdditionalDriver(value);
+                  }),
+              if (controller.isAdditionalDriver.value) ...{
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      onChanged: controller.updateDriverFirstName,
+                      keyboardType: TextInputType.name,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintStyle: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: "UberMove"),
+                        hintText: "Driver First Name",
+                        focusColor: Colors.white,
+                        disabledBorder: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your full name';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  onChanged: controller.updateDriverLastName,
+                  keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    hintText: "Driver Last Name",
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your full name';
+                    }
+                    return null;
+                  },
+                ),
+              }
+            ],
+          );
         }),
         const SizedBox(
           height: 5,
