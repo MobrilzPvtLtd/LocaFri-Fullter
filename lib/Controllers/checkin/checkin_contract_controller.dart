@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
 
 class CheckinContractController extends GetxController {
   RxBool isChecked = false.obs;
@@ -87,6 +89,35 @@ class CheckinContractController extends GetxController {
     vehicleImages[index] = null;
   }
 
+  Future<File?> resizeAndConvertToPng(File imageFile) async {
+    try {
+      // Read the image bytes
+      final imageBytes = await imageFile.readAsBytes();
+
+      // Decode the image using the image package
+      final img.Image? decodedImage = img.decodeImage(imageBytes);
+      if (decodedImage == null) return null;
+
+      // Resize the image
+      final img.Image resizedImage =
+          img.copyResize(decodedImage, width: 800); // Adjust width as needed
+
+      // Encode to PNG format
+      final List<int> pngBytes = img.encodePng(resizedImage);
+
+      // Save the resized PNG to a temporary file
+      final tempDir = await getTemporaryDirectory();
+      final resizedFile =
+          File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png');
+      await resizedFile.writeAsBytes(pngBytes);
+
+      return resizedFile;
+    } catch (e) {
+      log("Error resizing image: $e");
+      return null;
+    }
+  }
+
   Future<void> uploadCheckinContract(
       String name,
       String address,
@@ -108,61 +139,116 @@ class CheckinContractController extends GetxController {
       'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
+    log("The token is : ${SharedPrefs.getToken}");
+
     request.fields['name'] = name;
     request.fields['address'] = address;
     request.fields['postal_code'] = postalCode;
     request.fields['email'] = email;
     request.fields['record_kilometers'] = recordKilometers;
-    // request.fields['fuel_level'] = (needleValue.value * 10.0).toString();
-    request.fields['fuel_level'] = "full";
+    request.fields['fuel_level'] =
+        (needleValue.value * 10.0) > 50.0 ? "full" : "half";
     request.fields['vehicle_damage_comments'] = vehicleDamageComments;
 
+    log("The fields are : ");
+    log(request.fields['name'].toString());
+    log(request.fields['address'].toString());
+    log(request.fields['postal_code'].toString());
+    log(request.fields['email'].toString());
+    log(request.fields['record_kilometers'].toString());
+    log(request.fields['fuel_level'].toString());
+    log(request.fields['vehicle_damage_comments'].toString());
+
     if (signatureImage.value != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        'customer_signature',
-        signatureImage.value!.path,
-      ));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //   'customer_signature',
+      //   signatureImage.value!.path,
+      // ));
+      final resizedSignature =
+          await resizeAndConvertToPng(signatureImage.value!);
+      if (resizedSignature != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'customer_signature',
+          resizedSignature.path,
+        ));
+      }
+      log(resizedSignature!.path.toString());
     }
 
     if (licenceImage.value != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        'license_photo',
-        licenceImage.value!.path,
-      ));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //   'license_photo',
+      //   licenceImage.value!.path,
+      // ));
+      final resizedLicenceImage =
+          await resizeAndConvertToPng(licenceImage.value!);
+      if (resizedLicenceImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'license_photo',
+          resizedLicenceImage.path,
+        ));
+      }
+      log(resizedLicenceImage!.path.toString());
     }
 
     if (odometerImage.value != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        'fuel_image',
-        odometerImage.value!.path,
-      ));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //   'fuel_image',
+      //   odometerImage.value!.path,
+      // ));
+      final resizedOdometerImage =
+          await resizeAndConvertToPng(odometerImage.value!);
+      if (resizedOdometerImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'fuel_image',
+          resizedOdometerImage.path,
+        ));
+      }
+      log(resizedOdometerImage!.path.toString());
     }
 
     if (vehicleImages[0] != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        'vehicle_images[]',
-        vehicleImages[0]!.path,
-      ));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //   'vehicle_images[]',
+      //   vehicleImages[0]!.path,
+      // ));
+      final resizedVehicleImage =
+          await resizeAndConvertToPng(vehicleImages[0]!);
+      if (resizedVehicleImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'vehicle_images[]',
+          resizedVehicleImage.path,
+        ));
+      }
+      log(resizedVehicleImage!.path.toString());
     }
-    if (vehicleImages[0] != null) {
-      request.files.add(await http.MultipartFile.fromPath(
-        'vehicle_images[]',
-        vehicleImages[1]!.path,
-      ));
+    if (vehicleImages[1] != null) {
+      // request.files.add(await http.MultipartFile.fromPath(
+      //   'vehicle_images[]',
+      //   vehicleImages[1]!.path,
+      // ));
+      final resizedVehicleImage =
+          await resizeAndConvertToPng(vehicleImages[1]!);
+      if (resizedVehicleImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'vehicle_images[]',
+          resizedVehicleImage.path,
+        ));
+      }
+      log(resizedVehicleImage!.path.toString());
     }
 
     try {
       var response = await request.send();
       statusCode.value = response.statusCode.toString();
       log(response.statusCode.toString());
-      log(response.stream.bytesToString().toString());
-      log(response.headers.toString());
       var responseBody = await response.stream.bytesToString();
+      log("Response body: $responseBody");
       var jsonResponse = json.decode(responseBody);
-      log(jsonResponse);
+      log("JSON response: $jsonResponse");
       if (response.statusCode == 201) {
-        var responseBody = await response.stream.bytesToString();
-        var jsonResponse = json.decode(responseBody);
+        // var responseBody = await response.stream.bytesToString();
+        // var jsonResponse = json.decode(responseBody);
         Get.offAll(
           const BottomNavigator(
             initialIndex: 2,

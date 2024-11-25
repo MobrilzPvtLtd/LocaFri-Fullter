@@ -47,6 +47,8 @@ dependencies:
   flutter_inappwebview: ^6.1.5
   flutter_launcher_icons: ^0.14.1
   flutter_no_internet_widget: ^1.0.0+18-dev.1
+  image: ^4.3.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
