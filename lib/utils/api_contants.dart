@@ -14,4 +14,5 @@ class ApiConstants {
   static const String contactUsEndPoint = "$baseUrl/api/contactus";
   static const String logoutEndPoint = "$baseUrl/api/logout";
   static const String bookingHistoryEndPoint = "$baseUrl/api/getBookingHistory";
+  static const String privacyPolicyEndPoint = "$baseUrl/api/privacy-policy";
 }
