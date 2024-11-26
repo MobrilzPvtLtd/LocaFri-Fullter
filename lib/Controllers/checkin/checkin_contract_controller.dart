@@ -27,6 +27,7 @@ class CheckinContractController extends GetxController {
   }
 
   Rx<File?> licenceImage = Rx<File?>(null);
+
   Future<void> pickImageFromCamera1() async {
     final licenseImagePicker =
         await ImagePicker().pickImage(source: ImageSource.camera);
@@ -34,7 +35,9 @@ class CheckinContractController extends GetxController {
       licenceImage.value = File(licenseImagePicker.path);
     }
   }
-
+  void clearLicenceImage() {
+    licenceImage.value = null;
+  }
   Future<void> pickImageFromGallery1() async {
     final licenseImagePicker1 =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -55,7 +58,9 @@ class CheckinContractController extends GetxController {
       odometerImage.value = File(pickedOdometerFile.path);
     }
   }
-
+  void deleteOdoImage() {
+    odometerImage.value = null;
+  }
   Future<void> pickOdometerImageGallery() async {
     final pickedOdometerFile1 =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -88,7 +93,12 @@ class CheckinContractController extends GetxController {
   void deleteVehicleImage(int index) {
     vehicleImages[index] = null;
   }
-
+  void clearVehicleImages() {
+    for (int i = 0; i < vehicleImages.length; i++) {
+      vehicleImages[i]?.deleteSync();
+      vehicleImages[i] = null;
+    }
+  }
   Future<File?> resizeAndConvertToPng(File imageFile) async {
     try {
       // Read the image bytes
@@ -119,6 +129,7 @@ class CheckinContractController extends GetxController {
   }
 
   Future<void> uploadCheckinContract(
+      String id,
       String name,
       String address,
       String postalCode,
@@ -140,7 +151,7 @@ class CheckinContractController extends GetxController {
     });
 
     log("The token is : ${SharedPrefs.getToken}");
-
+    request.fields['booking_id'] = id;
     request.fields['name'] = name;
     request.fields['address'] = address;
     request.fields['postal_code'] = postalCode;

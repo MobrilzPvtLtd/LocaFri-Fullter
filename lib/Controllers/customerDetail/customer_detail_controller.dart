@@ -425,9 +425,9 @@ class CustomerDetailController extends GetxController {
   }
 
   // Stripe Payment API Call
-  Future<void> stripePaymentCall(
-      CreateContractData createContractData, BuildContext context) async {
+  Future<bool> stripePaymentCall(CreateContractData createContractData, BuildContext context) async {
     try {
+      // Construct request body
       var paymentBody = {
         "price": createContractData.price.toString(),
         "vehicle_name": createContractData.vehicleName ?? "",
@@ -438,6 +438,7 @@ class CustomerDetailController extends GetxController {
             : "payment_full",
       };
 
+      // Make API call
       var response = await http.post(
         Uri.parse(ApiConstants.stripePaymentEndPoint),
         headers: {
@@ -447,20 +448,27 @@ class CustomerDetailController extends GetxController {
         body: paymentBody,
       );
 
-      log(response.statusCode.toString());
+      log("Response Code: ${response.statusCode}");
 
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
+
+        // Save the redirect URL for navigation
         paymentRedirectUrl.value = responseData["redirectUrl"];
-        log(responseData["redirectUrl"]);
-        Get.offAll(BottomNavigator());
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => const BottomNavigator()));
+        log("Redirect URL: ${responseData["redirectUrl"]}");
+
+        // Return true on successful payment initiation
+        return true;
+      } else {
+        log("Payment API Error: ${response.body}");
+        return false;
       }
     } catch (e) {
-      print(e);
+      log("Payment Call Exception: $e");
+      return false;
     }
   }
+
 
   Future<void> fetchStripePaymentDetails(String url) async {
     showSuceessDialogBox(

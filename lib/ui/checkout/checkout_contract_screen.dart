@@ -10,15 +10,25 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
+import '../../Controllers/customerDetail/customer_detail_controller.dart';
+import '../../models/create_contract_data.dart';
+import '../../widget/bottomnavigation.dart';
+import '../customerdetail/payment_screen.dart';
+
 class CheckoutContractScreen extends StatefulWidget {
   final String paymentStatus;
-  const CheckoutContractScreen({super.key, required this.paymentStatus});
+  final String? vehicleName;
+  final String? dPrice;
+  final int? id;
+  const CheckoutContractScreen({super.key, required this.paymentStatus, required this.vehicleName, required this.dPrice, required this.id});
 
   @override
   State<CheckoutContractScreen> createState() => _checkoutContractScreenState();
 }
 
 class _checkoutContractScreenState extends State<CheckoutContractScreen> {
+  final CustomerDetailController _customerController =
+  Get.put(CustomerDetailController());
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
@@ -78,6 +88,18 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading:  IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BottomNavigator(
+                    initialIndex: 2,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.white,
         title: const Text(
           "Checkout Contract",
@@ -189,7 +211,45 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                         ),
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: Text("Pay Now ->"))
+                          onPressed: () async {
+                            final createContractData = CreateContractData(
+                              price: ,  // Set the actual price
+                              vehicleName:widget.vehicleName,  // Vehicle name from booking data
+                              customerEmail: SharedPrefs.getUserEmail,  // Customer email from user data
+                              bookingId: widget.id,  // Booking ID from booking data
+                            );
+                            if (_formKey.currentState!.validate()) {
+                              // Ensure CreateContractData object is properly initialized
+                              if (createContractData != null) {
+                                try {
+                                  // Call the API and await the result
+                                  bool isPaymentInitiated = await _customerController.stripePaymentCall(createContractData!, context);
+
+                                  if (isPaymentInitiated) {
+                                    // Navigate to PaymentScreen if API call succeeds
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                          paymentUrl: _customerController.paymentRedirectUrl.value,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    // Display error notification if something went wrong
+                                    Get.snackbar("Failed", "Something went wrong");
+                                  }
+                                } catch (e) {
+                                  // Handle unexpected errors
+                                  Get.snackbar("Error", "An unexpected error occurred: $e");
+                                }
+                              } else {
+                                // Handle case where CreateContractData is null
+                                Get.snackbar("Error", "Invalid contract data");
+                              }
+                            }
+                          }
+                          , child: Text("Pay Now ->"))
                     ],
                   ),
                 ),
@@ -821,4 +881,5 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
       },
     );
   }
+
 }

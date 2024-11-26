@@ -23,14 +23,15 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
     return formattedDate;
   }
 
-  @override
-  void initState() {
-    controller.fetchUserBookingData();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   controller.fetchUserBookingData();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchUserBookingData();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,50 +47,43 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
             );
           } else if (controller.error != null) {
             return Center(
-              child: Text("Error : ${controller.error}"),
+              child: Text("Error: ${controller.error}"),
             );
-          } else if (controller.bookingData != null &&
-              controller.bookingData!.length != 0) {
+          } else if (controller.bookingData != null && controller.bookingData!.isNotEmpty) {
             final data = controller.bookingData;
             return ListView.builder(
               itemCount: data!.length,
               itemBuilder: (context, index) {
-                switch (data[index].statusDescription) {
-                  case "Pending":
-                    status = "Pending";
-                    color = Colors.red;
-                    break;
-                  case "Approved":
-                    status = "Check-in";
-                    color = Colors.green;
-                    break;
-                  case "Rejected":
-                    status = "Rejected";
-                    color = Colors.red;
-                    break;
-                  case "Submit Check-in":
-                    status = "Check-in";
-                    color = Colors.green;
-                    break;
-                  case "Check-in Submitted":
-                    status = "Check-out";
-                    color = Colors.green;
-                    break;
-                  case "Check-in Approved":
-                    status = "Check-out";
-                    color = Colors.green;
-                    break;
-                  case "Booking Completed":
-                    status = "Completed";
-                    color = Colors.blue;
-                    break;
-                  default:
-                    status = "Pending";
-                    color = Colors.red;
+                final booking = data[index].booking;
+                final transaction = booking!.transaction;
+
+                // Initialize status and color
+                String status;
+                Color color;
+
+                if (booking.isComplete == 1 && booking.isConfirm == 2) {
+                  // Completed
+                  status = "Completed";
+                  color = Colors.blue;
+                } else if (booking.isContract == 2 && booking.isConfirm == 1) {
+                  // Check-out
+                  status = "Check-out";
+                  color = Colors.green;
+                } else if (booking.isContract == 1) {
+                  // Check-in
+                  status = "Check-in";
+                  color = Colors.green;
+                } else if (booking.isViewbooking == 1) {
+                  // Check-in (if is_viewbooking turns to 1)
+                  status = "Check-in";
+                  color = Colors.green;
+                } else {
+                  // Default Pending State
+                  status = "Pending";
+                  color = Colors.red;
                 }
                 return Container(
                   margin: const EdgeInsets.only(top: 10),
-                  height: 230,
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -107,173 +101,130 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                 backgroundColor: Colors.white,
                                 child: Center(
                                   child: Text(
-                                    data[index].bookingId.toString(),
+                                    booking.id.toString(),
                                     style: const TextStyle(color: Colors.black),
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
+                              const SizedBox(width: 10),
                               Text(
-                                data[index].vehicleName.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                                booking.name.toString(),
+                                style: const TextStyle(color: Colors.white, fontSize: 20),
                               ),
                             ],
                           ),
                           GestureDetector(
                             onTap: () {
-                              switch (data[index].statusDescription) {
-                                case "Approved" || "Submit Check-in":
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          CheckinContractScreen(),
+                              // Navigate based on computed status
+                              if (booking.isComplete == 1 && booking.isConfirm == 2) {
+                                // Booking Completed — No navigation or show details
+                                return;  // Optional: You might show a dialog or summary instead
+                              } else if (booking.isContract == 2 && booking.isConfirm == 1) {
+                                // Navigate to CheckoutContractScreen
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CheckoutContractScreen(
+                                        vehicleName:booking.name,
+                                        dPrice:booking.dprice,
+                                        id:booking.id,
+                                        paymentStatus: booking.status.toString(),
                                     ),
-                                  );
-                                  break;
-                                case "Check-in Approved":
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          CheckoutContractScreen(
-                                        paymentStatus:
-                                            data[index].status.toString(),
-                                      ),
-                                    ),
-                                  );
-                                default:
+                                  ),
+                                );
+                              } else if (booking.isContract == 1 || booking.isViewbooking == 1) {
+                                // Navigate to CheckinContractScreen
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CheckinContractScreen(id:booking.id),
+                                  ),
+                                );
                               }
+                              // Optional: Add a default action or an alert for unsupported states
                             },
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: color,
+                                color: color,  // Determined by your status logic
                               ),
                               child: Text(
-                                status ?? "Pending",
+                                status,  // Computed status
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
-                          )
+                          ),
+
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Text(
-                            "Total Price : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                            "Total Price: ",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           Text(
-                            data[index].totalPrice.toString(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                            booking.totalPrice.toString(),
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (data[index].transaction != null) ...{
+                      const SizedBox(height: 10),
+                      if (transaction != null) ...{
                         Row(
                           children: [
                             const Text(
-                              "Pending Price : ",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
+                              "Pending Price: ",
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              "${double.parse(data[index].totalPrice.toString()) - double.parse(data[index].transaction!.amount.toString())}",
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
+                              "${double.parse(booking.totalPrice.toString()) - double.parse(transaction.amount.toString())}",
+                              style: const TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       },
                       Row(
                         children: [
                           const Text(
-                            "Location : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                            "Location: ",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           Text(
-                            "${data[index].pickUpLocation.toString()} to ${data[index].dropOffLocation.toString()}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                            "${booking.pickUpLocation} to ${booking.dropOffLocation}",
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Text(
-                            "Date : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                            "Date: ",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           Text(
-                            "${foramtDate(data[index].pickUpDate.toString())} to ${foramtDate(data[index].collectionDate.toString())}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                            "${formatDate(booking.pickUpDate.toString())} to ${formatDate(booking.collectionDate.toString())}",
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           const Text(
-                            "Status : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                            "Status: ",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                           Text(
-                            data[index].statusDescription.toString(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                            booking.status.toString(),
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 );
@@ -288,7 +239,12 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
             );
           }
         }),
-      ),
+      )
+
     );
+  }
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return "${dateTime.day}-${dateTime.month}-${dateTime.year}";
   }
 }

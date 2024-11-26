@@ -11,7 +11,8 @@ import '../../Controllers/checkin/checkin_contract_controller.dart';
 
 // ignore: must_be_immutable
 class CheckinContractScreen extends StatefulWidget {
-  CheckinContractScreen({super.key});
+  int? id;
+  CheckinContractScreen({super.key, required this.id});
 
   @override
   State<CheckinContractScreen> createState() => _CheckinContractScreenState();
@@ -56,8 +57,13 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
     customerSignatureFile.value = file;
   }
 
-  @override
+@override
   void dispose() {
+   controller.clearLicenceImage();
+   controller.deleteImage();
+   controller.deleteOdoImage();
+   controller.deleteOdometerImage();
+   controller.clearVehicleImages();
     super.dispose();
   }
 
@@ -669,6 +675,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         onTap: () {
           if (_formKey.currentState!.validate()) {
             controller.uploadCheckinContract(
+              widget.id.toString(),
               fullNameController.text,
               addressController.text,
               postalCodeController.text,
