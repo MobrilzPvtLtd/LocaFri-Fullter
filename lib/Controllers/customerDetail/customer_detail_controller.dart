@@ -429,7 +429,7 @@ class CustomerDetailController extends GetxController {
     try {
       // Construct request body
       var paymentBody = {
-        "price": createContractData.price.toString(),
+        "price": "${createContractData.price}",
         "vehicle_name": createContractData.vehicleName ?? "",
         "customer_email": createContractData.customerEmail ?? "",
         "booking_id": createContractData.bookingId.toString(),
@@ -444,10 +444,11 @@ class CustomerDetailController extends GetxController {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ${SharedPrefs.getToken}',
+
         },
         body: paymentBody,
       );
-
+      print("Bearer ${SharedPrefs.getToken}");
       log("Response Code: ${response.statusCode}");
 
       if (response.statusCode == 200) {

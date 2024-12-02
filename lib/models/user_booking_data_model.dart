@@ -9,14 +9,14 @@ class UserBookingDataModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['status'] = status;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -25,66 +25,51 @@ class UserBookingDataModel {
 }
 
 class Data {
-  int? id;
+  int? contractId;
   int? bookingId;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  Null? addressFirst;
-  Null? addressLast;
-  String? createdAt;
-  String? updatedAt;
-  Booking? booking;
+  String? totalAmount;
+  String? amountPaid;
+  String? remainingAmount;
+  String? paymentLink;
+  Bookings? bookings;
 
   Data(
-      {this.id,
+      {this.contractId,
         this.bookingId,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.phone,
-        this.addressFirst,
-        this.addressLast,
-        this.createdAt,
-        this.updatedAt,
-        this.booking});
+        this.totalAmount,
+        this.amountPaid,
+        this.remainingAmount,
+        this.paymentLink,
+        this.bookings});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    contractId = json['contract_id'];
     bookingId = json['booking_id'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    email = json['email'];
-    phone = json['phone'];
-    addressFirst = json['address_first'];
-    addressLast = json['address_last'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    booking =
-    json['booking'] != null ?  Booking.fromJson(json['booking']) : null;
+    totalAmount = json['total_amount'];
+    amountPaid = json['amount_paid'];
+    remainingAmount = json['remaining_amount'];
+    paymentLink = json['payment_link'];
+    bookings = json['bookings'] != null
+        ? new Bookings.fromJson(json['bookings'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['id'] = id;
-    data['booking_id'] = bookingId;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['email'] = email;
-    data['phone'] = phone;
-    data['address_first'] = addressFirst;
-    data['address_last'] = addressLast;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (booking != null) {
-      data['booking'] = booking!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['contract_id'] = this.contractId;
+    data['booking_id'] = this.bookingId;
+    data['total_amount'] = this.totalAmount;
+    data['amount_paid'] = this.amountPaid;
+    data['remaining_amount'] = this.remainingAmount;
+    data['payment_link'] = this.paymentLink;
+    if (this.bookings != null) {
+      data['bookings'] = this.bookings!.toJson();
     }
     return data;
   }
 }
 
-class Booking {
+class Bookings {
   int? id;
   String? name;
   String? dprice;
@@ -115,9 +100,9 @@ class Booking {
   int? seen;
   String? createdAt;
   String? updatedAt;
-  Transaction? transaction;
+  Checkout? checkout;
 
-  Booking(
+  Bookings(
       {this.id,
         this.name,
         this.dprice,
@@ -148,9 +133,9 @@ class Booking {
         this.seen,
         this.createdAt,
         this.updatedAt,
-        this.transaction});
+        this.checkout});
 
-  Booking.fromJson(Map<String, dynamic> json) {
+  Bookings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     dprice = json['Dprice'];
@@ -181,99 +166,99 @@ class Booking {
     seen = json['seen'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    transaction = json['transaction'] != null
-        ?  Transaction.fromJson(json['transaction'])
+    checkout = json['checkout'] != null
+        ? new Checkout.fromJson(json['checkout'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['id'] = id;
-    data['name'] = name;
-    data['Dprice'] = dprice;
-    data['wprice'] = wprice;
-    data['mprice'] = mprice;
-    data['total_price'] = totalPrice;
-    data['day_count'] = dayCount;
-    data['week_count'] = weekCount;
-    data['month_count'] = monthCount;
-    data['additional_driver'] = additionalDriver;
-    data['booster_seat'] = boosterSeat;
-    data['child_seat'] = childSeat;
-    data['exit_permit'] = exitPermit;
-    data['pickUpLocation'] = pickUpLocation;
-    data['dropOffLocation'] = dropOffLocation;
-    data['pickUpDate'] = pickUpDate;
-    data['pickUpTime'] = pickUpTime;
-    data['collectionTime'] = collectionTime;
-    data['collectionDate'] = collectionDate;
-    data['targetDate'] = targetDate;
-    data['status'] = status;
-    data['payment_type'] = paymentType;
-    data['is_viewbooking'] = isViewbooking;
-    data['is_rejected'] = isRejected;
-    data['is_contract'] = isContract;
-    data['is_confirm'] = isConfirm;
-    data['is_complete'] = isComplete;
-    data['seen'] = seen;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (transaction != null) {
-      data['transaction'] = transaction!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['Dprice'] = this.dprice;
+    data['wprice'] = this.wprice;
+    data['mprice'] = this.mprice;
+    data['total_price'] = this.totalPrice;
+    data['day_count'] = this.dayCount;
+    data['week_count'] = this.weekCount;
+    data['month_count'] = this.monthCount;
+    data['additional_driver'] = this.additionalDriver;
+    data['booster_seat'] = this.boosterSeat;
+    data['child_seat'] = this.childSeat;
+    data['exit_permit'] = this.exitPermit;
+    data['pickUpLocation'] = this.pickUpLocation;
+    data['dropOffLocation'] = this.dropOffLocation;
+    data['pickUpDate'] = this.pickUpDate;
+    data['pickUpTime'] = this.pickUpTime;
+    data['collectionTime'] = this.collectionTime;
+    data['collectionDate'] = this.collectionDate;
+    data['targetDate'] = this.targetDate;
+    data['status'] = this.status;
+    data['payment_type'] = this.paymentType;
+    data['is_viewbooking'] = this.isViewbooking;
+    data['is_rejected'] = this.isRejected;
+    data['is_contract'] = this.isContract;
+    data['is_confirm'] = this.isConfirm;
+    data['is_complete'] = this.isComplete;
+    data['seen'] = this.seen;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.checkout != null) {
+      data['checkout'] = this.checkout!.toJson();
     }
     return data;
   }
 }
 
-class Transaction {
+class Checkout {
   int? id;
-  int? orderId;
-  String? transactionId;
-  String? amount;
-  String? currency;
-  String? paymentMethod;
-  String? dateTime;
-  String? paymentStatus;
+  int? bookingId;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phone;
+  Null? addressFirst;
+  Null? addressLast;
   String? createdAt;
   String? updatedAt;
 
-  Transaction(
+  Checkout(
       {this.id,
-        this.orderId,
-        this.transactionId,
-        this.amount,
-        this.currency,
-        this.paymentMethod,
-        this.dateTime,
-        this.paymentStatus,
+        this.bookingId,
+        this.firstName,
+        this.lastName,
+        this.email,
+        this.phone,
+        this.addressFirst,
+        this.addressLast,
         this.createdAt,
         this.updatedAt});
 
-  Transaction.fromJson(Map<String, dynamic> json) {
+  Checkout.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    orderId = json['order_id'];
-    transactionId = json['transaction_id'];
-    amount = json['amount'];
-    currency = json['currency'];
-    paymentMethod = json['payment_method'];
-    dateTime = json['date_time'];
-    paymentStatus = json['payment_status'];
+    bookingId = json['booking_id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    phone = json['phone'];
+    addressFirst = json['address_first'];
+    addressLast = json['address_last'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['id'] = id;
-    data['order_id'] = orderId;
-    data['transaction_id'] = transactionId;
-    data['amount'] = amount;
-    data['currency'] = currency;
-    data['payment_method'] = paymentMethod;
-    data['date_time'] = dateTime;
-    data['payment_status'] = paymentStatus;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['booking_id'] = this.bookingId;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['address_first'] = this.addressFirst;
+    data['address_last'] = this.addressLast;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

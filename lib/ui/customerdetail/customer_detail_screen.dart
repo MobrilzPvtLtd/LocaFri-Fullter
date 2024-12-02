@@ -646,6 +646,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => PaymentScreen(
+                                      fromCheckout:false,
                                       paymentUrl:
                                           controller.paymentRedirectUrl.value),
                                 ),

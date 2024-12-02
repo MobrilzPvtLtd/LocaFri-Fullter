@@ -18,9 +18,10 @@ import '../customerdetail/payment_screen.dart';
 class CheckoutContractScreen extends StatefulWidget {
   final String paymentStatus;
   final String? vehicleName;
-  final String? dPrice;
+  final String? price;
   final int? id;
-  const CheckoutContractScreen({super.key, required this.paymentStatus, required this.vehicleName, required this.dPrice, required this.id});
+  final int? contractId;
+  const CheckoutContractScreen({super.key, required this.paymentStatus, required this.vehicleName, required this.price, required this.id, required this.contractId});
 
   @override
   State<CheckoutContractScreen> createState() => _checkoutContractScreenState();
@@ -114,213 +115,227 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
         physics: controller.isGaugeActive.value
             ? NeverScrollableScrollPhysics()
             : AlwaysScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                _firstandlastname(nameController),
-                _addressandPostalcode(addressController, postalCodeController),
-                _emailandLicense(controller.licenceImage, emailController),
-                _kilometerandFuelLevelandVehicalDamage(
-                    _image, kilometerController),
-                const Text(
-                  "Upload Vehical/Damages ",
-                  style: TextStyle(
-                      fontFamily: "UberMove",
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _VehicalDamage(controller.vehicleImages),
-                _odometerimage(controller.odometerImage),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "Upload Signature",
-                        style: TextStyle(
-                          fontFamily: "UberMove",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 2),
-                        ),
-                        child: SfSignaturePad(
-                          key: signatureGlobalKey,
-                          backgroundColor: Colors.white,
-                          strokeColor: Colors.black,
-                          minimumStrokeWidth: 2.0,
-                          maximumStrokeWidth: 4.0,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TextButton(
-                            onPressed: handleSaveButtonPressed,
-                            child: const Text(
-                              'Capture Signature',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: handleClearButtonPressed,
-                            child: const Text(
-                              'Clear',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+        child: Stack(
+          children:[ Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  _firstandlastname(nameController),
+                  _addressandPostalcode(addressController, postalCodeController),
+                  _emailandLicense(controller.licenceImage, emailController),
+                  _kilometerandFuelLevelandVehicalDamage(
+                      _image, kilometerController),
+                  const Text(
+                    "Upload Vehical/Damages ",
+                    style: TextStyle(
+                        fontFamily: "UberMove",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey.shade300),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        "Pay Pending Amount : ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _VehicalDamage(controller.vehicleImages),
+                  _odometerimage(controller.odometerImage),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Upload Signature",
+                          style: TextStyle(
+                            fontFamily: "UberMove",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      ElevatedButton(
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 2),
+                          ),
+                          child: SfSignaturePad(
+                            key: signatureGlobalKey,
+                            backgroundColor: Colors.white,
+                            strokeColor: Colors.black,
+                            minimumStrokeWidth: 2.0,
+                            maximumStrokeWidth: 4.0,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              onPressed: handleSaveButtonPressed,
+                              child: const Text(
+                                'Capture Signature',
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: handleClearButtonPressed,
+                              child: const Text(
+                                'Clear',
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.grey.shade300),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Pay Pending Amount : ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        ElevatedButton(
                           onPressed: () async {
                             final createContractData = CreateContractData(
-                              price: ,  // Set the actual price
-                              vehicleName:widget.vehicleName,  // Vehicle name from booking data
-                              customerEmail: SharedPrefs.getUserEmail,  // Customer email from user data
-                              bookingId: widget.id,  // Booking ID from booking data
+                              price: widget.price, // Set the actual price
+                              vehicleName: widget.vehicleName, // Vehicle name from booking data
+                              customerEmail: SharedPrefs.getUserEmail, // Corrected function call
+                              bookingId: widget.id,
+                              paymentType: _customerController.stripePaymentType.value = "payment_full"// Booking ID from booking data
                             );
-                            if (_formKey.currentState!.validate()) {
-                              // Ensure CreateContractData object is properly initialized
-                              if (createContractData != null) {
-                                try {
-                                  // Call the API and await the result
-                                  bool isPaymentInitiated = await _customerController.stripePaymentCall(createContractData!, context);
+                              try {
+                                // Call the API and await the result
+                                bool isPaymentInitiated = await _customerController.stripePaymentCall(createContractData, context);
 
-                                  if (isPaymentInitiated) {
-                                    // Navigate to PaymentScreen if API call succeeds
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => PaymentScreen(
-                                          paymentUrl: _customerController.paymentRedirectUrl.value,
-                                        ),
+                                if (isPaymentInitiated) {
+                                  // Navigate to PaymentScreen if API call succeeds
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PaymentScreen(
+                                      fromCheckout:true,
+                                      paymentUrl: _customerController.paymentRedirectUrl.value,
                                       ),
-                                    );
-                                  } else {
-                                    // Display error notification if something went wrong
-                                    Get.snackbar("Failed", "Something went wrong");
-                                  }
-                                } catch (e) {
-                                  // Handle unexpected errors
-                                  Get.snackbar("Error", "An unexpected error occurred: $e");
+                                    ),
+                                  );
+                                } else {
+                                  // Display error notification if something went wrong
+                                  Get.snackbar("Failed", "Something went wrong");
                                 }
-                              } else {
-                                // Handle case where CreateContractData is null
-                                Get.snackbar("Error", "Invalid contract data");
+                              } catch (e) {
+                                // Handle unexpected errors
+                                Get.snackbar("Error", "An unexpected error occurred: $e");
                               }
-                            }
-                          }
-                          , child: Text("Pay Now ->"))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Obx(() {
-                        return Checkbox(
-                          activeColor: const Color(0xffff36a21),
-                          value: controller.isChecked.value,
-                          checkColor: Colors.white,
-                          onChanged: (newValue) {
-                            controller.toggleCheckbox(newValue!);
                           },
-                        );
-                      }),
-                      const Text(
-                        "I am 18 years of age or older and agree to the \n terms of the Contract and the  Valve Privacy \n Policy",
-                        style: TextStyle(fontFamily: "Ubermove"),
-                      )
-                    ],
+                          child: const Text("Pay Now ->"),
+                        )
+
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      controller.uploadCheckOutContract(
-                        name: nameController.text,
-                        address: addressController.text,
-                        postalCode: postalCodeController.text,
-                        email: emailController.text,
-                        recordKilometers: kilometerController.text,
-                        signatureImage: customerSignatureFile,
-                        fuelLevel: "75",
-                        comment: "Good",
-                        contractId: SharedPrefs.getContractId.toString(),
-                        context: context,
-                      );
-                    } else {
-                      print("Something went wrong");
-                    }
-                  },
-                  child: Container(
-                    height: height * 0.06,
-                    width: width * 0.90,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffff36a21),
-                        borderRadius: BorderRadius.circular(14)),
-                    child: const Center(
-                      child: Text(
-                        "Submit Form",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Obx(() {
+                          return Checkbox(
+                            activeColor: const Color(0xffff36a21),
+                            value: controller.isChecked.value,
+                            checkColor: Colors.white,
+                            onChanged: (newValue) {
+                              controller.toggleCheckbox(newValue!);
+                            },
+                          );
+                        }),
+                        const Text(
+                          "I am 18 years of age or older and agree to the \n terms of the Contract and the  Valve Privacy \n Policy",
+                          style: TextStyle(fontFamily: "Ubermove"),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller.uploadCheckOutContract(
+                          name: nameController.text,
+                          address: addressController.text,
+                          postalCode: postalCodeController.text,
+                          email: emailController.text,
+                          recordKilometers: kilometerController.text,
+                          signatureImage: customerSignatureFile,
+                          fuelLevel: "75",
+                          comment: "Good",
+                          contractId:widget.contractId.toString(),
+                          context: context,
+                        );
+                      } else {
+                        print("Something went wrong");
+                      }
+                    },
+                    child: Container(
+                      height: height * 0.06,
+                      width: width * 0.90,
+                      decoration: BoxDecoration(
+                          color: const Color(0xffff36a21),
+                          borderRadius: BorderRadius.circular(14)),
+                      child: const Center(
+                        child: Text(
+                          "Submit Form",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return Positioned.fill(
+                  child: Container(
+                    color: Colors.black.withOpacity(0.5), // Semi-transparent background
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black, // Loader color
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink(); // Empty container if loader is not active
+              }
+            }),
+       ] ),
       ),
     );
   }
@@ -380,7 +395,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           TextFormField(
             controller: addressController,
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.streetAddress,
             cursorColor: Colors.black,
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
@@ -410,7 +425,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           TextFormField(
             controller: postalCodeController,
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.phone,
             cursorColor: Colors.black,
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(

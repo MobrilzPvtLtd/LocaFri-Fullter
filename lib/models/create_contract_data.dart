@@ -1,7 +1,7 @@
 class CreateContractData {
   bool? status;
   String? message;
-  int? price;
+  String? price;
   String? vehicleName;
   String? customerEmail;
   int? bookingId;

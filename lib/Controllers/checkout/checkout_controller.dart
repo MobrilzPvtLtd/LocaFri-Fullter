@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image/image.dart' as img;
 
 class CheckOutContractController extends GetxController {
   RxBool isChecked = false.obs;
@@ -86,20 +87,115 @@ class CheckOutContractController extends GetxController {
     vehicleImages[index] = null;
   }
 
-  Future<void> uploadCheckOutContract(
-      {required String name,
-      required String address,
-      required String postalCode,
-      required String email,
-      required String recordKilometers,
-      required Rx<File?> signatureImage,
-      required String fuelLevel,
-      required String comment,
-      required String contractId,
-      required BuildContext context}) async {
-    isLoading.value = true;
-    showDialogBox();
+  // Future<void> uploadCheckOutContract({
+  //   required String name,
+  //   required String address,
+  //   required String postalCode,
+  //   required String email,
+  //   required String recordKilometers,
+  //   required Rx<File?> signatureImage,
+  //   required String fuelLevel,
+  //   required String comment,
+  //   required String contractId,
+  //   required BuildContext context,
+  // }) async {
+  //   isLoading.value = true;  // Start the loader
+  //   showDialogBox();  // Show the loading dialog
+  //
+  //   var request = http.MultipartRequest(
+  //     'POST',
+  //     Uri.parse(ApiConstants.checkoutEndPoint),
+  //   );
+  //
+  //   // Add request headers
+  //   request.headers.addAll({
+  //     "Content-Type": "application/form-data",
+  //     'Authorization': 'Bearer ${SharedPrefs.getToken}',
+  //   });
+  //
+  //   // Add form fields
+  //   request.fields['contract_id'] = contractId;
+  //   request.fields['name'] = name;
+  //   request.fields['address'] = address;
+  //   request.fields['postal_code'] = postalCode;
+  //   request.fields['email'] = email;
+  //   request.fields['record_kilometers'] = recordKilometers;
+  //   request.fields['fuel_level'] = (fuelLevel);  // Ensure correct data
+  //   request.fields['vehicle_damage_comments'] = comment;
+  //
+  //   // Add images if available
+  //   if (signatureImage.value != null) {
+  //     request.files.add(await http.MultipartFile.fromPath(
+  //       'customer_signature',
+  //       signatureImage.value!.path,
+  //     ));
+  //   }
+  //
+  //   // Add other images conditionally (example for other files)
+  //   if (licenceImage.value != null) {
+  //     request.files.add(await http.MultipartFile.fromPath(
+  //       'license_photo',
+  //       licenceImage.value!.path,
+  //     ));
+  //   }
+  //
+  //   if (odometerImage.value != null) {
+  //     request.files.add(await http.MultipartFile.fromPath(
+  //       'fuel_image',
+  //       odometerImage.value!.path,
+  //     ));
+  //   }
+  //
+  //   // Handle multiple vehicle images
+  //   for (int i = 0; i < vehicleImages.length; i++) {
+  //     if (vehicleImages[i] != null) {
+  //       request.files.add(await http.MultipartFile.fromPath(
+  //         'vehicle_images[]',
+  //         vehicleImages[i]!.path,
+  //       ));
+  //     }
+  //   }
+  //
+  //   try {
+  //     var response = await request.send();
+  //     var responseBody = await response.stream.bytesToString();
+  //     statusCode.value = response.statusCode.toString();
+  //
+  //     if (response.statusCode == 200) {
+  //       var jsonResponse = json.decode(responseBody);
+  //       print('Check-out completed: ${jsonResponse['message']}');
+  //       Get.snackbar("Success", "Check-out form submitted successfully.");
+  //     } else {
+  //       var jsonResponse = json.decode(responseBody);
+  //       String errorMessage = jsonResponse['message'] ?? 'Something went wrong!';
+  //       print('Error response: $errorMessage');
+  //       Get.snackbar("Failed", errorMessage);
+  //     }
+  //   } catch (e) {
+  //     print('Error uploading contract: $e');
+  //     Get.snackbar("Failed", "An error occurred: $e");
+  //   } finally {
+  //     isLoading.value = false;  // Stop the loader
+  //     if (Get.isDialogOpen ?? false) {  // Close the loader dialog if open
+  //       Get.back();
+  //     }
+  //   }
+  // }
 
+
+  Future<void> uploadCheckOutContract({
+    required String name,
+    required String address,
+    required String postalCode,
+    required String email,
+    required String recordKilometers,
+    required Rx<File?> signatureImage,
+    required String fuelLevel,
+    required String comment,
+    required String contractId,
+    required BuildContext context,
+  }) async {
+    isLoading.value = true;
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(ApiConstants.checkoutEndPoint),
@@ -110,86 +206,115 @@ class CheckOutContractController extends GetxController {
       'Authorization': 'Bearer ${SharedPrefs.getToken}',
     });
 
-    request.fields['contract_id'] = SharedPrefs.getContractId.toString();
+    // Add form fields
+    request.fields['contract_id'] = contractId;
     request.fields['name'] = name;
     request.fields['address'] = address;
     request.fields['postal_code'] = postalCode;
     request.fields['email'] = email;
     request.fields['record_kilometers'] = recordKilometers;
-    request.fields['fuel_level'] = (needleValue.value * 10.0).toString();
+    request.fields['fuel_level'] = fuelLevel;
     request.fields['vehicle_damage_comments'] = comment;
-    request.fields['contract_id'] = contractId;
 
+    // Compress and add signature image if available
     if (signatureImage.value != null) {
+      File compressedSignature = await compressImage(signatureImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'customer_signature',
-        signatureImage.value!.path,
+        compressedSignature.path,
       ));
     }
 
+    // Compress and add other images if available
     if (licenceImage.value != null) {
+      File compressedLicense = await compressImage(licenceImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'license_photo',
-        licenceImage.value!.path,
+        compressedLicense.path,
       ));
     }
 
     if (odometerImage.value != null) {
+      File compressedOdometer = await compressImage(odometerImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'fuel_image',
-        odometerImage.value!.path,
+        compressedOdometer.path,
       ));
     }
 
+    // Compress and add vehicle images
     for (int i = 0; i < vehicleImages.length; i++) {
       if (vehicleImages[i] != null) {
+        File compressedVehicleImage = await compressImage(vehicleImages[i]!);
         request.files.add(await http.MultipartFile.fromPath(
           'vehicle_images[]',
-          vehicleImages[i]!.path,
+          compressedVehicleImage.path,
         ));
       }
     }
 
     try {
       var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
       statusCode.value = response.statusCode.toString();
-      log(response.statusCode.toString());
+
       if (response.statusCode == 200) {
-        var responseBody = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseBody);
         print('Check-out completed: ${jsonResponse['message']}');
+        Get.snackbar("Success", "Check-out form submitted successfully.");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>BottomAppBar()));
+      } else {
+        var jsonResponse = json.decode(responseBody);
+        String errorMessage = jsonResponse['message'] ?? 'Something went wrong!';
+        print('Error response: $errorMessage');
+        Get.snackbar("Failed", errorMessage);
       }
+      isLoading.value = false;
     } catch (e) {
       print('Error uploading contract: $e');
+      Get.snackbar("Failed", "An error occurred: $e");
     } finally {
       isLoading.value = false;
-      Get.back();
-      if (statusCode.value == "200") {
-        Get.snackbar("Success", "Check Out form submitted.");
-      } else {
-        Get.snackbar("Failed", "Something went wrong.");
-      }
     }
   }
 
-  void showDialogBox() {
-    if (isLoading.value) {
-      Get.dialog(
-        Center(
-          child: Container(
-            width: 100.0,
-            height: 100.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        ),
-        barrierDismissible: false,
-      );
-    }
+// Function to compress an image file
+  Future<File> compressImage(File file) async {
+    final bytes = await file.readAsBytes();
+    img.Image? image = img.decodeImage(bytes);
+
+    // Resize the image to a smaller size (e.g., width: 800px)
+    img.Image resizedImage = img.copyResize(image!, width: 800);
+
+    // Compress the image and save it to a new file
+    final compressedBytes = img.encodeJpg(resizedImage, quality: 70); // Adjust quality (0-100)
+
+    final compressedFile = File(file.path)
+      ..writeAsBytesSync(compressedBytes);
+
+    return compressedFile;
   }
+
+
+
+  // void showDialogBox() {
+  //   if (isLoading.value || !(Get.isDialogOpen ?? false)) { // Prevent multiple dialogs
+  //     Get.dialog(
+  //       Center(
+  //         child: Container(
+  //           width: 100.0,
+  //           height: 100.0,
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(8.0),
+  //           ),
+  //           child: const Center(
+  //             child: CircularProgressIndicator(),
+  //           ),
+  //         ),
+  //       ),
+  //       barrierDismissible: false,
+  //     );
+  //   }
+  // }
 }

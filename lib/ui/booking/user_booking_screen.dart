@@ -23,45 +23,49 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
     return formattedDate;
   }
 
-  // @override
-  // void initState() {
-  //   controller.fetchUserBookingData();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchUserBookingData().then((_) {
+      setState(() {});  // Trigger a rebuild after the data is fetched
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchUserBookingData();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Booking History"),
         centerTitle: true,
       ),
-      body: Padding(
+      body:Padding(
         padding: const EdgeInsets.all(10),
-        child: GetBuilder<BookingController>(builder: (context) {
+        child: Obx(() {
           if (controller.isLoading.value) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (controller.error != null) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (controller.error.value != null) {
             return Center(
-              child: Text("Error: ${controller.error}"),
+              child: Text(
+                "Error: ${controller.error.value}",
+                style: const TextStyle(color: Colors.red, fontSize: 18),
+              ),
             );
-          } else if (controller.bookingData != null && controller.bookingData!.isNotEmpty) {
-            final data = controller.bookingData;
+          } else if (controller.bookingData!.isNotEmpty) {
             return ListView.builder(
-              itemCount: data!.length,
+              itemCount: controller.bookingData!.length,
               itemBuilder: (context, index) {
-                final booking = data[index].booking;
-                final transaction = booking!.transaction;
+                final booking = controller.bookingData![index].bookings;
+                final transaction = controller.bookingData![index].remainingAmount;
+                double transactionAmount = double.tryParse(transaction!) ?? 0.0;
+                print('Transaction Amount: $transactionAmount');
+                String formattedAmount = transactionAmount.toStringAsFixed(2);
 
-                // Initialize status and color
                 String status;
                 Color color;
 
-                if (booking.isComplete == 1 && booking.isConfirm == 2) {
+                if (booking!.isComplete == 1 && booking.isConfirm == 2) {
                   // Completed
                   status = "Completed";
                   color = Colors.blue;
@@ -69,15 +73,24 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                   // Check-out
                   status = "Check-out";
                   color = Colors.green;
-                } else if (booking.isContract == 1) {
+                } else if (booking.isContract == 1 && booking.isViewbooking==1) {
                   // Check-in
                   status = "Check-in";
                   color = Colors.green;
-                } else if (booking.isViewbooking == 1) {
+                } else if (booking.isContract == 0 && booking.isConfirm==0) {
                   // Check-in (if is_viewbooking turns to 1)
-                  status = "Check-in";
-                  color = Colors.green;
-                } else {
+                  status = "Pending";
+                  color = Colors.orange;
+                } else if (booking.isContract == 2 && booking.isConfirm==0) {
+                  // Check-in (if is_viewbooking turns to 1)
+                  status = "Pending";
+                  color = Colors.orange;
+                }
+                else if (booking.isContract == 2 && booking.isConfirm==2) {
+                  // Check-in
+                  status = "Pending";
+                  color = Colors.red;
+                }else {
                   // Default Pending State
                   status = "Pending";
                   color = Colors.red;
@@ -125,14 +138,15 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => CheckoutContractScreen(
+                                      contractId:controller.bookingData![index].contractId,
                                         vehicleName:booking.name,
-                                        dPrice:booking.dprice,
+                                        price:formattedAmount,
                                         id:booking.id,
                                         paymentStatus: booking.status.toString(),
                                     ),
                                   ),
                                 );
-                              } else if (booking.isContract == 1 || booking.isViewbooking == 1) {
+                              } else if (booking.isContract == 1) {
                                 // Navigate to CheckinContractScreen
                                 Navigator.pushReplacement(
                                   context,
@@ -180,7 +194,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              "${double.parse(booking.totalPrice.toString()) - double.parse(transaction.amount.toString())}",
+                              transaction,
                               style: const TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ],

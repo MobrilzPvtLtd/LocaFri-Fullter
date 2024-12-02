@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
+import '../../widget/bottomnavigation.dart';
+
 class PaymentScreen extends StatefulWidget {
   final String paymentUrl;
-  const PaymentScreen({super.key, required this.paymentUrl});
+  final bool fromCheckout;  // New parameter to track navigation origin
+
+  const PaymentScreen({super.key, required this.paymentUrl, required this.fromCheckout});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -13,9 +17,8 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   InAppWebViewController? _webViewController;
-  final CustomerDetailController customerDetailController =
-      Get.put(CustomerDetailController());
-      
+  final CustomerDetailController customerDetailController = Get.put(CustomerDetailController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,13 +35,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
             _webViewController = controller;
           },
           onLoadStop: (InAppWebViewController controller, Uri? url) {
-            if (url != null && url.toString().contains("session_id")) { 
-              Navigator.of(context).pop(); 
+            if (url != null && url.toString().contains("session_id")) {
+              // Fetch payment details
               customerDetailController.fetchStripePaymentDetails(url.toString());
+
+              // Navigate based on the flag
+              if (widget.fromCheckout) {
+                // Pop back to the previous screen
+                Navigator.pop(context);
+              } else {
+                // Navigate to BottomNavigator if from create contract
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => BottomNavigator()),
+                );
+              }
             }
-          }
+          },
         ),
       ),
     );
   }
 }
+

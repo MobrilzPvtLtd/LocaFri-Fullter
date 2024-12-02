@@ -18,6 +18,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     MobilityScreen(),
     const BookingScreen(),
   ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,10 +58,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
               label: 'Booking'),
         ],
       ),
-      body: IndexedStack(
-        children: pages,
-        index: _currentindex,
-      ),
+      body: pages[_currentindex], // Direct widget display
     );
   }
 }

@@ -137,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: screenHeight * 0.35,
+          height: screenHeight * 0.3,
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
@@ -370,7 +370,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             }).toList(),
                             hint: Text(
-                              "Select Your Pickup Location",
+                              "Select Your DropOff Location",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.045,
@@ -499,8 +499,8 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(width: screenWidth * 0.02),
             Expanded(
               child: GestureDetector(
-                onTap: () => _materialDatePicker(context, isPickUp),
-                // onTap: () => _cupertinoTimePicker(context, isPickUp),
+                // onTap: () => _materialDatePicker(context, isPickUp),
+                onTap: () => _cupertinoTimePicker(context, isPickUp),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                   decoration: BoxDecoration(
