@@ -45,7 +45,7 @@ class CustomerDetailController extends GetxController {
   var dropOffTime = TimeOfDay.now().obs;
   var driverFirstName = ''.obs;
   var driverLastName = ''.obs;
-
+  var totalPrices = 0.0.obs;
   void updateDriverFirstName(String value) {
     driverFirstName.value = value;
   }
@@ -100,22 +100,26 @@ class CustomerDetailController extends GetxController {
 
   void toggleAdditionalDriver(bool value) {
     isAdditionalDriver.value = value;
-    updateTotalPrice();
+    double price = calculateAdditional();
+    updateTotalAdditional(value, price);
   }
 
   void toggleChildBoosterSeat(bool value) {
     isChildBoosterSeat.value = value;
-    updateTotalPrice();
+    double price = calculateChildBoosterSeatPrice();
+    updateTotalPrices(value,price);
   }
 
   void toggleChildSeat(bool value) {
     isChildSeat.value = value;
-    updateTotalPrice();
+    double price = calculateChildSeatPrice();
+    updateTotalPrices(value,price);
   }
 
   void toggleExitPermit(bool value) {
     isExitPermit.value = value;
-    updateTotalPrice();
+    double price = calculateExitPermitPrice();
+    updateTotalPriceExit(value,price);
   }
 
   void updateLoading(bool value) {
@@ -138,7 +142,7 @@ class CustomerDetailController extends GetxController {
   }
 
   void verifyEmail(String? email, BuildContext context) {
-    if (email != null) {
+    if (email != null && email.isNotEmpty) {
       fetchOTP(email);
       _verifyEmailDailogBox(email, context);
     }
@@ -251,36 +255,79 @@ class CustomerDetailController extends GetxController {
     return false;
   }
 
-  double calculateAdditionalOptionPrice() {
+  double calculateChildBoosterSeatPrice() {
     final int daysCount = int.tryParse(days.value) ?? 0;
     final int weeksCount = int.tryParse(week.value) ?? 0;
     final int monthsCount = int.tryParse(month.value) ?? 0;
-
-    double price = 0.0;
-
-    if (isAdditionalDriver.value) {
-      price += 20.0;
-    }
-
-    if (isChildBoosterSeat.value) {
-      price += (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
-    }
-
-    if (isChildSeat.value) {
-      price += (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
-    }
-
-    if (isExitPermit.value) {
-      price += 149.0;
-    }
-
-    return price;
+    return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
   }
 
-  void updateTotalPrice() {
-    double total = calculateAdditionalOptionPrice();
-    endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+  double calculateChildSeatPrice() {
+    final int daysCount = int.tryParse(days.value) ?? 0;
+    final int weeksCount = int.tryParse(week.value) ?? 0;
+    final int monthsCount = int.tryParse(month.value) ?? 0;
+    return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
   }
+  double calculateAdditional() {
+    final int daysCount = int.tryParse(days.value) ?? 0;
+    final int weeksCount = int.tryParse(week.value) ?? 0;
+    final int monthsCount = int.tryParse(month.value) ?? 0;
+    return (daysCount * 20) + (weeksCount * 30) + (monthsCount * 50);
+  }
+  void updateTotalAdditional(bool isAddition, double price) {
+    double total = calculateAdditional();
+    if (isAddition == true) {
+      endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+    } else {
+      endPrice.value = (double.parse(endPrice.value) - total).toStringAsFixed(2);
+    }
+  }
+  double calculateDailyPrice149() {
+    final int daysCount = int.tryParse(days.value) ?? 0;
+    return daysCount * 149;  // ₹149 per day
+  }
+  double calculateExitPermitPrice() {
+    return calculateDailyPrice149();  // ₹149 per day for the exit permit
+  }
+  void updateTotalPriceExit(bool isAddition, double priceChange) {
+    double currentTotal = double.tryParse(endPrice.value) ?? 0.0;
+
+    if (isAddition) {
+      currentTotal += priceChange;
+    } else {
+      currentTotal -= priceChange;
+    }
+
+    endPrice.value = currentTotal.toStringAsFixed(2);
+  }
+
+  // double calculateAdditionalOptionPrice() {
+  //   double price = 0.0;
+  //
+  //   if (isAdditionalDriver.value) {
+  //     price += 20.0;
+  //   }
+  //
+  //   if (isChildBoosterSeat.value) {
+  //     price += calculateChildBoosterSeatPrice();
+  //   }
+  //
+  //   if (isChildSeat.value) {
+  //     price += calculateChildSeatPrice();
+  //   }
+  //
+  //   if (isExitPermit.value) {
+  //     price += 149.0;
+  //   }
+  //
+  //   return price;
+  // }
+
+
+  // void updateTotalPrice() {
+  //   double total = calculateAdditionalOptionPrice();
+  //   endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+  // }
 
   calculateTotalPrice(
     String dprice,
@@ -293,6 +340,25 @@ class CustomerDetailController extends GetxController {
             (double.parse(month.toString()) * double.parse(month.toString()));
     totalPrice.value.text = price.toString();
     endPrice.value = price.toStringAsFixed(2);
+  }
+
+
+  // Method to update the total price based on toggle
+  void updateTotalPrices(bool isAddition, double price) {
+    double total = calculateChildBoosterSeatPrice();
+    if (isAddition == true) {
+      endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+    } else {
+      endPrice.value = (double.parse(endPrice.value) - total).toStringAsFixed(2);
+    }
+  }
+
+
+  // Toggle function for Child Booster Seat
+  void toggleChildBoosterSeats(bool value) {
+    isChildBoosterSeat.value = value;
+    double price = calculateChildBoosterSeatPrice();
+    updateTotalPrices(value, price);  // Update total based on toggle state
   }
 
   Map<String, int> calculateDateDifference(

@@ -179,7 +179,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
+                      return 'Please enter your last name';
                     }
                     return null;
                   },
@@ -207,7 +207,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
+                      return 'Please enter your phone number';
                     }
                     return null;
                   },
@@ -232,12 +232,16 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
-                    suffix: GestureDetector(
-                      child: const Text("verify"),
-                      onTap: () {
-                        controller.verifyEmail(controller.email.value, context);
-                      },
-                    ),
+                    suffix:  Obx(() {  // Use Obx to observe the email verification status
+                      return controller.verifyOtpStatus.value
+                          ? const Icon(Icons.check_circle, color: Colors.green)  // Show green tick
+                          : GestureDetector(
+                        child: const Text("verify", style: TextStyle(color: Colors.blue)),
+                        onTap: () {
+                          controller.verifyEmail(controller.email.value, context);
+                        },
+                      );
+                    }),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -770,22 +774,21 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           height: 5,
         ),
         Obx(() {
-          double calculateChildBoosterSeatPrice() {
-            final int days = int.tryParse(controller.days.value) ?? 0;
-            final int weeks = int.tryParse(controller.week.value) ?? 0;
-            final int months = int.tryParse(controller.month.value) ?? 0;
-            return (days * 5) + (weeks * 30) + (months * 50);
-          }
+          double childBoosterSeatPrice = controller.calculateChildBoosterSeatPrice();
 
           String childBoosterSeatText = controller.isChildBoosterSeat.value
-              ? "Child Booster Seat \n(${calculateChildBoosterSeatPrice()})"
+              ? "Child Booster Seat \n(\$${childBoosterSeatPrice.toStringAsFixed(2)})"
               : "Child Booster Seat";
 
           return AdditionalOptionsWidget(
-              switchvalue: controller.isChildBoosterSeat.value,
-              text: childBoosterSeatText,
-              onChanged: controller.toggleChildBoosterSeat);
+            switchvalue: controller.isChildBoosterSeat.value,
+            text: childBoosterSeatText,
+            onChanged: (value) {
+              controller.toggleChildBoosterSeats(value);  // Call toggle method
+            },
+          );
         }),
+
         const SizedBox(
           height: 5,
         ),
@@ -804,7 +807,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           return AdditionalOptionsWidget(
               switchvalue: controller.isChildSeat.value,
               text: childSeatText,
-              onChanged: controller.toggleChildSeat);
+            onChanged: (value) {
+              controller.toggleChildSeat(value);  // Call toggle method
+            },);
         }),
         const SizedBox(
           height: 5,
@@ -817,7 +822,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           return AdditionalOptionsWidget(
               switchvalue: controller.isExitPermit.value,
               text: exitPermitText,
-              onChanged: controller.toggleExitPermit);
+            onChanged: (value) {
+              controller.toggleExitPermit(value);  // Call toggle method
+            },);
         }),
         const SizedBox(
           height: 5,
