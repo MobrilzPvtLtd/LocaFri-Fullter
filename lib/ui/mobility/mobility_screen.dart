@@ -45,7 +45,7 @@ class MobilityScreen extends StatelessWidget {
             return const Center(child: Text('No cars available'));
           }
           return ListView.builder(
-            itemCount: 1,
+            itemCount: mobilityController.carList.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               final product = mobilityController.carList[index];

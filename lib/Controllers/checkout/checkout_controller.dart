@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -182,7 +182,6 @@ class CheckOutContractController extends GetxController {
   //   }
   // }
 
-
   Future<void> uploadCheckOutContract({
     required String name,
     required String address,
@@ -262,10 +261,11 @@ class CheckOutContractController extends GetxController {
         var jsonResponse = json.decode(responseBody);
         print('Check-out completed: ${jsonResponse['message']}');
         Get.snackbar("Success", "Check-out form submitted successfully.");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>BottomAppBar()));
+        Get.offAll(const BottomNavigator());
       } else {
         var jsonResponse = json.decode(responseBody);
-        String errorMessage = jsonResponse['message'] ?? 'Something went wrong!';
+        String errorMessage =
+            jsonResponse['message'] ?? 'Something went wrong!';
         print('Error response: $errorMessage');
         Get.snackbar("Failed", errorMessage);
       }
@@ -287,15 +287,13 @@ class CheckOutContractController extends GetxController {
     img.Image resizedImage = img.copyResize(image!, width: 800);
 
     // Compress the image and save it to a new file
-    final compressedBytes = img.encodeJpg(resizedImage, quality: 70); // Adjust quality (0-100)
+    final compressedBytes =
+        img.encodeJpg(resizedImage, quality: 70); // Adjust quality (0-100)
 
-    final compressedFile = File(file.path)
-      ..writeAsBytesSync(compressedBytes);
+    final compressedFile = File(file.path)..writeAsBytesSync(compressedBytes);
 
     return compressedFile;
   }
-
-
 
   // void showDialogBox() {
   //   if (isLoading.value || !(Get.isDialogOpen ?? false)) { // Prevent multiple dialogs

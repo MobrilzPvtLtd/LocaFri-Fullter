@@ -433,6 +433,8 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               child: const Text(
                 'Search',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ],
