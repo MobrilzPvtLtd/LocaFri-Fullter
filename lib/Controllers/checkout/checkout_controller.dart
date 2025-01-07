@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:carapp/utils/api_contants.dart';
 import 'package:carapp/utils/shared_prefs.dart';
@@ -264,8 +265,8 @@ class CheckOutContractController extends GetxController {
         Get.offAll(const BottomNavigator());
       } else {
         var jsonResponse = json.decode(responseBody);
-        String errorMessage =
-            jsonResponse['message'] ?? 'Something went wrong!';
+        log(jsonResponse.toString());
+        String errorMessage = jsonResponse['error'] ?? 'Something went wrong!';
         print('Error response: $errorMessage');
         Get.snackbar("Failed", errorMessage);
       }

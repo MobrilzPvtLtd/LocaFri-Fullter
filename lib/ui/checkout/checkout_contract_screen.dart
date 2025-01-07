@@ -22,6 +22,8 @@ class CheckoutContractScreen extends StatefulWidget {
   final int? id;
   final int? contractId;
   final double pendingAmount;
+  final String name;
+  final String email;
   const CheckoutContractScreen({
     super.key,
     required this.paymentStatus,
@@ -30,6 +32,8 @@ class CheckoutContractScreen extends StatefulWidget {
     required this.id,
     required this.contractId,
     required this.pendingAmount,
+    required this.name,
+    required this.email,
   });
 
   @override
@@ -95,6 +99,8 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    nameController.text = widget.name;
+    emailController.text = widget.email;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -448,7 +454,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
+                return 'Please enter your address';
               }
               return null;
             },
@@ -478,7 +484,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
+                return 'Please enter your Postal Code';
               }
               return null;
             },
@@ -518,7 +524,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your full name';
+              return 'Please enter your Email';
             }
             return null;
           },

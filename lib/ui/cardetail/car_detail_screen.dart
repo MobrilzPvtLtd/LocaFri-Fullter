@@ -168,25 +168,25 @@ class CarDetailScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "\$${carDetails['Dprice']}/day",
+                                "\CHF ${carDetails['Dprice']}/day",
                                 style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "\$${carDetails['wprice']}/week",
+                                "\CHF ${carDetails['wprice']}/week",
                                 style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "\$${carDetails['mprice']}/month",
+                                "\CHF ${carDetails['mprice']}/month",
                                 style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),

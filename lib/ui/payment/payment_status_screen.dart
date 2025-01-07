@@ -29,7 +29,11 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Get.offAll(const BottomNavigator());
+            if (widget.fromCheckout) {
+              Navigator.pop(context);
+            } else {
+              Get.offAll(const BottomNavigator());
+            }
           },
           icon: const Icon(Icons.arrow_back),
         ),

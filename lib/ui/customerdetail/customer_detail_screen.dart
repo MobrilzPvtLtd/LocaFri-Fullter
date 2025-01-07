@@ -730,7 +730,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
       children: [
         Obx(() {
           String additionalDriverText = controller.isAdditionalDriver.value
-              ? "Additional Driver \n(20. -/ per month)"
+              ? "Additional Driver \n(CHF 20. -/ per month)"
               : "Additional Driver";
 
           return Column(
@@ -807,7 +807,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               controller.calculateChildBoosterSeatPrice();
 
           String childBoosterSeatText = controller.isChildBoosterSeat.value
-              ? "Child Booster Seat \n(\$${childBoosterSeatPrice.toStringAsFixed(2)})"
+              ? "Child Booster Seat \n(\CHF ${childBoosterSeatPrice.toStringAsFixed(2)})"
               : "Child Booster Seat";
 
           return AdditionalOptionsWidget(
@@ -830,7 +830,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           }
 
           String childSeatText = controller.isChildSeat.value
-              ? "Child Seat \n(${calculateChildSeatPrice()})"
+              ? "Child Seat \n(CHF ${calculateChildSeatPrice()})"
               : "Child Seat";
 
           return AdditionalOptionsWidget(
@@ -846,7 +846,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         ),
         Obx(() {
           String exitPermitText = controller.isExitPermit.value
-              ? "Exit Permit \n(149.-/month)"
+              ? "Exit Permit \n(CHF 149.-/month)"
               : "Exit Permit";
 
           return AdditionalOptionsWidget(

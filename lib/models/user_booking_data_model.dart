@@ -35,12 +35,12 @@ class Data {
 
   Data(
       {this.contractId,
-        this.bookingId,
-        this.totalAmount,
-        this.amountPaid,
-        this.remainingAmount,
-        this.paymentLink,
-        this.bookings});
+      this.bookingId,
+      this.totalAmount,
+      this.amountPaid,
+      this.remainingAmount,
+      this.paymentLink,
+      this.bookings});
 
   Data.fromJson(Map<String, dynamic> json) {
     contractId = json['contract_id'];
@@ -104,36 +104,36 @@ class Bookings {
 
   Bookings(
       {this.id,
-        this.name,
-        this.dprice,
-        this.wprice,
-        this.mprice,
-        this.totalPrice,
-        this.dayCount,
-        this.weekCount,
-        this.monthCount,
-        this.additionalDriver,
-        this.boosterSeat,
-        this.childSeat,
-        this.exitPermit,
-        this.pickUpLocation,
-        this.dropOffLocation,
-        this.pickUpDate,
-        this.pickUpTime,
-        this.collectionTime,
-        this.collectionDate,
-        this.targetDate,
-        this.status,
-        this.paymentType,
-        this.isViewbooking,
-        this.isRejected,
-        this.isContract,
-        this.isConfirm,
-        this.isComplete,
-        this.seen,
-        this.createdAt,
-        this.updatedAt,
-        this.checkout});
+      this.name,
+      this.dprice,
+      this.wprice,
+      this.mprice,
+      this.totalPrice,
+      this.dayCount,
+      this.weekCount,
+      this.monthCount,
+      this.additionalDriver,
+      this.boosterSeat,
+      this.childSeat,
+      this.exitPermit,
+      this.pickUpLocation,
+      this.dropOffLocation,
+      this.pickUpDate,
+      this.pickUpTime,
+      this.collectionTime,
+      this.collectionDate,
+      this.targetDate,
+      this.status,
+      this.paymentType,
+      this.isViewbooking,
+      this.isRejected,
+      this.isContract,
+      this.isConfirm,
+      this.isComplete,
+      this.seen,
+      this.createdAt,
+      this.updatedAt,
+      this.checkout});
 
   Bookings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -224,15 +224,15 @@ class Checkout {
 
   Checkout(
       {this.id,
-        this.bookingId,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.phone,
-        this.addressFirst,
-        this.addressLast,
-        this.createdAt,
-        this.updatedAt});
+      this.bookingId,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phone,
+      this.addressFirst,
+      this.addressLast,
+      this.createdAt,
+      this.updatedAt});
 
   Checkout.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -273,7 +273,8 @@ class CustomerDetailController extends GetxController {
     final int daysCount = int.tryParse(days.value) ?? 0;
     final int weeksCount = int.tryParse(week.value) ?? 0;
     final int monthsCount = int.tryParse(month.value) ?? 0;
-    return (daysCount * 20) + (weeksCount * 30) + (monthsCount * 50);
+    // return (daysCount * 20) + (weeksCount * 30) + (monthsCount * 50);
+    return 20;
   }
 
   void updateTotalAdditional(bool isAddition, double price) {
@@ -289,7 +290,7 @@ class CustomerDetailController extends GetxController {
 
   double calculateDailyPrice149() {
     final int daysCount = int.tryParse(days.value) ?? 0;
-    return daysCount * 149; // ₹149 per day
+    return 149; // ₹149 per day
   }
 
   double calculateExitPermitPrice() {

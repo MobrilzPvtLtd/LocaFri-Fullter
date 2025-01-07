@@ -89,6 +89,9 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                       booking.isConfirm == 2) {
                     status = "Pending";
                     color = Colors.red;
+                  } else if (booking.isRejected == 1) {
+                    status = "Rejected";
+                    color = Colors.red;
                   } else {
                     status = "Pending";
                     color = Colors.red;
@@ -146,6 +149,11 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                         paymentStatus:
                                             booking.status.toString(),
                                         pendingAmount: transactionAmount,
+                                        name:
+                                            "${booking.checkout?.firstName} ${booking.checkout?.lastName}",
+                                        email: booking.checkout?.email
+                                                .toString() ??
+                                            "",
                                       ),
                                     ),
                                   );
@@ -154,7 +162,14 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          CheckinContractScreen(id: booking.id),
+                                          CheckinContractScreen(
+                                        id: booking.id,
+                                        name:
+                                            "${booking.checkout?.firstName} ${booking.checkout?.lastName}",
+                                        email: booking.checkout?.email
+                                                .toString() ??
+                                            "",
+                                      ),
                                     ),
                                   );
                                 }

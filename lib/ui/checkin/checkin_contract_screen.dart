@@ -12,7 +12,10 @@ import '../../Controllers/checkin/checkin_contract_controller.dart';
 // ignore: must_be_immutable
 class CheckinContractScreen extends StatefulWidget {
   int? id;
-  CheckinContractScreen({super.key, required this.id});
+  String name;
+  String email;
+  CheckinContractScreen(
+      {super.key, required this.id, required this.name, required this.email});
 
   @override
   State<CheckinContractScreen> createState() => _CheckinContractScreenState();
@@ -69,6 +72,8 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
 
   @override
   Widget build(BuildContext context) {
+    fullNameController.text = widget.name;
+    emailController.text = widget.email;
     return WillPopScope(
       onWillPop: () async {
         return false;
