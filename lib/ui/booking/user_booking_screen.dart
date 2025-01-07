@@ -55,7 +55,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
               return ListView.builder(
                 itemCount: controller.bookingData!.length,
                 itemBuilder: (context, index) {
-                  final booking = controller.bookingData![index].bookings;
+                  final booking = controller.bookingData?[index].bookings;
                   final transaction =
                       controller.bookingData![index].remainingAmount;
                   double transactionAmount =
@@ -92,6 +92,33 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                   } else if (booking.isRejected == 1) {
                     status = "Rejected";
                     color = Colors.red;
+                  } else if (booking.isViewbooking == 1 && booking.seen == 1) {
+                    status = "Reservation Accepted";
+                    color = Colors.green;
+                  } else if (booking.isViewbooking == 1 &&
+                      booking.isContract == 2 &&
+                      booking.seen == 1) {
+                    status = "Check-in submitted";
+                    color = Colors.green;
+                  } else if (booking.isViewbooking == 1 &&
+                      booking.isContract == 2 &&
+                      booking.isConfirm == 1 &&
+                      booking.seen == 1) {
+                    status = "Check-in accepted";
+                    color = Colors.green;
+                  } else if (booking.isViewbooking == 1 &&
+                      booking.isContract == 2 &&
+                      booking.isConfirm == 2 &&
+                      booking.seen == 1) {
+                    status = "Check-out accepted";
+                    color = Colors.green;
+                  } else if (booking.isViewbooking == 1 &&
+                      booking.isContract == 2 &&
+                      booking.isConfirm == 2 &&
+                      booking.seen == 1 &&
+                      booking.isComplete == 1) {
+                    status = "success";
+                    color = Colors.green;
                   } else {
                     status = "Pending";
                     color = Colors.red;
@@ -125,7 +152,7 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                 Text(
                                   booking.name.toString(),
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                      color: Colors.white, fontSize: 16),
                                 ),
                               ],
                             ),
@@ -142,15 +169,17 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                       builder: (context) =>
                                           CheckoutContractScreen(
                                         contractId: controller
-                                            .bookingData![index].contractId,
-                                        vehicleName: booking.name,
-                                        price: formattedAmount,
-                                        id: booking.id,
+                                                .bookingData?[index]
+                                                .contractId ??
+                                            0,
+                                        vehicleName: booking.name ?? "",
+                                        price: formattedAmount ?? "",
+                                        id: booking.id ?? 0,
                                         paymentStatus:
                                             booking.status.toString(),
                                         pendingAmount: transactionAmount,
                                         name:
-                                            "${booking.checkout?.firstName} ${booking.checkout?.lastName}",
+                                            "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
                                         email: booking.checkout?.email
                                                 .toString() ??
                                             "",
@@ -163,9 +192,9 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           CheckinContractScreen(
-                                        id: booking.id,
+                                        id: booking.id ?? 0,
                                         name:
-                                            "${booking.checkout?.firstName} ${booking.checkout?.lastName}",
+                                            "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
                                         email: booking.checkout?.email
                                                 .toString() ??
                                             "",
@@ -234,10 +263,12 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
                             ),
-                            Text(
-                              "${booking.pickUpLocation} to ${booking.dropOffLocation}",
-                              style: const TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                            Flexible(
+                              child: Text(
+                                "${booking.pickUpLocation ?? ""} to ${booking.dropOffLocation ?? ""}",
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
                             ),
                           ],
                         ),

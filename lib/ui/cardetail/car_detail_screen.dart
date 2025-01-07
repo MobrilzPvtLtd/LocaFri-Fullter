@@ -303,14 +303,16 @@ class CarDetailScreen extends StatelessWidget {
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if (carDetails['door'] > 0) ...{
-                                  const Text(
-                                    "Number of doors",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                if (carDetails['door'] != null) ...{
+                                  if (carDetails['door'] > 0) ...{
+                                    const Text(
+                                      "Number of doors",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontFamily: "UberMove",
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  },
                                 },
                                 const Text(
                                   "Transmission",
@@ -389,51 +391,53 @@ class CarDetailScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  carDetails['body'],
+                                  carDetails['body'] ?? "None",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  carDetails['type'],
+                                  carDetails['type'] ?? "",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  carDetails['location'],
+                                  carDetails['location'] ?? "",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  carDetails['seat'],
+                                  carDetails['seat'] ?? "",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if (carDetails['door'] > 0) ...{
-                                  Text(
-                                    carDetails['door'].toString(),
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                if (carDetails['door'] != null) ...{
+                                  if (carDetails['door'] > 0) ...{
+                                    Text(
+                                      carDetails['door'].toString(),
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontFamily: "UberMove",
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  },
                                 },
                                 Text(
-                                  carDetails['trans'],
+                                  carDetails['trans'] ?? "",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  carDetails['fuel'],
+                                  carDetails['fuel'] ?? "",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",

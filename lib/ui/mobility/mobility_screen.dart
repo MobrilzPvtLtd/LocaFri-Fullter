@@ -126,7 +126,7 @@ class MobilityScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            product["seat"],
+                            product["seat"] ?? "",
                             style: TextStyle(
                               fontSize: height * 0.020,
                               fontFamily: "UberMove",

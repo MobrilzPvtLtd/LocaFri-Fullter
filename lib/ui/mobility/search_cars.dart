@@ -91,7 +91,7 @@ class SearchCars extends StatelessWidget {
                           height: height * 0.20,
                           width: width * 0.35,
                           child: Image.network(
-                            product['profile'],
+                            product['profile'] ?? "",
                           ),
                         ),
                       ),
@@ -127,7 +127,7 @@ class SearchCars extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            product["location"],
+                            product["location"] ?? "",
                             style: const TextStyle(
                               fontSize: 16,
                               fontFamily: "UberMove",
@@ -135,7 +135,7 @@ class SearchCars extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            product["seat"],
+                            product["seat"] ?? "",
                             style: const TextStyle(
                               fontSize: 16,
                               fontFamily: "UberMove",
@@ -150,10 +150,10 @@ class SearchCars extends StatelessWidget {
                             width: width * 0.30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Color(0xffff36a21),
+                              color: const Color(0xffff36a21),
                               border: Border.all(
                                 width: 1,
-                                color: Color(0xffff36a21),
+                                color: const Color(0xffff36a21),
                               ),
                             ),
                             child: const Center(

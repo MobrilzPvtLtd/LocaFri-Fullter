@@ -7,10 +7,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class BookingController extends GetxController {
-
   UserBookingDataModel? userBookingData;
   var isLoading = true.obs;
-  var error = Rxn<String>();  // Nullable String
+  var error = Rxn<String>(); // Nullable String
   List<Data>? get bookingData => userBookingData?.data ?? [];
 
   // Future<void> fetchUserBookingData() async {
@@ -35,8 +34,8 @@ class BookingController extends GetxController {
   // }
   Future<void> fetchUserBookingData() async {
     try {
-      isLoading.value = true;         // Start loading
-      error.value = null;             // Reset previous error
+      isLoading.value = true; // Start loading
+      error.value = null; // Reset previous error
       var url = Uri.parse(ApiConstants.bookingHistoryEndPoint);
       var requestBody = jsonEncode({"email": SharedPrefs.getUserEmail});
 
@@ -53,10 +52,9 @@ class BookingController extends GetxController {
         error.value = 'Server Error: ${response.statusCode}';
       }
     } catch (e) {
-      error.value = 'Error: $e';      // Capture exception
+      error.value = 'Error: $e'; // Capture exception
     } finally {
-      isLoading.value = false;        // Stop loading
+      isLoading.value = false; // Stop loading
     }
   }
 }
-

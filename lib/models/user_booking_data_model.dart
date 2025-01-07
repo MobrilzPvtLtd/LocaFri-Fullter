@@ -89,7 +89,7 @@ class Bookings {
   String? pickUpTime;
   String? collectionTime;
   String? collectionDate;
-  Null? targetDate;
+  String? targetDate;
   String? status;
   String? paymentType;
   int? isViewbooking;
@@ -217,8 +217,8 @@ class Checkout {
   String? lastName;
   String? email;
   String? phone;
-  Null? addressFirst;
-  Null? addressLast;
+  String? addressFirst;
+  String? addressLast;
   String? createdAt;
   String? updatedAt;
 
