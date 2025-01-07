@@ -57,13 +57,13 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
     customerSignatureFile.value = file;
   }
 
-@override
+  @override
   void dispose() {
-   controller.clearLicenceImage();
-   controller.deleteImage();
-   controller.deleteOdoImage();
-   controller.deleteOdometerImage();
-   controller.clearVehicleImages();
+    controller.clearLicenceImage();
+    controller.deleteImage();
+    controller.deleteOdoImage();
+    controller.deleteOdometerImage();
+    controller.clearVehicleImages();
     super.dispose();
   }
 

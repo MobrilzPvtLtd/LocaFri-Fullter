@@ -1,20 +1,34 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'dart:developer';
 import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
+import 'package:carapp/models/payment_transaction_data_model.dart';
 import 'package:carapp/ui/payment/payment_status_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../../widget/bottomnavigation.dart';
-
 class PaymentScreen extends StatefulWidget {
   final String paymentUrl;
   final bool fromCheckout;
+  final String token;
+  final String price;
+  final String vehicleName;
+  final String email;
+  final String bookingId;
+  final String paymentType;
 
   const PaymentScreen(
-      {super.key, required this.paymentUrl, required this.fromCheckout});
+      {super.key,
+      required this.paymentUrl,
+      required this.fromCheckout,
+      required this.token,
+      required this.price,
+      required this.vehicleName,
+      required this.email,
+      required this.bookingId,
+      required this.paymentType});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -25,6 +39,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   late Timer _timer;
   bool _paymentStatusReceived = false;
   String paymentId = "";
+  String amountPaid = "";
 
   @override
   void initState() {
@@ -45,7 +60,41 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
 
       try {
-        // API Call
+        var data = {
+          "booking_id": widget.bookingId,
+        };
+
+        var response = await http.post(
+          Uri.parse(
+              "https://locafri.ultimatetrueweb.com/api/transaction-response"),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${widget.token}',
+          },
+          body: jsonEncode(data),
+        );
+
+        log(response.body.toString());
+
+        if (response.statusCode == 200) {
+          var responseData = jsonDecode(response.body);
+          final data =
+              PaymentTransactionDataModel.fromJson(jsonDecode(response.body));
+          log(responseData.toString());
+          String status = data.data?.paymentPaid ?? "PENDING";
+          String remainingAmount = data.data?.remainingAmount ?? "0.00";
+          amountPaid = data.data?.amountPaid ?? "";
+          log("The status is $status");
+          if (widget.fromCheckout) {
+            if (status == "complete" && remainingAmount == "0.00") {
+              _stopPolling(timer, true);
+            }
+          } else {
+            if (status == "complete" || status == "failed") {
+              _stopPolling(timer, true);
+            }
+          }
+        }
       } catch (e) {
         print("Error checking payment status: $e");
       }
@@ -64,7 +113,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       PaymentStatusScreen(
         isPaymentSuccess: paymentCompleted,
         transactionId: paymentId,
-        amount: "10 ",
+        amount: amountPaid,
+        fromCheckout: widget.fromCheckout,
       ),
     );
 
@@ -79,39 +129,41 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        return _paymentStatusReceived || !_timer.isActive;
+      },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Payment Gateway"),
-          centerTitle: true,
+          title: const Text('Payment'),
         ),
-        body: InAppWebView(
-          initialUrlRequest: URLRequest(
-            url: WebUri.uri(Uri.parse(widget.paymentUrl)),
-          ),
-          onWebViewCreated: (InAppWebViewController controller) {
-            _webViewController = controller;
-          },
-          onLoadStop: (InAppWebViewController controller, Uri? url) {
-            if (url != null && url.toString().contains("session_id")) {
-              // Fetch payment details
-              customerDetailController
-                  .fetchStripePaymentDetails(url.toString());
-
-              // Navigate based on the flag
-              if (widget.fromCheckout) {
-                // Pop back to the previous screen
-                Navigator.pop(context);
-              } else {
-                // Navigate to BottomNavigator if from create contract
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => BottomNavigator()),
-                );
-              }
+        body: FutureBuilder<void>(
+          future: _completer.future,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
+            return InAppWebView(
+              initialUrlRequest: URLRequest(
+                url: WebUri.uri(
+                  Uri.parse(widget.paymentUrl),
+                ),
+              ),
+              onWebViewCreated: (controller) {},
+            );
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    super.dispose();
   }
 }

@@ -1,8 +1,10 @@
 import 'package:carapp/Controllers/search/search_controller.dart';
+import 'package:carapp/models/create_contract_data.dart';
 import 'package:carapp/ui/customerdetail/payment_screen.dart';
 import 'package:carapp/ui/customerdetail/widget/other_request_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/additional_option_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/customer_datetime_field_widget.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,7 @@ class CustomerDetailScreen extends StatefulWidget {
 }
 
 class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
+  List paymentType = <String>["PAY PARTIALLY 10%", "PAY FULL AMOUNT"];
   final SearchCarsController searchCarController =
       Get.put(SearchCarsController());
 
@@ -232,15 +235,19 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     hintText: "Email",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
-                    suffix:  Obx(() {  // Use Obx to observe the email verification status
+                    suffix: Obx(() {
+                      // Use Obx to observe the email verification status
                       return controller.verifyOtpStatus.value
-                          ? const Icon(Icons.check_circle, color: Colors.green)  // Show green tick
+                          ? const Icon(Icons.check_circle,
+                              color: Colors.green) // Show green tick
                           : GestureDetector(
-                        child: const Text("verify", style: TextStyle(color: Colors.blue)),
-                        onTap: () {
-                          controller.verifyEmail(controller.email.value, context);
-                        },
-                      );
+                              child: const Text("verify",
+                                  style: TextStyle(color: Colors.blue)),
+                              onTap: () {
+                                controller.verifyEmail(
+                                    controller.email.value, context);
+                              },
+                            );
                     }),
                     filled: true,
                     fillColor: Colors.white,
@@ -650,9 +657,31 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => PaymentScreen(
-                                      fromCheckout:false,
-                                      paymentUrl:
-                                          controller.paymentRedirectUrl.value),
+                                    fromCheckout: false,
+                                    paymentUrl:
+                                        controller.paymentRedirectUrl.value,
+                                    vehicleName: controller
+                                            .createContractData?.vehicleName
+                                            .toString() ??
+                                        "",
+                                    email: controller
+                                            .createContractData?.customerEmail
+                                            .toString() ??
+                                        "",
+                                    price: controller.createContractData?.price
+                                            .toString() ??
+                                        "",
+                                    bookingId: controller
+                                            .createContractData?.bookingId
+                                            .toString() ??
+                                        "",
+                                    paymentType:
+                                        controller.stripePaymentType.value ==
+                                                paymentType[0]
+                                            ? "payment_partial"
+                                            : "payment_full",
+                                    token: SharedPrefs.getToken,
+                                  ),
                                 ),
                               );
                             } else {
@@ -774,7 +803,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           height: 5,
         ),
         Obx(() {
-          double childBoosterSeatPrice = controller.calculateChildBoosterSeatPrice();
+          double childBoosterSeatPrice =
+              controller.calculateChildBoosterSeatPrice();
 
           String childBoosterSeatText = controller.isChildBoosterSeat.value
               ? "Child Booster Seat \n(\$${childBoosterSeatPrice.toStringAsFixed(2)})"
@@ -784,11 +814,10 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
             switchvalue: controller.isChildBoosterSeat.value,
             text: childBoosterSeatText,
             onChanged: (value) {
-              controller.toggleChildBoosterSeats(value);  // Call toggle method
+              controller.toggleChildBoosterSeats(value); // Call toggle method
             },
           );
         }),
-
         const SizedBox(
           height: 5,
         ),
@@ -805,11 +834,12 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               : "Child Seat";
 
           return AdditionalOptionsWidget(
-              switchvalue: controller.isChildSeat.value,
-              text: childSeatText,
+            switchvalue: controller.isChildSeat.value,
+            text: childSeatText,
             onChanged: (value) {
-              controller.toggleChildSeat(value);  // Call toggle method
-            },);
+              controller.toggleChildSeat(value); // Call toggle method
+            },
+          );
         }),
         const SizedBox(
           height: 5,
@@ -820,11 +850,12 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               : "Exit Permit";
 
           return AdditionalOptionsWidget(
-              switchvalue: controller.isExitPermit.value,
-              text: exitPermitText,
+            switchvalue: controller.isExitPermit.value,
+            text: exitPermitText,
             onChanged: (value) {
-              controller.toggleExitPermit(value);  // Call toggle method
-            },);
+              controller.toggleExitPermit(value); // Call toggle method
+            },
+          );
         }),
         const SizedBox(
           height: 5,

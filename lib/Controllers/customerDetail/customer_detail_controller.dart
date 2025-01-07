@@ -107,19 +107,19 @@ class CustomerDetailController extends GetxController {
   void toggleChildBoosterSeat(bool value) {
     isChildBoosterSeat.value = value;
     double price = calculateChildBoosterSeatPrice();
-    updateTotalPrices(value,price);
+    updateTotalPrices(value, price);
   }
 
   void toggleChildSeat(bool value) {
     isChildSeat.value = value;
     double price = calculateChildSeatPrice();
-    updateTotalPrices(value,price);
+    updateTotalPrices(value, price);
   }
 
   void toggleExitPermit(bool value) {
     isExitPermit.value = value;
     double price = calculateExitPermitPrice();
-    updateTotalPriceExit(value,price);
+    updateTotalPriceExit(value, price);
   }
 
   void updateLoading(bool value) {
@@ -268,27 +268,34 @@ class CustomerDetailController extends GetxController {
     final int monthsCount = int.tryParse(month.value) ?? 0;
     return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
   }
+
   double calculateAdditional() {
     final int daysCount = int.tryParse(days.value) ?? 0;
     final int weeksCount = int.tryParse(week.value) ?? 0;
     final int monthsCount = int.tryParse(month.value) ?? 0;
     return (daysCount * 20) + (weeksCount * 30) + (monthsCount * 50);
   }
+
   void updateTotalAdditional(bool isAddition, double price) {
     double total = calculateAdditional();
     if (isAddition == true) {
-      endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+      endPrice.value =
+          (double.parse(endPrice.value) + total).toStringAsFixed(2);
     } else {
-      endPrice.value = (double.parse(endPrice.value) - total).toStringAsFixed(2);
+      endPrice.value =
+          (double.parse(endPrice.value) - total).toStringAsFixed(2);
     }
   }
+
   double calculateDailyPrice149() {
     final int daysCount = int.tryParse(days.value) ?? 0;
-    return daysCount * 149;  // ₹149 per day
+    return daysCount * 149; // ₹149 per day
   }
+
   double calculateExitPermitPrice() {
-    return calculateDailyPrice149();  // ₹149 per day for the exit permit
+    return calculateDailyPrice149(); // ₹149 per day for the exit permit
   }
+
   void updateTotalPriceExit(bool isAddition, double priceChange) {
     double currentTotal = double.tryParse(endPrice.value) ?? 0.0;
 
@@ -323,7 +330,6 @@ class CustomerDetailController extends GetxController {
   //   return price;
   // }
 
-
   // void updateTotalPrice() {
   //   double total = calculateAdditionalOptionPrice();
   //   endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
@@ -342,23 +348,23 @@ class CustomerDetailController extends GetxController {
     endPrice.value = price.toStringAsFixed(2);
   }
 
-
   // Method to update the total price based on toggle
   void updateTotalPrices(bool isAddition, double price) {
     double total = calculateChildBoosterSeatPrice();
     if (isAddition == true) {
-      endPrice.value = (double.parse(endPrice.value) + total).toStringAsFixed(2);
+      endPrice.value =
+          (double.parse(endPrice.value) + total).toStringAsFixed(2);
     } else {
-      endPrice.value = (double.parse(endPrice.value) - total).toStringAsFixed(2);
+      endPrice.value =
+          (double.parse(endPrice.value) - total).toStringAsFixed(2);
     }
   }
-
 
   // Toggle function for Child Booster Seat
   void toggleChildBoosterSeats(bool value) {
     isChildBoosterSeat.value = value;
     double price = calculateChildBoosterSeatPrice();
-    updateTotalPrices(value, price);  // Update total based on toggle state
+    updateTotalPrices(value, price); // Update total based on toggle state
   }
 
   Map<String, int> calculateDateDifference(
@@ -491,7 +497,8 @@ class CustomerDetailController extends GetxController {
   }
 
   // Stripe Payment API Call
-  Future<bool> stripePaymentCall(CreateContractData createContractData, BuildContext context) async {
+  Future<bool> stripePaymentCall(
+      CreateContractData createContractData, BuildContext context) async {
     try {
       // Construct request body
       var paymentBody = {
@@ -510,7 +517,6 @@ class CustomerDetailController extends GetxController {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ${SharedPrefs.getToken}',
-
         },
         body: paymentBody,
       );
@@ -535,7 +541,6 @@ class CustomerDetailController extends GetxController {
       return false;
     }
   }
-
 
   Future<void> fetchStripePaymentDetails(String url) async {
     showSuceessDialogBox(

@@ -21,13 +21,16 @@ class CheckoutContractScreen extends StatefulWidget {
   final String? price;
   final int? id;
   final int? contractId;
-  const CheckoutContractScreen(
-      {super.key,
-      required this.paymentStatus,
-      required this.vehicleName,
-      required this.price,
-      required this.id,
-      required this.contractId});
+  final double pendingAmount;
+  const CheckoutContractScreen({
+    super.key,
+    required this.paymentStatus,
+    required this.vehicleName,
+    required this.price,
+    required this.id,
+    required this.contractId,
+    required this.pendingAmount,
+  });
 
   @override
   State<CheckoutContractScreen> createState() => _checkoutContractScreenState();
@@ -117,10 +120,10 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        controller: _scrollController,
-        physics: controller.isGaugeActive.value
-            ? NeverScrollableScrollPhysics()
-            : AlwaysScrollableScrollPhysics(),
+        // controller: _scrollController,
+        // physics: controller.isGaugeActive.value
+        //     ? NeverScrollableScrollPhysics()
+        //     : AlwaysScrollableScrollPhysics(),
         child: Stack(
           children: [
             Padding(
@@ -202,71 +205,74 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.grey.shade300),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text(
-                            "Pay Pending Amount : ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                    if (widget.pendingAmount != 0.00) ...{
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.grey.shade300),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Text(
+                              "Pay Pending Amount : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final createContractData = CreateContractData(
-                                  price: widget.price, // Set the actual price
-                                  vehicleName: widget
-                                      .vehicleName, // Vehicle name from booking data
-                                  customerEmail: SharedPrefs
-                                      .getUserEmail, // Corrected function call
-                                  bookingId: widget.id,
-                                  paymentType: _customerController
-                                          .stripePaymentType.value =
-                                      "payment_full" // Booking ID from booking data
-                                  );
-                              try {
-                                // Call the API and await the result
-                                bool isPaymentInitiated =
-                                    await _customerController.stripePaymentCall(
-                                        createContractData, context);
+                            ElevatedButton(
+                              onPressed: () async {
+                                final createContractData = CreateContractData(
+                                    price: widget.price,
+                                    vehicleName: widget.vehicleName,
+                                    customerEmail: SharedPrefs.getUserEmail,
+                                    bookingId: widget.id,
+                                    paymentType: _customerController
+                                        .stripePaymentType
+                                        .value = "payment_full");
+                                try {
+                                  bool isPaymentInitiated =
+                                      await _customerController
+                                          .stripePaymentCall(
+                                              createContractData, context);
 
-                                if (isPaymentInitiated) {
-                                  // Navigate to PaymentScreen if API call succeeds
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PaymentScreen(
-                                        fromCheckout: true,
-                                        paymentUrl: _customerController
-                                            .paymentRedirectUrl.value,
+                                  if (isPaymentInitiated) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                          fromCheckout: true,
+                                          paymentUrl: _customerController
+                                              .paymentRedirectUrl.value,
+                                          email: SharedPrefs.getUserEmail,
+                                          bookingId: widget.id.toString(),
+                                          paymentType: "payment_full",
+                                          price: widget.price.toString(),
+                                          vehicleName:
+                                              widget.vehicleName.toString(),
+                                          token: SharedPrefs.getToken,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                } else {
-                                  // Display error notification if something went wrong
-                                  Get.snackbar(
-                                      "Failed", "Something went wrong");
+                                    );
+                                  } else {
+                                    Get.snackbar(
+                                        "Failed", "Something went wrong");
+                                  }
+                                } catch (e) {
+                                  Get.snackbar("Error",
+                                      "An unexpected error occurred: $e");
                                 }
-                              } catch (e) {
-                                // Handle unexpected errors
-                                Get.snackbar("Error",
-                                    "An unexpected error occurred: $e");
-                              }
-                            },
-                            child: const Text("Pay Now ->"),
-                          )
-                        ],
+                              },
+                              child: const Text("Pay Now ->"),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+                    },
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(

@@ -35,9 +35,11 @@ class CheckinContractController extends GetxController {
       licenceImage.value = File(licenseImagePicker.path);
     }
   }
+
   void clearLicenceImage() {
     licenceImage.value = null;
   }
+
   Future<void> pickImageFromGallery1() async {
     final licenseImagePicker1 =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -58,9 +60,11 @@ class CheckinContractController extends GetxController {
       odometerImage.value = File(pickedOdometerFile.path);
     }
   }
+
   void deleteOdoImage() {
     odometerImage.value = null;
   }
+
   Future<void> pickOdometerImageGallery() async {
     final pickedOdometerFile1 =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -93,29 +97,25 @@ class CheckinContractController extends GetxController {
   void deleteVehicleImage(int index) {
     vehicleImages[index] = null;
   }
+
   void clearVehicleImages() {
     for (int i = 0; i < vehicleImages.length; i++) {
       vehicleImages[i]?.deleteSync();
       vehicleImages[i] = null;
     }
   }
+
   Future<File?> resizeAndConvertToPng(File imageFile) async {
     try {
-      // Read the image bytes
       final imageBytes = await imageFile.readAsBytes();
 
-      // Decode the image using the image package
       final img.Image? decodedImage = img.decodeImage(imageBytes);
       if (decodedImage == null) return null;
 
-      // Resize the image
-      final img.Image resizedImage =
-          img.copyResize(decodedImage, width: 800); // Adjust width as needed
+      final img.Image resizedImage = img.copyResize(decodedImage, width: 800);
 
-      // Encode to PNG format
       final List<int> pngBytes = img.encodePng(resizedImage);
 
-      // Save the resized PNG to a temporary file
       final tempDir = await getTemporaryDirectory();
       final resizedFile =
           File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png');
@@ -171,10 +171,6 @@ class CheckinContractController extends GetxController {
     log(request.fields['vehicle_damage_comments'].toString());
 
     if (signatureImage.value != null) {
-      // request.files.add(await http.MultipartFile.fromPath(
-      //   'customer_signature',
-      //   signatureImage.value!.path,
-      // ));
       final resizedSignature =
           await resizeAndConvertToPng(signatureImage.value!);
       if (resizedSignature != null) {
@@ -187,10 +183,6 @@ class CheckinContractController extends GetxController {
     }
 
     if (licenceImage.value != null) {
-      // request.files.add(await http.MultipartFile.fromPath(
-      //   'license_photo',
-      //   licenceImage.value!.path,
-      // ));
       final resizedLicenceImage =
           await resizeAndConvertToPng(licenceImage.value!);
       if (resizedLicenceImage != null) {
@@ -203,10 +195,6 @@ class CheckinContractController extends GetxController {
     }
 
     if (odometerImage.value != null) {
-      // request.files.add(await http.MultipartFile.fromPath(
-      //   'fuel_image',
-      //   odometerImage.value!.path,
-      // ));
       final resizedOdometerImage =
           await resizeAndConvertToPng(odometerImage.value!);
       if (resizedOdometerImage != null) {
@@ -219,10 +207,6 @@ class CheckinContractController extends GetxController {
     }
 
     if (vehicleImages[0] != null) {
-      // request.files.add(await http.MultipartFile.fromPath(
-      //   'vehicle_images[]',
-      //   vehicleImages[0]!.path,
-      // ));
       final resizedVehicleImage =
           await resizeAndConvertToPng(vehicleImages[0]!);
       if (resizedVehicleImage != null) {
@@ -234,10 +218,6 @@ class CheckinContractController extends GetxController {
       log(resizedVehicleImage!.path.toString());
     }
     if (vehicleImages[1] != null) {
-      // request.files.add(await http.MultipartFile.fromPath(
-      //   'vehicle_images[]',
-      //   vehicleImages[1]!.path,
-      // ));
       final resizedVehicleImage =
           await resizeAndConvertToPng(vehicleImages[1]!);
       if (resizedVehicleImage != null) {
@@ -258,8 +238,6 @@ class CheckinContractController extends GetxController {
       var jsonResponse = json.decode(responseBody);
       log("JSON response: $jsonResponse");
       if (response.statusCode == 201) {
-        // var responseBody = await response.stream.bytesToString();
-        // var jsonResponse = json.decode(responseBody);
         Get.offAll(
           const BottomNavigator(
             initialIndex: 2,
@@ -283,25 +261,4 @@ class CheckinContractController extends GetxController {
       }
     }
   }
-
-  // void showDialogBox() {
-  //   if (isLoading.value) {
-  //     Get.dialog(
-  //       Center(
-  //         child: Container(
-  //           width: 100.0,
-  //           height: 100.0,
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(8.0),
-  //           ),
-  //           child: const Center(
-  //             child: CircularProgressIndicator(),
-  //           ),
-  //         ),
-  //       ),
-  //       barrierDismissible: false,
-  //     );
-  //   }
-  // }
 }

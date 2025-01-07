@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
 import 'package:carapp/Controllers/search/search_controller.dart';
 import 'package:carapp/ui/mobility/search_cars.dart';
 import 'package:carapp/ui/Profile/profile.dart';
+import 'package:carapp/utils/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -407,6 +410,7 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
               onPressed: () {
+                log("The token is : ${SharedPrefs.getToken}");
                 customerDetailController.pickUpDate.value = _pickUpDate;
                 customerDetailController.dropOffDate.value = _dropOffDate;
                 customerDetailController.pickUpTime.value = _pickUpTime;

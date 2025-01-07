@@ -1,14 +1,18 @@
+import 'package:carapp/widget/bottomnavigation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PaymentStatusScreen extends StatefulWidget {
   final bool isPaymentSuccess;
   final String transactionId;
   final String amount;
+  final bool fromCheckout;
   const PaymentStatusScreen({
     super.key,
     required this.isPaymentSuccess,
     required this.transactionId,
     required this.amount,
+    required this.fromCheckout,
   });
 
   @override
@@ -25,7 +29,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.offAll(const BottomNavigator());
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -83,17 +87,17 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Transaction Id : ",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    Text(
-                      "${widget.transactionId} ",
-                      style: const TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // const Text(
+                    //   "Transaction Id : ",
+                    //   style: TextStyle(fontSize: 16, color: Colors.black),
+                    // ),
+                    // Text(
+                    //   "${widget.transactionId} ",
+                    //   style: const TextStyle(fontSize: 15, color: Colors.black),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                     Row(
                       children: [
                         const Text(
@@ -125,7 +129,11 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  if (widget.fromCheckout) {
+                    Navigator.pop(context);
+                  } else {
+                    Get.offAll(const BottomNavigator());
+                  }
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
