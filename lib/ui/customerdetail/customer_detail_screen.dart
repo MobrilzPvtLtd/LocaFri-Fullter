@@ -256,6 +256,96 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  onChanged: controller.updateAddress,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    hintText: "Address",
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your address';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  onChanged: controller.updateCity,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    hintText: "City",
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your city';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  onChanged: controller.updateZipCode,
+                  keyboardType: TextInputType.number,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w800, fontFamily: "UberMove"),
+                    hintText: "Zip Code",
+                    focusColor: Colors.white,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your zip code';
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 20),
                 const Text(
                   "Pick Up Location",

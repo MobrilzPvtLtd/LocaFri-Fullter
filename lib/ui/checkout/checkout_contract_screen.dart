@@ -24,6 +24,8 @@ class CheckoutContractScreen extends StatefulWidget {
   final double pendingAmount;
   final String name;
   final String email;
+  final String address;
+  final String zipCode;
   const CheckoutContractScreen({
     super.key,
     required this.paymentStatus,
@@ -34,6 +36,8 @@ class CheckoutContractScreen extends StatefulWidget {
     required this.pendingAmount,
     required this.name,
     required this.email,
+    required this.address,
+    required this.zipCode,
   });
 
   @override
@@ -101,6 +105,8 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
     final width = MediaQuery.of(context).size.width;
     nameController.text = widget.name;
     emailController.text = widget.email;
+    addressController.text = widget.address;
+    postalCodeController.text = widget.zipCode;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

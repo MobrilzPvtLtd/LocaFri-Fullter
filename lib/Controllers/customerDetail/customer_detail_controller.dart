@@ -15,6 +15,9 @@ class CustomerDetailController extends GetxController {
   var firstName = ''.obs;
   var lastName = ''.obs;
   var phoneNumber = ''.obs;
+  var city = ''.obs;
+  var zipCode = ''.obs;
+  var address = ''.obs;
   var email = ''.obs;
   var selectedPickUpLocation = ''.obs;
   var selectedDropOffLocation = ''.obs;
@@ -64,6 +67,18 @@ class CustomerDetailController extends GetxController {
 
   void updatePhoneNumber(String value) {
     phoneNumber.value = value;
+  }
+
+  void updateAddress(String value) {
+    address.value = value;
+  }
+
+  void updateCity(String value) {
+    city.value = value;
+  }
+
+  void updateZipCode(String value) {
+    zipCode.value = value;
   }
 
   void updateEmail(String value, BuildContext context) {
@@ -435,8 +450,10 @@ class CustomerDetailController extends GetxController {
         'last_name': lastName.value,
         'phone': phoneNumber.value,
         'email': email.value,
-        'address_first': '',
+        'address_first': address.value,
         'address_last': '',
+        'zipcode': zipCode.value,
+        'city': city.value,
         'vehicle_name': vehicleName,
         'Dprice': dprice,
         'wprice': wprice,

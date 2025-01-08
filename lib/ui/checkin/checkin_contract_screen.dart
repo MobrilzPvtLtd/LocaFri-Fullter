@@ -14,8 +14,16 @@ class CheckinContractScreen extends StatefulWidget {
   int? id;
   String name;
   String email;
-  CheckinContractScreen(
-      {super.key, required this.id, required this.name, required this.email});
+  String address;
+  String zipCode;
+  CheckinContractScreen({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.address,
+    required this.zipCode,
+  });
 
   @override
   State<CheckinContractScreen> createState() => _CheckinContractScreenState();
@@ -74,6 +82,8 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
   Widget build(BuildContext context) {
     fullNameController.text = widget.name;
     emailController.text = widget.email;
+    addressController.text = widget.address;
+    postalCodeController.text = widget.zipCode;
     return WillPopScope(
       onWillPop: () async {
         return false;

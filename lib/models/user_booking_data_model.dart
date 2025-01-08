@@ -219,6 +219,7 @@ class Checkout {
   String? phone;
   String? addressFirst;
   String? addressLast;
+  String? zipCode;
   String? createdAt;
   String? updatedAt;
 
@@ -231,6 +232,7 @@ class Checkout {
       this.phone,
       this.addressFirst,
       this.addressLast,
+      this.zipCode,
       this.createdAt,
       this.updatedAt});
 
@@ -243,6 +245,7 @@ class Checkout {
     phone = json['phone'];
     addressFirst = json['address_first'];
     addressLast = json['address_last'];
+    zipCode = json['zipcode'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -257,6 +260,7 @@ class Checkout {
     data['phone'] = this.phone;
     data['address_first'] = this.addressFirst;
     data['address_last'] = this.addressLast;
+    data['zipcode'] = this.zipCode;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;
