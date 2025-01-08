@@ -897,7 +897,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               controller.calculateChildBoosterSeatPrice();
 
           String childBoosterSeatText = controller.isChildBoosterSeat.value
-              ? "Child Booster Seat \n(\CHF ${childBoosterSeatPrice.toStringAsFixed(2)})"
+              ? "Child Booster Seat \n(\CHF ${childBoosterSeatPrice.toStringAsFixed(2)} -/ per month)"
               : "Child Booster Seat";
 
           return AdditionalOptionsWidget(
@@ -916,11 +916,12 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
             final int days = int.tryParse(controller.days.value) ?? 0;
             final int weeks = int.tryParse(controller.week.value) ?? 0;
             final int months = int.tryParse(controller.month.value) ?? 0;
-            return (days * 5) + (weeks * 30) + (months * 50);
+            // return (days * 5) + (weeks * 30) + (months * 50);
+            return 30.0;
           }
 
           String childSeatText = controller.isChildSeat.value
-              ? "Child Seat \n(CHF ${calculateChildSeatPrice()})"
+              ? "Child Seat \n(CHF ${calculateChildSeatPrice()} -/ per month)"
               : "Child Seat";
 
           return AdditionalOptionsWidget(

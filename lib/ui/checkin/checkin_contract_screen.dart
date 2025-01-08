@@ -89,157 +89,169 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BottomNavigator(
-                      initialIndex: 2,
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.arrow_back)),
-          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          title: const Text(
-            "Check in Contract",
-            style: TextStyle(
-              fontFamily: "UberMove",
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          // controller: _scrollController,
-          // physics: controller.isGaugeActive.value
-          //     ? const NeverScrollableScrollPhysics()
-          //     : const AlwaysScrollableScrollPhysics(),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                _fullName(fullNameController),
-                _addressAndPostalCode(addressController, postalCodeController),
-                _emailAndLicense(controller.licenceImage, emailController),
-                _kilometerAndFuelLevel(kilometerController),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15, right: 15.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      'Niveau de reservoir',
-                      style: TextStyle(
-                        fontFamily: "UberMove",
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+          appBar: AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BottomNavigator(
+                        initialIndex: 2,
                       ),
                     ),
-                  ),
-                ),
-                dioKilometer(context),
-                // _diokilometer(),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Upload Vehicle/Damages",
-                    style: TextStyle(
-                      fontFamily: "UberMove",
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _vehicleDamage(controller.vehicleImages),
-                _odometerImage(controller.odometerImage),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "Upload Signature",
-                        style: TextStyle(
-                          fontFamily: "UberMove",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 2),
-                          // borderRadius: BorderRadius.circular(12)
-                        ),
-                        child: SfSignaturePad(
-                          key: signatureGlobalKey,
-                          backgroundColor: Colors.white,
-                          strokeColor: Colors.black,
-                          minimumStrokeWidth: 2.0,
-                          maximumStrokeWidth: 4.0,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TextButton(
-                            onPressed: handleSaveButtonPressed,
-                            child: const Text(
-                              'Capture Signature',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: handleClearButtonPressed,
-                            child: const Text(
-                              'Clear',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Obx(() {
-                        return Checkbox(
-                          activeColor: const Color(0xffff36a21),
-                          value: controller
-                              .isChecked.value, // Bind to the reactive boolean
-                          checkColor: Colors.white,
-                          onChanged: (newValue) {
-                            controller.toggleCheckbox(newValue!);
-                          },
-                        );
-                      }),
-                      const Text(
-                        "I am 18 years of age or older and agree to the terms \n of the Contract and the Valve Privacy Policy",
-                        style: TextStyle(fontFamily: "Ubermove"),
-                      )
-                    ], //
-                  ),
-                ),
-                _submitButton(context),
-              ],
+                  );
+                },
+                icon: const Icon(Icons.arrow_back)),
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            title: const Text(
+              "Check in Contract",
+              style: TextStyle(
+                fontFamily: "UberMove",
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-      ),
+          body: Obx(
+            () => SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        _fullName(fullNameController),
+                        _addressAndPostalCode(
+                            addressController, postalCodeController),
+                        _emailAndLicense(
+                            controller.licenceImage, emailController),
+                        _kilometerAndFuelLevel(kilometerController),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15, right: 15.0),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              'Niveau de reservoir',
+                              style: TextStyle(
+                                fontFamily: "UberMove",
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        dioKilometer(context),
+                        // _diokilometer(),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Upload Vehicle/Damages",
+                            style: TextStyle(
+                              fontFamily: "UberMove",
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _vehicleDamage(controller.vehicleImages),
+                        _odometerImage(controller.odometerImage),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Upload Signature",
+                                style: TextStyle(
+                                  fontFamily: "UberMove",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 2),
+                                  // borderRadius: BorderRadius.circular(12)
+                                ),
+                                child: SfSignaturePad(
+                                  key: signatureGlobalKey,
+                                  backgroundColor: Colors.white,
+                                  strokeColor: Colors.black,
+                                  minimumStrokeWidth: 2.0,
+                                  maximumStrokeWidth: 4.0,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  TextButton(
+                                    onPressed: handleSaveButtonPressed,
+                                    child: const Text(
+                                      'Capture Signature',
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.black),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: handleClearButtonPressed,
+                                    child: const Text(
+                                      'Clear',
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Obx(() {
+                                return Checkbox(
+                                  activeColor: const Color(0xffff36a21),
+                                  value: controller.isChecked
+                                      .value, // Bind to the reactive boolean
+                                  checkColor: Colors.white,
+                                  onChanged: (newValue) {
+                                    controller.toggleCheckbox(newValue!);
+                                  },
+                                );
+                              }),
+                              const Text(
+                                "I am 18 years of age or older and agree to the terms \n of the Contract and the Valve Privacy Policy",
+                                style: TextStyle(fontFamily: "Ubermove"),
+                              )
+                            ], //
+                          ),
+                        ),
+                        _submitButton(context),
+                      ],
+                    ),
+                  ),
+                  controller.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+                      : const SizedBox()
+                ],
+              ),
+            ),
+          )),
     );
   }
 

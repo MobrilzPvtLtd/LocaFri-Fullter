@@ -274,14 +274,16 @@ class CustomerDetailController extends GetxController {
     final int daysCount = int.tryParse(days.value) ?? 0;
     final int weeksCount = int.tryParse(week.value) ?? 0;
     final int monthsCount = int.tryParse(month.value) ?? 0;
-    return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    // return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    return 20.0;
   }
 
   double calculateChildSeatPrice() {
     final int daysCount = int.tryParse(days.value) ?? 0;
     final int weeksCount = int.tryParse(week.value) ?? 0;
     final int monthsCount = int.tryParse(month.value) ?? 0;
-    return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    // return (daysCount * 5) + (weeksCount * 30) + (monthsCount * 50);
+    return 30.0;
   }
 
   double calculateAdditional() {

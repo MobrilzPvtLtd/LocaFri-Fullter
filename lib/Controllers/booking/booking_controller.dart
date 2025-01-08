@@ -38,6 +38,7 @@ class BookingController extends GetxController {
       error.value = null; // Reset previous error
       var url = Uri.parse(ApiConstants.bookingHistoryEndPoint);
       var requestBody = jsonEncode({"email": SharedPrefs.getUserEmail});
+      log(SharedPrefs.getUserEmail);
 
       var response = await http.post(
         url,
@@ -47,6 +48,7 @@ class BookingController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        log(response.body.toString());
         userBookingData = UserBookingDataModel.fromJson(data);
       } else {
         error.value = 'Server Error: ${response.statusCode}';

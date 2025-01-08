@@ -74,57 +74,64 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                     if (booking!.isComplete == 1 && booking.isConfirm == 2) {
                       status = "Completed";
                       color = Colors.blue;
-                    } else if (booking.isContract == 2 &&
-                        booking.isConfirm == 1) {
-                      status = "Check-out";
-                      color = Colors.green;
-                    } else if (booking.isContract == 1 &&
-                        booking.isViewbooking == 1) {
-                      status = "Check-in";
-                      color = Colors.green;
-                    } else if (booking.isContract == 0 &&
-                        booking.isConfirm == 0) {
-                      status = "Pending";
-                      color = Colors.orange;
-                    } else if (booking.isContract == 2 &&
-                        booking.isConfirm == 0) {
-                      status = "Pending";
-                      color = Colors.orange;
-                    } else if (booking.isContract == 2 &&
-                        booking.isConfirm == 2) {
-                      status = "Pending";
-                      color = Colors.red;
-                    } else if (booking.isRejected == 1) {
-                      status = "Rejected";
-                      color = Colors.red;
                     } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
+                        booking.isContract == 0 &&
+                        booking.isConfirm == 0 &&
+                        booking.isComplete == 0 &&
                         booking.seen == 1) {
                       status = "Reservation Accepted";
+                      color = Colors.yellow.shade700;
+                    } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
+                        booking.isContract == 1 &&
+                        booking.isConfirm == 0 &&
+                        booking.isComplete == 0 &&
+                        booking.seen == 1) {
+                      status = "Check-in";
                       color = Colors.green;
                     } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
                         booking.isContract == 2 &&
+                        booking.isConfirm == 0 &&
+                        booking.isComplete == 0 &&
                         booking.seen == 1) {
                       status = "Check-in submitted";
                       color = Colors.green;
                     } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
                         booking.isContract == 2 &&
                         booking.isConfirm == 1 &&
+                        booking.isComplete == 0 &&
                         booking.seen == 1) {
-                      status = "Check-in accepted";
+                      status = "Check-out";
                       color = Colors.green;
                     } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
                         booking.isContract == 2 &&
                         booking.isConfirm == 2 &&
+                        booking.isComplete == 0 &&
                         booking.seen == 1) {
-                      status = "Check-out accepted";
+                      status = "Check-out submitted";
                       color = Colors.green;
                     } else if (booking.isViewbooking == 1 &&
                         booking.isContract == 2 &&
                         booking.isConfirm == 2 &&
                         booking.seen == 1 &&
+                        booking.isComplete == 0) {
+                      status = "Completed";
+                      color = Colors.green;
+                    } else if (booking.isViewbooking == 1 &&
+                        booking.isRejected == 0 &&
+                        booking.isContract == 2 &&
+                        booking.isConfirm == 0 &&
+                        booking.seen == 1 &&
                         booking.isComplete == 1) {
                       status = "success";
                       color = Colors.green;
+                    } else if (booking.isRejected == 1) {
+                      status = "Rejected";
+                      color = Colors.red;
                     } else {
                       status = "Pending";
                       color = Colors.red;
@@ -300,23 +307,6 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                               ),
                               Text(
                                 "${formatDate(booking.pickUpDate.toString())} to ${formatDate(booking.collectionDate.toString())}",
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Text(
-                                "Status: ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                booking.status.toString(),
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.white),
                               ),
