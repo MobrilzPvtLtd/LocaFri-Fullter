@@ -362,7 +362,7 @@ class CustomerDetailController extends GetxController {
     double price =
         (double.parse(days.toString()) * double.parse(dprice.toString())) +
             (double.parse(week.toString()) * double.parse(wprice.toString())) +
-            (double.parse(month.toString()) * double.parse(month.toString()));
+            (double.parse(month.toString()) * double.parse(mprice.toString()));
     totalPrice.value.text = price.toString();
     endPrice.value = price.toStringAsFixed(2);
   }
@@ -386,6 +386,19 @@ class CustomerDetailController extends GetxController {
     updateTotalPrices(value, price); // Update total based on toggle state
   }
 
+  String getTimeValue(TimeOfDay timeOfDay) {
+    final String hour = timeOfDay.hour.toString().padLeft(2, '0');
+    final String minute = timeOfDay.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
+  String getDateValue(DateTime dateTime) {
+    final String year = dateTime.year.toString();
+    final String month = dateTime.month.toString().padLeft(2, '0');
+    final String day = dateTime.day.toString().padLeft(2, '0');
+    return '$year-$month-$day';
+  }
+
   Map<String, int> calculateDateDifference(
     DateTime pickupDate,
     DateTime dropOffDate,
@@ -401,6 +414,19 @@ class CustomerDetailController extends GetxController {
     int weeks = 0;
     int days = 0;
 
+    final totalDays = dropOffDate.difference(pickupDate).inDays + 1;
+
+    final totalMonths = totalDays ~/ 30;
+    final remainingDaysAfterMonths = totalDays - (totalMonths * 30);
+
+    final percentileWeeks = remainingDaysAfterMonths ~/ 7;
+
+    final remainingDays = remainingDaysAfterMonths - (percentileWeeks * 7);
+
+    // counter001.text = remainingDays.toString();
+    // counter002.text = percentileWeeks.toString();
+    // counter003.text = totalMonths.toString();
+
     while (pickupDate.year < dropOffDate.year ||
         (pickupDate.year == dropOffDate.year &&
             pickupDate.month < dropOffDate.month)) {
@@ -412,31 +438,16 @@ class CustomerDetailController extends GetxController {
     weeks = days ~/ 7;
     days = days % 7;
 
-    log("The days are : $days, weeks are $weeks and the months are $months");
-
-    updateMonth(months.toString());
-    updateWeek(weeks.toString());
-    updateDays(days.toString());
+    updateMonth(totalMonths.toString());
+    updateWeek(percentileWeeks.toString());
+    updateDays(remainingDays.toString());
     calculateTotalPrice(dprice, wprice, mprice);
 
     return {
-      'months': months,
-      'weeks': weeks,
-      'days': days,
+      'months': int.parse(totalMonths.toString()),
+      'weeks': int.parse(percentileWeeks.toString()),
+      'days': int.parse(remainingDays.toString()),
     };
-  }
-
-  String getTimeValue(TimeOfDay timeOfDay) {
-    final String hour = timeOfDay.hour.toString().padLeft(2, '0');
-    final String minute = timeOfDay.minute.toString().padLeft(2, '0');
-    return '$hour:$minute';
-  }
-
-  String getDateValue(DateTime dateTime) {
-    final String year = dateTime.year.toString();
-    final String month = dateTime.month.toString().padLeft(2, '0');
-    final String day = dateTime.day.toString().padLeft(2, '0');
-    return '$year-$month-$day';
   }
 
   Future<bool> submitForm(
