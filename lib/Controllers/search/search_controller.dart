@@ -36,7 +36,7 @@ class SearchCarsController extends GetxController {
             .toSet()
             .toList());
       } else {
-        Get.snackbar("Error", "Failed to fetch locations");
+        Get.snackbar("Erreur", "Échec de la récupération des emplacements");
       }
     } finally {
       isLoading(false);
@@ -67,12 +67,13 @@ class SearchCarsController extends GetxController {
         availableCars.assignAll(data['data']);
         Get.to(() => SearchCars());
       } else {
-        Get.snackbar("Error", "Failed to fetch available cars");
+        Get.snackbar(
+            "Erreur", "Échec de la récupération des voitures disponibles");
       }
     } on TimeoutException {
-      Get.snackbar("Error", "Internet connection issue");
+      Get.snackbar("Erreur", "Problème de connexion Internet");
     } catch (e) {
-      Get.snackbar("Error", "An error occurred: $e");
+      Get.snackbar("Erreur", "Une erreur s'est produite: $e");
     } finally {
       isLoading(false);
     }

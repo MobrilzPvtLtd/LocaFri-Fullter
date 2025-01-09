@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Log In.",
+                    "Se connecter.",
                     style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: "Email",
+                      hintText: "E-mail",
                       focusColor: Colors.white,
                       disabledBorder: InputBorder.none,
                       filled: true,
@@ -55,11 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please enter an email";
+                        return "Veuillez entrer un email";
                       }
                       final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                       if (!emailRegex.hasMatch(value)) {
-                        return "Enter a valid email";
+                        return "Entrez un email valide";
                       }
                       return null;
                     },
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: const Center(
                         child: Text(
-                          "Get OTP",
+                          "Obtenir OTP",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,

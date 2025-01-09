@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:carapp/Controllers/checkout/checkout_controller.dart';
 import 'package:carapp/Controllers/customerDetail/customer_detail_controller.dart';
 import 'package:carapp/models/payment_transaction_data_model.dart';
 import 'package:carapp/ui/payment/payment_status_screen.dart';
@@ -35,6 +36,8 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  CheckOutContractController checkOutContractController =
+      Get.put(CheckOutContractController());
   final Completer<void> _completer = Completer<void>();
   late Timer _timer;
   bool _paymentStatusReceived = false;
@@ -103,6 +106,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void _stopPolling(Timer timer, bool paymentCompleted) async {
     timer.cancel();
+    checkOutContractController.isPaymentDone.value = paymentCompleted;
     _paymentStatusReceived = paymentCompleted;
 
     if (!_completer.isCompleted) {
@@ -135,7 +139,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Payment'),
+          title: const Text('Paiement'),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

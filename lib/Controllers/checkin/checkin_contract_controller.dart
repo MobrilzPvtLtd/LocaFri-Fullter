@@ -171,63 +171,95 @@ class CheckinContractController extends GetxController {
     log(request.fields['vehicle_damage_comments'].toString());
 
     if (signatureImage.value != null) {
-      final resizedSignature =
-          await resizeAndConvertToPng(signatureImage.value!);
-      if (resizedSignature != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'customer_signature',
-          resizedSignature.path,
-        ));
-      }
-      log(resizedSignature!.path.toString());
+      request.files.add(await http.MultipartFile.fromPath(
+        'customer_signature',
+        signatureImage.value!.path,
+      ));
     }
 
+    // Add other images conditionally (example for other files)
     if (licenceImage.value != null) {
-      final resizedLicenceImage =
-          await resizeAndConvertToPng(licenceImage.value!);
-      if (resizedLicenceImage != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'license_photo',
-          resizedLicenceImage.path,
-        ));
-      }
-      log(resizedLicenceImage!.path.toString());
+      request.files.add(await http.MultipartFile.fromPath(
+        'license_photo',
+        licenceImage.value!.path,
+      ));
     }
 
     if (odometerImage.value != null) {
-      final resizedOdometerImage =
-          await resizeAndConvertToPng(odometerImage.value!);
-      if (resizedOdometerImage != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'fuel_image',
-          resizedOdometerImage.path,
-        ));
-      }
-      log(resizedOdometerImage!.path.toString());
+      request.files.add(await http.MultipartFile.fromPath(
+        'fuel_image',
+        odometerImage.value!.path,
+      ));
     }
 
-    if (vehicleImages[0] != null) {
-      final resizedVehicleImage =
-          await resizeAndConvertToPng(vehicleImages[0]!);
-      if (resizedVehicleImage != null) {
+    // Handle multiple vehicle images
+    for (int i = 0; i < vehicleImages.length; i++) {
+      if (vehicleImages[i] != null) {
         request.files.add(await http.MultipartFile.fromPath(
           'vehicle_images[]',
-          resizedVehicleImage.path,
+          vehicleImages[i]!.path,
         ));
       }
-      log(resizedVehicleImage!.path.toString());
     }
-    if (vehicleImages[1] != null) {
-      final resizedVehicleImage =
-          await resizeAndConvertToPng(vehicleImages[1]!);
-      if (resizedVehicleImage != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'vehicle_images[]',
-          resizedVehicleImage.path,
-        ));
-      }
-      log(resizedVehicleImage!.path.toString());
-    }
+
+    // if (signatureImage.value != null) {
+    //   final resizedSignature =
+    //       await resizeAndConvertToPng(signatureImage.value!);
+    //   if (resizedSignature != null) {
+    //     request.files.add(await http.MultipartFile.fromPath(
+    //       'customer_signature',
+    //       resizedSignature.path,
+    //     ));
+    //   }
+    //   log(resizedSignature!.path.toString());
+    // }
+
+    // if (licenceImage.value != null) {
+    //   final resizedLicenceImage =
+    //       await resizeAndConvertToPng(licenceImage.value!);
+    //   if (resizedLicenceImage != null) {
+    //     request.files.add(await http.MultipartFile.fromPath(
+    //       'license_photo',
+    //       resizedLicenceImage.path,
+    //     ));
+    //   }
+    //   log(resizedLicenceImage!.path.toString());
+    // }
+
+    // if (odometerImage.value != null) {
+    //   final resizedOdometerImage =
+    //       await resizeAndConvertToPng(odometerImage.value!);
+    //   if (resizedOdometerImage != null) {
+    //     request.files.add(await http.MultipartFile.fromPath(
+    //       'fuel_image',
+    //       resizedOdometerImage.path,
+    //     ));
+    //   }
+    //   log(resizedOdometerImage!.path.toString());
+    // }
+
+    // if (vehicleImages[0] != null) {
+    //   final resizedVehicleImage =
+    //       await resizeAndConvertToPng(vehicleImages[0]!);
+    //   if (resizedVehicleImage != null) {
+    //     request.files.add(await http.MultipartFile.fromPath(
+    //       'vehicle_images[]',
+    //       resizedVehicleImage.path,
+    //     ));
+    //   }
+    //   log(resizedVehicleImage!.path.toString());
+    // }
+    // if (vehicleImages[1] != null) {
+    //   final resizedVehicleImage =
+    //       await resizeAndConvertToPng(vehicleImages[1]!);
+    //   if (resizedVehicleImage != null) {
+    //     request.files.add(await http.MultipartFile.fromPath(
+    //       'vehicle_images[]',
+    //       resizedVehicleImage.path,
+    //     ));
+    //   }
+    //   log(resizedVehicleImage!.path.toString());
+    // }
 
     try {
       var response = await request.send();
@@ -255,9 +287,9 @@ class CheckinContractController extends GetxController {
       isLoading.value = false;
       Get.back();
       if (statusCode.value == "201") {
-        Get.snackbar("Success", "Check in form submitted.");
+        Get.snackbar("Succès", "Formulaire d'enregistrement soumis.");
       } else {
-        Get.snackbar("Failed", "Something went wrong.");
+        Get.snackbar("Échoué", "Quelque chose s'est mal passé.");
       }
     }
   }

@@ -8,7 +8,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScrenState extends State<SplashScreen> {
-  
   @override
   void initState() {
     super.initState();

@@ -89,169 +89,162 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         return false;
       },
       child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BottomNavigator(
-                        initialIndex: 2,
-                      ),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigator(
+                      initialIndex: 2,
                     ),
-                  );
-                },
-                icon: const Icon(Icons.arrow_back)),
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            title: const Text(
-              "Check in Contract",
-              style: TextStyle(
-                fontFamily: "UberMove",
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.arrow_back)),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          title: const Text(
+            "Contrat d'enregistrement",
+            style: TextStyle(
+              fontFamily: "UberMove",
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          body: Obx(
-            () => SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        _fullName(fullNameController),
-                        _addressAndPostalCode(
-                            addressController, postalCodeController),
-                        _emailAndLicense(
-                            controller.licenceImage, emailController),
-                        _kilometerAndFuelLevel(kilometerController),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15.0),
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Text(
-                              'Niveau de reservoir',
-                              style: TextStyle(
-                                fontFamily: "UberMove",
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _fullName(fullNameController),
+                    _addressAndPostalCode(
+                        addressController, postalCodeController),
+                    _emailAndLicense(controller.licenceImage, emailController),
+                    _kilometerAndFuelLevel(kilometerController),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          'Niveau de reservoir',
+                          style: TextStyle(
+                            fontFamily: "UberMove",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        dioKilometer(context),
-                        // _diokilometer(),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            "Upload Vehicle/Damages",
+                      ),
+                    ),
+                    dioKilometer(context),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Télécharger le véhicule/les dommages",
+                        style: TextStyle(
+                          fontFamily: "UberMove",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    _vehicleDamage(controller.vehicleImages),
+                    _odometerImage(controller.odometerImage),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Télécharger la signature",
                             style: TextStyle(
                               fontFamily: "UberMove",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _vehicleDamage(controller.vehicleImages),
-                        _odometerImage(controller.odometerImage),
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
+                          const SizedBox(height: 10),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 2),
+                            ),
+                            child: SfSignaturePad(
+                              key: signatureGlobalKey,
+                              backgroundColor: Colors.white,
+                              strokeColor: Colors.black,
+                              minimumStrokeWidth: 2.0,
+                              maximumStrokeWidth: 4.0,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Text(
-                                "Upload Signature",
-                                style: TextStyle(
-                                  fontFamily: "UberMove",
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                              TextButton(
+                                onPressed: handleSaveButtonPressed,
+                                child: const Text(
+                                  'Capturer la signature',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.black),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey, width: 2),
-                                  // borderRadius: BorderRadius.circular(12)
+                              TextButton(
+                                onPressed: handleClearButtonPressed,
+                                child: const Text(
+                                  'Clair',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.black),
                                 ),
-                                child: SfSignaturePad(
-                                  key: signatureGlobalKey,
-                                  backgroundColor: Colors.white,
-                                  strokeColor: Colors.black,
-                                  minimumStrokeWidth: 2.0,
-                                  maximumStrokeWidth: 4.0,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    onPressed: handleSaveButtonPressed,
-                                    child: const Text(
-                                      'Capture Signature',
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: handleClearButtonPressed,
-                                    child: const Text(
-                                      'Clear',
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black),
-                                    ),
-                                  ),
-                                ],
                               ),
                             ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Obx(() {
-                                return Checkbox(
-                                  activeColor: const Color(0xffff36a21),
-                                  value: controller.isChecked
-                                      .value, // Bind to the reactive boolean
-                                  checkColor: Colors.white,
-                                  onChanged: (newValue) {
-                                    controller.toggleCheckbox(newValue!);
-                                  },
-                                );
-                              }),
-                              const Text(
-                                "I am 18 years of age or older and agree to the terms \n of the Contract and the Valve Privacy Policy",
-                                style: TextStyle(fontFamily: "Ubermove"),
-                              )
-                            ], //
-                          ),
-                        ),
-                        _submitButton(context),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        )
-                      : const SizedBox()
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Obx(() {
+                            return Checkbox(
+                              activeColor: const Color(0xffff36a21),
+                              value: controller.isChecked.value,
+                              checkColor: Colors.white,
+                              onChanged: (newValue) {
+                                controller.toggleCheckbox(newValue!);
+                              },
+                            );
+                          }),
+                          const Text(
+                            "J'ai 18 ans ou plus et j'accepte les termes\n du contrat et la politique de \nconfidentialité de Valve.",
+                            style: TextStyle(fontFamily: "Ubermove"),
+                          )
+                        ],
+                      ),
+                    ),
+                    _submitButton(context),
+                  ],
+                ),
               ),
             ),
-          )),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
+          ],
+        ),
+      ),
     );
   }
 
@@ -355,7 +348,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
                 fontWeight: FontWeight.w800,
                 fontFamily: "UberMove",
               ),
-              hintText: "Full Name",
+              hintText: "Nom et prénom",
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -364,7 +357,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your full name';
+                return 'Veuillez entrer votre nom complet';
               }
               return null;
             },
@@ -382,7 +375,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Address",
+            "Adresse",
             style: TextStyle(
                 fontFamily: "UberMove",
                 fontSize: 20,
@@ -413,7 +406,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your address';
+                return 'Veuillez entrer votre adresse';
               }
               return null;
             },
@@ -432,7 +425,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
                 fontWeight: FontWeight.w800,
                 fontFamily: "UberMove",
               ),
-              hintText: "Postal Code",
+              hintText: "Code Postal",
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -441,7 +434,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your postal code';
+                return 'Veuillez entrer votre code postal';
               }
               return null;
             },
@@ -470,7 +463,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
               ),
               hintStyle: const TextStyle(
                   fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-              hintText: "Email",
+              hintText: "E-mail",
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -479,7 +472,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your E-mail';
+                return 'Veuillez entrer votre e-mail';
               }
               return null;
             },
@@ -488,7 +481,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         const Padding(
           padding: EdgeInsets.only(left: 15, right: 15, top: 20),
           child: Text(
-            "Upload ID/Driving License Image",
+            "Télécharger une image d'identité/permis de conduire",
             style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 20,
@@ -558,7 +551,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             fontWeight: FontWeight.w800,
             fontFamily: "UberMove",
           ),
-          hintText: "Kilometers",
+          hintText: "Kilomètres",
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -567,7 +560,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your Kilometers';
+            return 'Veuillez entrer vos kilomètres';
           }
           return null;
         },
@@ -638,7 +631,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
         const Padding(
           padding: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Text(
-            "Upload odometer with kms and fuel image",
+            "Télécharger le compteur kilométrique avec les km et l'image du carburant",
             style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 19,
@@ -697,49 +690,43 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
   Widget _submitButton(BuildContext context) {
     final height = MediaQuery.of(Get.context!).size.height;
     final width = MediaQuery.of(Get.context!).size.width;
-    return Obx(
-      () => GestureDetector(
-        onTap: () {
-          if (_formKey.currentState!.validate()) {
-            controller.uploadCheckinContract(
-              widget.id.toString(),
-              fullNameController.text,
-              addressController.text,
-              postalCodeController.text,
-              emailController.text,
-              kilometerController.text,
-              'full',
-              'no damages in car',
-              customerSignatureFile,
-              context,
-            );
-            print('Form submitted');
-          } else {
-            print('Form is not valid');
-          }
-        },
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
-          child: Container(
-            height: height * 0.06,
-            width: width * 0.90,
-            decoration: BoxDecoration(
-                color: const Color(0xffff36a21),
-                borderRadius: BorderRadius.circular(14)),
-            child: Center(
-              child: controller.isLoading.value
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    )
-                  : const Text(
-                      "Submit Form",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+    return GestureDetector(
+      onTap: () {
+        if (_formKey.currentState!.validate()) {
+          controller.uploadCheckinContract(
+            widget.id.toString(),
+            fullNameController.text,
+            addressController.text,
+            postalCodeController.text,
+            emailController.text,
+            kilometerController.text,
+            'full',
+            'no damages in car',
+            customerSignatureFile,
+            context,
+          );
+          print('Form submitted');
+        } else {
+          print('Form is not valid');
+        }
+      },
+      child: Padding(
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
+        child: Container(
+          height: height * 0.06,
+          width: width * 0.90,
+          decoration: BoxDecoration(
+              color: const Color(0xffff36a21),
+              borderRadius: BorderRadius.circular(14)),
+          child: const Center(
+            child: Text(
+              "Soumettre le formulaire",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
           ),
         ),
@@ -756,7 +743,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Navigator.pop(context);
                   Get.find<CheckinContractController>()
@@ -765,7 +752,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Navigator.pop(context);
                   Get.find<CheckinContractController>()
@@ -788,7 +775,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Get.find<CheckinContractController>().pickImageFromCamera1();
                   Navigator.pop(context);
@@ -796,7 +783,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Get.find<CheckinContractController>().pickImageFromGallery1();
                   Navigator.pop(context);
@@ -818,7 +805,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Get.find<CheckinContractController>()
                       .pickOdometerImageCamera();
@@ -827,7 +814,7 @@ class _CheckinContractScreenState extends State<CheckinContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Get.find<CheckinContractController>()
                       .pickOdometerImageGallery();

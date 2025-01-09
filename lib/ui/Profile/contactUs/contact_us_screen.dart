@@ -30,7 +30,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           backgroundColor: Colors.white10,
           bottom: AppBar(
             title: const Text(
-              "Contact us",
+              "Contactez-nous",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
@@ -57,7 +57,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       borderSide: const BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    hintText: "Full Name",
+                    hintText: "Nom et prénom",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -68,7 +68,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
+                      return 'Veuillez entrer votre nom complet';
                     }
                     return null;
                   },
@@ -84,7 +84,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       borderSide: const BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    hintText: "Email ID",
+                    hintText: "Identifiant de courrier électronique",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -95,11 +95,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter an email";
+                      return "Veuillez entrer un email";
                     }
                     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                     if (!emailRegex.hasMatch(value)) {
-                      return "Enter a valid email";
+                      return "Entrez un email valide";
                     }
                     return null;
                   },
@@ -128,7 +128,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your message';
+                      return 'Veuillez entrer votre message';
                     }
                     return null;
                   },
@@ -147,9 +147,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                   ),
                   const Text(
-                    "I have read and accept the privacy policy.",
+                    "J'ai lu et j'accepte la politique de confidentialité.",
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
                         fontFamily: "UberMove",
                         color: Colors.black,
                         fontWeight: FontWeight.w600),
@@ -181,7 +181,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           )
                         : const Center(
                             child: Text(
-                              "Send",
+                              "Envoyer",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "UberMove",

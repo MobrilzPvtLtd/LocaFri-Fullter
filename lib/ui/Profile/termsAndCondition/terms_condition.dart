@@ -14,7 +14,7 @@ class _TermAndConditionScreenState extends State<TermAndConditionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Terms & Condition",
+          "Conditions générales",
         ),
         centerTitle: true,
       ),

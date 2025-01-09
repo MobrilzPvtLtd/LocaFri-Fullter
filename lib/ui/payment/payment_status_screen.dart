@@ -25,7 +25,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Payment Status"),
+        title: const Text("Statut du paiement"),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -69,7 +69,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
               ),
               widget.isPaymentSuccess
                   ? const Text(
-                      "Payment successful",
+                      "Paiement réussi",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     )
@@ -91,21 +91,10 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const Text(
-                    //   "Transaction Id : ",
-                    //   style: TextStyle(fontSize: 16, color: Colors.black),
-                    // ),
-                    // Text(
-                    //   "${widget.transactionId} ",
-                    //   style: const TextStyle(fontSize: 15, color: Colors.black),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
                     Row(
                       children: [
                         const Text(
-                          "Amount : ",
+                          "Montant : ",
                           style: TextStyle(fontSize: 15, color: Colors.black),
                         ),
                         Text(
@@ -125,8 +114,10 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                 margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
                 padding: const EdgeInsets.only(
                     top: 20, bottom: 20, left: 10, right: 10),
-                child: const Text(
-                    "Thank you, Please take a screenshot or save the details for your reference..."),
+                child: const Flexible(
+                  child: Text(
+                      "Merci, veuillez prendre une capture d'écran ou enregistrer les détails pour votre référence..."),
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -145,7 +136,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                       color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(20)),
                   child: const Text(
-                    "Close",
+                    "Fermer",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

@@ -73,7 +73,7 @@ class CarDetailScreen extends StatelessWidget {
                             controller.carDetails['images'] == null ||
                             controller.carDetails['images'].isEmpty) {
                           return const Center(
-                              child: Text('No images available'));
+                              child: Text('Aucune image disponible'));
                         }
                         return PageView.builder(
                           controller: _pageController,
@@ -220,7 +220,7 @@ class CarDetailScreen extends StatelessWidget {
                               ),
                               child: const Center(
                                 child: Text(
-                                  "Rent",
+                                  "Louer",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "UberMove",
@@ -235,7 +235,7 @@ class CarDetailScreen extends StatelessWidget {
                     ],
                   ),
                   const Text(
-                    "Details",
+                    "Détails",
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "UberMove",
@@ -253,7 +253,7 @@ class CarDetailScreen extends StatelessWidget {
                     endIndent: 10,
                   ),
                   const Text(
-                    "Specifications",
+                    "Caractéristiques",
                     style: TextStyle(
                         fontSize: 26,
                         color: Colors.black,
@@ -276,28 +276,28 @@ class CarDetailScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Body",
+                                  "Corps",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Type",
+                                  "Taper",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Location",
+                                  "Emplacement",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Number of seats",
+                                  "Nombre de places",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -306,7 +306,7 @@ class CarDetailScreen extends StatelessWidget {
                                 if (carDetails['door'] != null) ...{
                                   if (carDetails['door'] > 0) ...{
                                     const Text(
-                                      "Number of doors",
+                                      "Nombre de portes",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: "UberMove",
@@ -322,7 +322,7 @@ class CarDetailScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Fuel",
+                                  "Carburant",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -333,7 +333,7 @@ class CarDetailScreen extends StatelessWidget {
                                     carDetails['permitted_kilometers_day'] !=
                                         "") ...{
                                   const Text(
-                                    "Permitted Kilometer",
+                                    "Kilomètre autorisé",
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: "UberMove",
@@ -365,21 +365,21 @@ class CarDetailScreen extends StatelessWidget {
                                   ),
                                 },
                                 const Text(
-                                  "Luggage",
+                                  "Bagage",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Exterior",
+                                  "Extérieur",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const Text(
-                                  "Interior",
+                                  "Intérieur",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -508,7 +508,7 @@ class CarDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "Features",
+                    "Caractéristiques",
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: "UberMove",
@@ -549,7 +549,7 @@ class CarDetailScreen extends StatelessWidget {
                             },
                           )
                         : const Center(
-                            child: Text('No features available'),
+                            child: Text('Aucune fonctionnalité disponible'),
                           ),
                   ),
                 ],

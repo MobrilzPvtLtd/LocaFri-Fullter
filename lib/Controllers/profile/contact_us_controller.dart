@@ -13,8 +13,8 @@ class ContactUsController extends GetxController {
   bool validateCheckbox() {
     if (!isChecked.value) {
       Get.snackbar(
-        "Validation Error",
-        "You must have read the conditions and accept them.",
+        "Erreur de validation",
+        "Vous devez avoir lu les conditions et les accepter.",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -36,18 +36,18 @@ class ContactUsController extends GetxController {
         body: json.encode(body),
       );
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Request Successfully Submitted");
+        Get.snackbar("Succès", "Demande soumise avec succès");
         Get.showSnackbar(
           const GetSnackBar(
-            title: "Thank you for contacting us.",
+            title: "Merci de nous avoir contactés.",
             message:
-                "We have sent you an email with the information you have requested.",
+                "Nous vous avons envoyé un email avec les informations que vous avez demandées.",
             duration: Duration(seconds: 3),
           ),
         );
         log(response.body.toString());
       } else {
-        Get.snackbar("Failed", "Something went wrong");
+        Get.snackbar("Échoué", "Quelque chose s'est mal passé");
       }
     } catch (e) {
       error = 'Error : $e';

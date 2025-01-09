@@ -47,15 +47,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.search),
-              label: 'Search'),
+              label: 'Recherche'),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.directions_car),
-              label: 'Mobility'),
+              label: 'Mobilité'),
           BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.book_online),
-              label: 'Booking'),
+              label: 'Réservation'),
         ],
       ),
       body: pages[_currentindex], // Direct widget display

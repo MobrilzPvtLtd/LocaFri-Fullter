@@ -34,18 +34,19 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text("Booking History"),
-          centerTitle: true,
-        ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await controller.fetchUserBookingData();
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Obx(() {
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text("Historique des réservations"),
+        centerTitle: true,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.fetchUserBookingData();
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Obx(
+            () {
               if (controller.isLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else if (controller.error.value != null) {
@@ -136,183 +137,227 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
                       status = "Pending";
                       color = Colors.red;
                     }
-                    return Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blueGrey,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: Center(
-                                      child: Text(
-                                        booking.id.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black),
+                    return GestureDetector(
+                      onTap: () {
+                        if (booking.isComplete == 1 && booking.isConfirm == 2) {
+                          return;
+                        } else if (booking.isContract == 2 &&
+                            booking.isConfirm == 1) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CheckoutContractScreen(
+                                contractId:
+                                    controller.bookingData?[index].contractId ??
+                                        0,
+                                vehicleName: booking.name ?? "",
+                                price: formattedAmount ?? "",
+                                id: booking.id ?? 0,
+                                paymentStatus: booking.status.toString(),
+                                pendingAmount: transactionAmount,
+                                name:
+                                    "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
+                                email: booking.checkout?.email.toString() ?? "",
+                                address: booking.checkout?.addressFirst ?? "",
+                                zipCode: booking.checkout?.zipCode ?? "",
+                              ),
+                            ),
+                          );
+                        } else if (booking.isContract == 1) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CheckinContractScreen(
+                                id: booking.id ?? 0,
+                                name:
+                                    "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
+                                email: booking.checkout?.email.toString() ?? "",
+                                address: booking.checkout?.addressFirst ?? "",
+                                zipCode: booking.checkout?.zipCode ?? "",
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blueGrey,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      child: Center(
+                                        child: Text(
+                                          booking.id.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    booking.name.toString(),
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (booking.isComplete == 1 &&
-                                      booking.isConfirm == 2) {
-                                    return;
-                                  } else if (booking.isContract == 2 &&
-                                      booking.isConfirm == 1) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            CheckoutContractScreen(
-                                          contractId: controller
-                                                  .bookingData?[index]
-                                                  .contractId ??
-                                              0,
-                                          vehicleName: booking.name ?? "",
-                                          price: formattedAmount ?? "",
-                                          id: booking.id ?? 0,
-                                          paymentStatus:
-                                              booking.status.toString(),
-                                          pendingAmount: transactionAmount,
-                                          name:
-                                              "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
-                                          email: booking.checkout?.email
-                                                  .toString() ??
-                                              "",
-                                          address:
-                                              booking.checkout?.addressFirst ??
-                                                  "",
-                                          zipCode:
-                                              booking.checkout?.zipCode ?? "",
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      booking.name.toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (booking.isComplete == 1 &&
+                                        booking.isConfirm == 2) {
+                                      return;
+                                    } else if (booking.isContract == 2 &&
+                                        booking.isConfirm == 1) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CheckoutContractScreen(
+                                            contractId: controller
+                                                    .bookingData?[index]
+                                                    .contractId ??
+                                                0,
+                                            vehicleName: booking.name ?? "",
+                                            price: formattedAmount ?? "",
+                                            id: booking.id ?? 0,
+                                            paymentStatus:
+                                                booking.status.toString(),
+                                            pendingAmount: transactionAmount,
+                                            name:
+                                                "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
+                                            email: booking.checkout?.email
+                                                    .toString() ??
+                                                "",
+                                            address: booking
+                                                    .checkout?.addressFirst ??
+                                                "",
+                                            zipCode:
+                                                booking.checkout?.zipCode ?? "",
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  } else if (booking.isContract == 1) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            CheckinContractScreen(
-                                          id: booking.id ?? 0,
-                                          name:
-                                              "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
-                                          email: booking.checkout?.email
-                                                  .toString() ??
-                                              "",
-                                          address:
-                                              booking.checkout?.addressFirst ??
-                                                  "",
-                                          zipCode:
-                                              booking.checkout?.zipCode ?? "",
+                                      );
+                                    } else if (booking.isContract == 1) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CheckinContractScreen(
+                                            id: booking.id ?? 0,
+                                            name:
+                                                "${booking.checkout?.firstName ?? ""} ${booking.checkout?.lastName ?? ""}",
+                                            email: booking.checkout?.email
+                                                    .toString() ??
+                                                "",
+                                            address: booking
+                                                    .checkout?.addressFirst ??
+                                                "",
+                                            zipCode:
+                                                booking.checkout?.zipCode ?? "",
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: color,
-                                  ),
-                                  child: Text(
-                                    status, // Computed status
-                                    style: const TextStyle(color: Colors.white),
+                                      );
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: color,
+                                    ),
+                                    child: Text(
+                                      status, // Computed status
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Text(
-                                "Total Price: ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                booking.totalPrice.toString(),
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          if (transaction != null) ...{
+                              ],
+                            ),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
                                 const Text(
-                                  "Pending Price: ",
+                                  "Prix ​​total :",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ),
                                 Text(
-                                  transaction,
+                                  booking.totalPrice.toString(),
                                   style: const TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 10),
-                          },
-                          Row(
-                            children: [
-                              const Text(
-                                "Location: ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
+                            if (transaction != null) ...{
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Prix ​​en attente :",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                  Text(
+                                    transaction,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ],
                               ),
-                              Flexible(
-                                child: Text(
-                                  "${booking.pickUpLocation ?? ""} to ${booking.dropOffLocation ?? ""}",
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                              const SizedBox(height: 10),
+                            },
+                            Row(
+                              children: [
+                                const Text(
+                                  "Emplacement: ",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Text(
-                                "Date: ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                              Text(
-                                "${formatDate(booking.pickUpDate.toString())} to ${formatDate(booking.collectionDate.toString())}",
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
+                                Flexible(
+                                  child: Text(
+                                    "${booking.pickUpLocation ?? ""} to ${booking.dropOffLocation ?? ""}",
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Date: ",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                                Text(
+                                  "${formatDate(booking.pickUpDate.toString())} to ${formatDate(booking.collectionDate.toString())}",
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -320,14 +365,16 @@ class _UserBookingScreenState extends State<UserBookingScreen> {
               } else {
                 return const Center(
                   child: Text(
-                    "No Booking Available",
+                    "Aucune réservation disponible",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                 );
               }
-            }),
+            },
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   String formatDate(String dateString) {

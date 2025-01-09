@@ -36,10 +36,10 @@ class ProfileController extends GetxController {
         SharedPrefs.setUserEmail(email);
         SharedPrefs.setUserPhoneNumber(phoneNumber);
         Navigator.pop(context);
-        Get.snackbar("Success", "Profile Detail Updated");
+        Get.snackbar("Succès", "Détails du profil mis à jour");
         log(response.body.toString());
       } else {
-        Get.snackbar("Failed", "Something went wrong");
+        Get.snackbar("Échoué", "Quelque chose s'est mal passé");
       }
     } catch (e) {
       error = 'Error : $e';

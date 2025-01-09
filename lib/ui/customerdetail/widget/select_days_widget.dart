@@ -39,7 +39,7 @@ class _SelectDaysWidgetState extends State<SelectDaysWidget> {
             dropdownColor: Colors.white,
             hint: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 35),
-              child: Text('Select a City',
+              child: Text('Sélectionnez une ville',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -97,7 +97,7 @@ class _SelectDaysWidgetState extends State<SelectDaysWidget> {
                 ),
               ),
               Text(
-                "Day: $number",
+                "Jour: $number",
                 style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
@@ -129,7 +129,7 @@ class _SelectDaysWidgetState extends State<SelectDaysWidget> {
                     color: const Color(0xffff36a21),
                   )),
               Text(
-                "Week: $number",
+                "Semaine: $number",
                 style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
@@ -162,7 +162,7 @@ class _SelectDaysWidgetState extends State<SelectDaysWidget> {
                     color: const Color(0xffff36a21),
                   )),
               Text(
-                "Month: $number",
+                "Mois: $number",
                 style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w800,

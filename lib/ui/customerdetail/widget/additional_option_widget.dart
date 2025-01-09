@@ -10,7 +10,8 @@ class AdditionalOptionsWidget extends StatefulWidget {
   });
 
   @override
-  State<AdditionalOptionsWidget> createState() => _AdditionalOptionsWidgetState();
+  State<AdditionalOptionsWidget> createState() =>
+      _AdditionalOptionsWidgetState();
 
   bool switchvalue;
   String text;
@@ -28,7 +29,7 @@ class _AdditionalOptionsWidgetState extends State<AdditionalOptionsWidget> {
         children: [
           Text(
             widget.text,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Switch(
             inactiveThumbColor: Colors.black,
@@ -43,4 +44,3 @@ class _AdditionalOptionsWidgetState extends State<AdditionalOptionsWidget> {
     );
   }
 }
-

@@ -33,10 +33,10 @@ class LogoutController extends GetxController {
         // Navigator.pop(context);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const BottomNavigator()));
-        Get.snackbar("Success", "Log Out");
+        Get.snackbar("Succès", "Se déconnecter");
         log(response.body.toString());
       } else {
-        Get.snackbar("Failed", "Something went wrong");
+        Get.snackbar("Échoué", "Quelque chose s'est mal passé");
       }
     } catch (e) {
       error = e.toString();

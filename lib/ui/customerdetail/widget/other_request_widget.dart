@@ -23,7 +23,7 @@ class _OtherRequestWidgetState extends State<OtherRequestWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Other Requests",
+                "Autres demandes",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Switch(
@@ -60,7 +60,7 @@ class _OtherRequestWidgetState extends State<OtherRequestWidget> {
           ),
           hintStyle: const TextStyle(
               fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-          hintText: "Add Other Requests ",
+          hintText: "Ajouter d'autres demandes",
           focusColor: Colors.white,
           disabledBorder: InputBorder.none,
           filled: true,

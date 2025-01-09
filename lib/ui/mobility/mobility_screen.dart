@@ -25,7 +25,7 @@ class MobilityScreen extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              "All Cars ",
+              "Toutes les voitures",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
@@ -42,7 +42,7 @@ class MobilityScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (mobilityController.carList.isEmpty) {
-            return const Center(child: Text('No cars available'));
+            return const Center(child: Text('Aucune voiture disponible'));
           }
           return ListView.builder(
             itemCount: mobilityController.carList.length,
@@ -118,7 +118,7 @@ class MobilityScreen extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            product["location"],
+                            product["location"] ?? "",
                             style: TextStyle(
                               fontSize: height * 0.020,
                               fontFamily: "UberMove",
@@ -150,7 +150,7 @@ class MobilityScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'Detail',
+                                'Détail',
                                 style: TextStyle(
                                   fontSize: height * 0.02,
                                   color: Colors.white,

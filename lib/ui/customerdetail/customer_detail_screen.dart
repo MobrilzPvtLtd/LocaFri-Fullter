@@ -1,5 +1,4 @@
 import 'package:carapp/Controllers/search/search_controller.dart';
-import 'package:carapp/models/create_contract_data.dart';
 import 'package:carapp/ui/customerdetail/payment_screen.dart';
 import 'package:carapp/ui/customerdetail/widget/other_request_widget.dart';
 import 'package:carapp/ui/customerdetail/widget/additional_option_widget.dart';
@@ -114,7 +113,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         ),
         centerTitle: true,
         title: const Text(
-          "Detail Form",
+          "Formulaire détaillé",
           style: TextStyle(
               fontSize: 30,
               color: Colors.black,
@@ -141,7 +140,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "First Name ",
+                    hintText: "Prénom",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -152,7 +151,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
+                      return 'Veuillez entrer votre nom complet';
                     }
                     return null;
                   },
@@ -171,7 +170,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Last Name ",
+                    hintText: "Nom de famille",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -182,7 +181,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your last name';
+                      return 'Veuillez entrer votre nom de famille';
                     }
                     return null;
                   },
@@ -199,7 +198,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Phone Number",
+                    hintText: "Numéro de téléphone",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -210,7 +209,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
+                      return 'Veuillez entrer votre numéro de téléphone';
                     }
                     return null;
                   },
@@ -232,7 +231,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Email",
+                    hintText: "E-mail",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     suffix: Obx(() {
@@ -241,7 +240,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                           ? const Icon(Icons.check_circle,
                               color: Colors.green) // Show green tick
                           : GestureDetector(
-                              child: const Text("verify",
+                              child: const Text("vérifier",
                                   style: TextStyle(color: Colors.blue)),
                               onTap: () {
                                 controller.verifyEmail(
@@ -270,7 +269,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Address",
+                    hintText: "Adresse",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -281,7 +280,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your address';
+                      return 'Veuillez entrer votre adresse';
                     }
                     return null;
                   },
@@ -300,7 +299,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "City",
+                    hintText: "Ville",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -311,7 +310,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your city';
+                      return 'Veuillez entrer votre ville';
                     }
                     return null;
                   },
@@ -330,7 +329,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Zip Code",
+                    hintText: "Code postal",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -341,14 +340,14 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your zip code';
+                      return 'Veuillez entrer votre code postal';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  "Pick Up Location",
+                  "Lieu de prise en charge",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -391,7 +390,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         );
                       }).toList(),
                       hint: const Text(
-                        "Select Your Pickup Location",
+                        "Sélectionnez votre lieu de prise en charge",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -406,7 +405,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   ),
                 ),
                 const Text(
-                  "Drop Off Location",
+                  "Lieu de dépôt",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -449,7 +448,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         );
                       }).toList(),
                       hint: const Text(
-                        "Select Your Drop Off Location",
+                        "Sélectionnez votre lieu de dépôt",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -475,7 +474,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Month",
+                      "Mois",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -520,7 +519,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       height: 10,
                     ),
                     const Text(
-                      "Week",
+                      "Semaine",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -565,7 +564,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       height: 10,
                     ),
                     const Text(
-                      "Days",
+                      "Jours",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -614,7 +613,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                 Obx(
                   () => SwitchListTile(
                     title: const Text(
-                      "Select Additional Option",
+                      "Sélectionnez une option supplémentaire",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -644,7 +643,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text(
-                            "Total Price:-",
+                            "Prix ​​total : -",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -664,7 +663,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                               textAlign: TextAlign.center,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: 'Amount',
+                                hintText: 'Montant',
                               ),
                             ),
                           ),
@@ -707,7 +706,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                           );
                         }).toList(),
                         hint: Text(
-                          "Select Your Payment Type",
+                          "Sélectionnez votre type de paiement",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.045,
@@ -775,7 +774,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 ),
                               );
                             } else {
-                              Get.snackbar("Failed", "Something went wrong");
+                              Get.snackbar(
+                                  "Échoué", "Quelque chose s'est mal passé");
                             }
                           },
                         );
@@ -794,7 +794,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 color: Colors.white,
                               )
                             : const Text(
-                                "Book Now",
+                                "Réservez maintenant",
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: "UberMove",
@@ -820,8 +820,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
       children: [
         Obx(() {
           String additionalDriverText = controller.isAdditionalDriver.value
-              ? "Additional Driver \n(CHF 20. -/ per month)"
-              : "Additional Driver";
+              ? "Conducteur supplémentaire \n(CHF 20. -/ par mois)"
+              : "Conducteur supplémentaire";
 
           return Column(
             children: [
@@ -849,7 +849,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         hintStyle: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontFamily: "UberMove"),
-                        hintText: "Driver First Name",
+                        hintText: "Prénom du conducteur",
                         focusColor: Colors.white,
                         disabledBorder: InputBorder.none,
                         filled: true,
@@ -875,7 +875,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     ),
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-                    hintText: "Driver Last Name",
+                    hintText: "Nom de famille du conducteur",
                     focusColor: Colors.white,
                     disabledBorder: InputBorder.none,
                     filled: true,
@@ -897,8 +897,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               controller.calculateChildBoosterSeatPrice();
 
           String childBoosterSeatText = controller.isChildBoosterSeat.value
-              ? "Child Booster Seat \n(\CHF ${childBoosterSeatPrice.toStringAsFixed(2)} -/ per month)"
-              : "Child Booster Seat";
+              ? "Siège rehausseur pour enfant \n(\CHF ${childBoosterSeatPrice.toStringAsFixed(2)} -/ par mois)"
+              : "Siège rehausseur pour enfant";
 
           return AdditionalOptionsWidget(
             switchvalue: controller.isChildBoosterSeat.value,
@@ -921,8 +921,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           }
 
           String childSeatText = controller.isChildSeat.value
-              ? "Child Seat \n(CHF ${calculateChildSeatPrice()} -/ per month)"
-              : "Child Seat";
+              ? "Siège enfant \n(CHF ${calculateChildSeatPrice()} -/ par mois)"
+              : "Siège enfant";
 
           return AdditionalOptionsWidget(
             switchvalue: controller.isChildSeat.value,
@@ -937,8 +937,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         ),
         Obx(() {
           String exitPermitText = controller.isExitPermit.value
-              ? "Exit Permit \n(CHF 149.-/month)"
-              : "Exit Permit";
+              ? "Permis de sortie \n(CHF 149.-/mois)"
+              : "Permis de sortie";
 
           return AdditionalOptionsWidget(
             switchvalue: controller.isExitPermit.value,

@@ -124,21 +124,17 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.white,
         title: const Text(
-          "Checkout Contract",
+          "Contrat de paiement",
           style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 30,
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: SingleChildScrollView(
-        // controller: _scrollController,
-        // physics: controller.isGaugeActive.value
-        //     ? NeverScrollableScrollPhysics()
-        //     : AlwaysScrollableScrollPhysics(),
-        child: Stack(
-          children: [
-            Padding(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15.0),
               child: Form(
                 key: _formKey,
@@ -151,7 +147,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                     _kilometerandFuelLevelandVehicalDamage(
                         _image, kilometerController),
                     const Text(
-                      "Upload Vehical/Damages ",
+                      "Télécharger des véhicules/dommages",
                       style: TextStyle(
                           fontFamily: "UberMove",
                           fontSize: 20,
@@ -167,7 +163,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                       child: Column(
                         children: [
                           const Text(
-                            "Upload Signature",
+                            "Télécharger la signature",
                             style: TextStyle(
                               fontFamily: "UberMove",
                               fontSize: 20,
@@ -196,7 +192,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                               TextButton(
                                 onPressed: handleSaveButtonPressed,
                                 child: const Text(
-                                  'Capture Signature',
+                                  'Capturer la signature',
                                   style: TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
@@ -204,7 +200,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                               TextButton(
                                 onPressed: handleClearButtonPressed,
                                 child: const Text(
-                                  'Clear',
+                                  'Clair',
                                   style: TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
@@ -221,66 +217,75 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         width: double.infinity,
-                        height: 50,
+                        height: 60,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.grey.shade300),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text(
-                              "Pay Pending Amount : ",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            const Flexible(
+                              child: Text(
+                                "Montant en attente de paiement :",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                final createContractData = CreateContractData(
-                                    price: widget.price,
-                                    vehicleName: widget.vehicleName,
-                                    customerEmail: SharedPrefs.getUserEmail,
-                                    bookingId: widget.id,
-                                    paymentType: _customerController
-                                        .stripePaymentType
-                                        .value = "payment_full");
-                                try {
-                                  bool isPaymentInitiated =
-                                      await _customerController
-                                          .stripePaymentCall(
-                                              createContractData, context);
+                            Obx(
+                              () => ElevatedButton(
+                                onPressed: () async {
+                                  final createContractData = CreateContractData(
+                                      price: widget.price,
+                                      vehicleName: widget.vehicleName,
+                                      customerEmail: SharedPrefs.getUserEmail,
+                                      bookingId: widget.id,
+                                      paymentType: _customerController
+                                          .stripePaymentType
+                                          .value = "payment_full");
+                                  try {
+                                    bool isPaymentInitiated =
+                                        await _customerController
+                                            .stripePaymentCall(
+                                                createContractData, context);
 
-                                  if (isPaymentInitiated) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => PaymentScreen(
-                                          fromCheckout: true,
-                                          paymentUrl: _customerController
-                                              .paymentRedirectUrl.value,
-                                          email: SharedPrefs.getUserEmail,
-                                          bookingId: widget.id.toString(),
-                                          paymentType: "payment_full",
-                                          price: widget.price.toString(),
-                                          vehicleName:
-                                              widget.vehicleName.toString(),
-                                          token: SharedPrefs.getToken,
+                                    if (isPaymentInitiated) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                            fromCheckout: true,
+                                            paymentUrl: _customerController
+                                                .paymentRedirectUrl.value,
+                                            email: SharedPrefs.getUserEmail,
+                                            bookingId: widget.id.toString(),
+                                            paymentType: "payment_full",
+                                            price: widget.price.toString(),
+                                            vehicleName:
+                                                widget.vehicleName.toString(),
+                                            token: SharedPrefs.getToken,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  } else {
-                                    Get.snackbar(
-                                        "Failed", "Something went wrong");
+                                      );
+                                    } else {
+                                      Get.snackbar("Échoué",
+                                          "Quelque chose s'est mal passé");
+                                    }
+                                  } catch (e) {
+                                    // Get.snackbar("Erreur",
+                                    //     "Une erreur inattendue s'est produite : $e");
                                   }
-                                } catch (e) {
-                                  Get.snackbar("Error",
-                                      "An unexpected error occurred: $e");
-                                }
-                              },
-                              child: const Text("Pay Now ->"),
-                            )
+                                },
+                                child: Text(
+                                  controller.isPaymentDone.value
+                                      ? 'Paid'
+                                      : "Payer maintenant ->",
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -300,7 +305,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                             );
                           }),
                           const Text(
-                            "I am 18 years of age or older and agree to the \n terms of the Contract and the  Valve Privacy \n Policy",
+                            "J'ai 18 ans ou plus et j'accepte les termes\n du contrat et la politique de \nconfidentialité de Valve.",
                             style: TextStyle(fontFamily: "Ubermove"),
                           )
                         ],
@@ -309,45 +314,39 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Obx(
-                      () => GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            controller.uploadCheckOutContract(
-                              name: nameController.text,
-                              address: addressController.text,
-                              postalCode: postalCodeController.text,
-                              email: emailController.text,
-                              recordKilometers: kilometerController.text,
-                              signatureImage: customerSignatureFile,
-                              fuelLevel: "75",
-                              comment: "Good",
-                              contractId: widget.contractId.toString(),
-                              context: context,
-                            );
-                          } else {
-                            print("Something went wrong");
-                          }
-                        },
-                        child: Container(
-                          height: height * 0.06,
-                          width: width * 0.90,
-                          decoration: BoxDecoration(
-                              color: const Color(0xffff36a21),
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Center(
-                            child: controller.isLoading.value
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : const Text(
-                                    "Submit Form",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                    GestureDetector(
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          controller.uploadCheckOutContract(
+                            name: nameController.text,
+                            address: addressController.text,
+                            postalCode: postalCodeController.text,
+                            email: emailController.text,
+                            recordKilometers: kilometerController.text,
+                            signatureImage: customerSignatureFile,
+                            fuelLevel: "75",
+                            comment: "Good",
+                            contractId: widget.contractId.toString(),
+                            context: context,
+                          );
+                        } else {
+                          print("Something went wrong");
+                        }
+                      },
+                      child: Container(
+                        height: height * 0.06,
+                        width: width * 0.90,
+                        decoration: BoxDecoration(
+                            color: const Color(0xffff36a21),
+                            borderRadius: BorderRadius.circular(14)),
+                        child: const Center(
+                          child: Text(
+                            "Soumettre le formulaire",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
@@ -359,28 +358,19 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
                 ),
               ),
             ),
-            // Obx(
-            //   () {
-            //     if (controller.isLoading.value) {
-            //       return Positioned.fill(
-            //         child: Container(
-            //           color: Colors.black
-            //               .withOpacity(0.5), // Semi-transparent background
-            //           child: const Center(
-            //             child: CircularProgressIndicator(
-            //               color: Colors.black, // Loader color
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     } else {
-            //       return const SizedBox
-            //           .shrink(); // Empty container if loader is not active
-            //     }
-            //   },
-            // ),
-          ],
-        ),
+          ),
+          Obx(() {
+            if (controller.isLoading.value) {
+              return Container(
+                color: Colors.black.withOpacity(0.5),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+        ],
       ),
     );
   }
@@ -399,7 +389,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             hintStyle: const TextStyle(
                 fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-            hintText: "Full Name",
+            hintText: "Nom et prénom",
             focusColor: Colors.white,
             disabledBorder: InputBorder.none,
             filled: true,
@@ -410,7 +400,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your full name';
+              return 'Veuillez entrer votre nom complet';
             }
             return null;
           },
@@ -429,7 +419,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             height: 10,
           ),
           const Text(
-            "Address",
+            "Adresse",
             style: TextStyle(
                 fontFamily: "UberMove",
                 fontSize: 20,
@@ -449,7 +439,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               ),
               hintStyle: const TextStyle(
                   fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-              hintText: "Address",
+              hintText: "Adresse",
               focusColor: Colors.white,
               disabledBorder: InputBorder.none,
               filled: true,
@@ -460,7 +450,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your address';
+                return 'Veuillez entrer votre adresse';
               }
               return null;
             },
@@ -479,7 +469,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               ),
               hintStyle: const TextStyle(
                   fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-              hintText: "Postal Code",
+              hintText: "Code Postal",
               focusColor: Colors.white,
               disabledBorder: InputBorder.none,
               filled: true,
@@ -490,7 +480,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your Postal Code';
+                return 'Veuillez entrer votre code postal';
               }
               return null;
             },
@@ -519,7 +509,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             hintStyle: const TextStyle(
                 fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-            hintText: "Email",
+            hintText: "E-mail",
             focusColor: Colors.white,
             disabledBorder: InputBorder.none,
             filled: true,
@@ -530,7 +520,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your Email';
+              return 'Veuillez entrer votre email';
             }
             return null;
           },
@@ -541,7 +531,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
         const Padding(
           padding: const EdgeInsets.only(left: 20),
           child: Text(
-            "Upload ID/Driving License Image",
+            "Télécharger l'image d'une pièce d'identité/permis de conduire",
             style: TextStyle(
                 fontFamily: "UberMove",
                 fontSize: 20,
@@ -604,7 +594,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Number of Kilometers",
+          "Nombre de kilomètres",
           style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 20,
@@ -624,7 +614,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             ),
             hintStyle: const TextStyle(
                 fontWeight: FontWeight.w800, fontFamily: "UberMove"),
-            hintText: "Number of Kilometers",
+            hintText: "Nombre de kilomètres",
             focusColor: Colors.white,
             disabledBorder: InputBorder.none,
             filled: true,
@@ -635,7 +625,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter your full name';
+              return 'Veuillez entrer votre nom complet';
             }
             return null;
           },
@@ -644,7 +634,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           height: 10,
         ),
         const Text(
-          'Niveau de reservoir',
+          'Niveau de réservoir',
           style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 20,
@@ -793,7 +783,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
           height: 20,
         ),
         const Text(
-          "Upload odometer with kms and fuel image",
+          "Télécharger le compteur kilométrique avec les km et l'image du carburant",
           style: TextStyle(
               fontFamily: "UberMove",
               fontSize: 19,
@@ -856,7 +846,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Get.find<CheckOutContractController>()
                       .pickOdometerImageCamera();
@@ -865,7 +855,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Get.find<CheckOutContractController>()
                       .pickOdometerImageGallery();
@@ -888,7 +878,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Get.find<CheckOutContractController>().pickImageFromCamera1();
                   Navigator.pop(context);
@@ -896,7 +886,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Get.find<CheckOutContractController>()
                       .pickImageFromGallery1();
@@ -919,7 +909,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
+                title: const Text('Caméra'),
                 onTap: () async {
                   Navigator.pop(context);
                   Get.find<CheckOutContractController>()
@@ -928,7 +918,7 @@ class _checkoutContractScreenState extends State<CheckoutContractScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
+                title: const Text('Galerie'),
                 onTap: () async {
                   Navigator.pop(context);
                   Get.find<CheckOutContractController>()

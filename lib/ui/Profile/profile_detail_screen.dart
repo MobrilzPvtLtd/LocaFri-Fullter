@@ -33,8 +33,6 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
           child: Form(
             key: _formKey,
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CircleAvatar(
                   radius: 100,
@@ -48,7 +46,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      " First Name",
+                      " Prénom",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -75,7 +73,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter an first name";
+                          return "Veuillez saisir un prénom";
                         }
                         return null;
                       },
@@ -90,7 +88,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      " Last Name",
+                      " Nom de famille",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -116,7 +114,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter an last name";
+                          return "Veuillez entrer un nom de famille";
                         }
                         return null;
                       },
@@ -131,7 +129,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      " Email",
+                      " E-mail",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -158,11 +156,11 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter an email";
+                          return "Veuillez entrer un email";
                         }
                         final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                         if (!emailRegex.hasMatch(value)) {
-                          return "Enter a valid email";
+                          return "Entrez un email valide";
                         }
                         return null;
                       },
@@ -177,7 +175,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      " Password",
+                      " Numéro de téléphone",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -205,7 +203,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter an Phone number";
+                          return "Veuillez entrer un numéro de téléphone";
                         }
                         return null;
                       },
@@ -243,7 +241,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                             )
                           : const Center(
                               child: Text(
-                                "Update Profile",
+                                "Mettre à jour le profil",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,

@@ -97,7 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               CupertinoButton(
                 child: const Text(
-                  'OK',
+                  'Ok',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w800,
@@ -252,7 +252,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Pick up office',
+                      'Bureau de retrait',
                       style: TextStyle(
                         fontSize: screenWidth * 0.05,
                         fontWeight: FontWeight.bold,
@@ -297,7 +297,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             }).toList(),
                             hint: Text(
-                              "Select Your Pickup Location",
+                              "Sélectionnez votre lieu de prise en charge",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.045,
@@ -320,16 +320,16 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: screenWidth * 0.88,
                       child: _buildDateTimePicker(
                         context,
-                        'Pick up day',
+                        'Jour de ramassage',
                         _pickUpDate,
-                        'Pick up hour',
+                        'Heure de prise en charge',
                         _pickUpTime,
                         true,
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     Text(
-                      'Drop off office',
+                      'Bureau de dépôt',
                       style: TextStyle(
                         fontSize: screenWidth * 0.04,
                         fontWeight: FontWeight.bold,
@@ -373,7 +373,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             }).toList(),
                             hint: Text(
-                              "Select Your DropOff Location",
+                              "Sélectionnez votre lieu de dépôt",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.045,
@@ -396,9 +396,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: screenWidth * 0.88,
                       child: _buildDateTimePicker(
                         context,
-                        'Drop off day',
+                        'Jour de dépôt',
                         _dropOffDate,
-                        'Drop off hour',
+                        'Heure de dépôt',
                         _dropOffTime,
                         false,
                       ),
@@ -436,7 +436,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               child: const Text(
-                'Search',
+                'Recherche',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),

@@ -22,7 +22,7 @@ class Profile extends StatelessWidget {
           backgroundColor: Colors.white10,
           bottom: AppBar(
             title: const Text(
-              "Profile",
+              "Profil",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
@@ -58,7 +58,7 @@ class Profile extends StatelessWidget {
               Buttonprofile(
                 icon: Icons.person,
                 icon2: Icons.arrow_right,
-                text: "Profile Detail",
+                text: "Détail du profil",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -71,7 +71,7 @@ class Profile extends StatelessWidget {
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
-                text: "Key-Box",
+                text: "Boîte à clés",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -84,7 +84,7 @@ class Profile extends StatelessWidget {
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
-                text: "Term & Condition",
+                text: "Termes et conditions",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -94,23 +94,10 @@ class Profile extends StatelessWidget {
                   );
                 },
               ),
-              // Buttonprofile(
-              //   icon: Icons.article_rounded,
-              //   icon2: Icons.arrow_right,
-              //   text: "Privacy Policy",
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => PrivacyPolicyScreen(),
-              //       ),
-              //     );
-              //   },
-              // ),
               Buttonprofile(
                 icon: Icons.article_rounded,
                 icon2: Icons.arrow_right,
-                text: "Contact us",
+                text: "Contactez-nous",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -126,7 +113,7 @@ class Profile extends StatelessWidget {
                   icon2: controller.isLoading.value
                       ? Icons.disabled_by_default
                       : Icons.arrow_right,
-                  text: "Logout",
+                  text: "Déconnexion",
                   onPressed: () {
                     controller.logout(context);
                   },

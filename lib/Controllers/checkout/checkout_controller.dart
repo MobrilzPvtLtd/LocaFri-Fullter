@@ -16,6 +16,7 @@ class CheckOutContractController extends GetxController {
   var statusCode = ''.obs;
   var needleValue = 10.0.obs;
   RxBool isGaugeActive = false.obs;
+  RxBool isPaymentDone = false.obs;
 
   void updateNeedleValue(double value) {
     needleValue.value = value.clamp(0, 9);
@@ -216,39 +217,34 @@ class CheckOutContractController extends GetxController {
     request.fields['fuel_level'] = fuelLevel;
     request.fields['vehicle_damage_comments'] = comment;
 
-    // Compress and add signature image if available
     if (signatureImage.value != null) {
-      File compressedSignature = await compressImage(signatureImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'customer_signature',
-        compressedSignature.path,
+        signatureImage.value!.path,
       ));
     }
 
-    // Compress and add other images if available
+    // Add other images conditionally (example for other files)
     if (licenceImage.value != null) {
-      File compressedLicense = await compressImage(licenceImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'license_photo',
-        compressedLicense.path,
+        licenceImage.value!.path,
       ));
     }
 
     if (odometerImage.value != null) {
-      File compressedOdometer = await compressImage(odometerImage.value!);
       request.files.add(await http.MultipartFile.fromPath(
         'fuel_image',
-        compressedOdometer.path,
+        odometerImage.value!.path,
       ));
     }
 
-    // Compress and add vehicle images
+    // Handle multiple vehicle images
     for (int i = 0; i < vehicleImages.length; i++) {
       if (vehicleImages[i] != null) {
-        File compressedVehicleImage = await compressImage(vehicleImages[i]!);
         request.files.add(await http.MultipartFile.fromPath(
           'vehicle_images[]',
-          compressedVehicleImage.path,
+          vehicleImages[i]!.path,
         ));
       }
     }
@@ -261,14 +257,15 @@ class CheckOutContractController extends GetxController {
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(responseBody);
         print('Check-out completed: ${jsonResponse['message']}');
-        Get.snackbar("Success", "Check-out form submitted successfully.");
+        Get.snackbar("Succès", "Formulaire de paiement soumis avec succès.");
         Get.offAll(const BottomNavigator());
       } else {
         var jsonResponse = json.decode(responseBody);
         log(jsonResponse.toString());
         String errorMessage = jsonResponse['error'] ?? 'Something went wrong!';
         print('Error response: $errorMessage');
-        Get.snackbar("Failed", errorMessage);
+        // Get.snackbar("Échoué", errorMessage);
+        _showDialog(context, errorMessage);
       }
       isLoading.value = false;
     } catch (e) {
@@ -277,6 +274,26 @@ class CheckOutContractController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void _showDialog(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Erreur'),
+          content: Text(text),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('D\'ACCORD'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
 // Function to compress an image file

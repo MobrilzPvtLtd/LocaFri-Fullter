@@ -171,15 +171,15 @@ class CustomerDetailController extends GetxController {
         return StatefulBuilder(
           builder: (context, setState) {
             return CupertinoAlertDialog(
-              title: const Text('Verify Email'),
+              title: const Text('Vérifier l\'e-mail'),
               content: Column(
                 children: [
                   const SizedBox(height: 10),
-                  Text('OTP has been sent to $email'),
+                  Text('OTP a été envoyé à $email'),
                   const SizedBox(height: 20),
                   CupertinoTextField(
                     onChanged: updateOtp,
-                    placeholder: 'Enter OTP',
+                    placeholder: 'Entrez OTP',
                     keyboardType: TextInputType.number,
                     maxLength: 6,
                     textAlign: TextAlign.center,
@@ -202,7 +202,7 @@ class CustomerDetailController extends GetxController {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 CupertinoDialogAction(
                   onPressed: () {
@@ -210,16 +210,17 @@ class CustomerDetailController extends GetxController {
                       () {
                         if (verifyOtpStatus.value) {
                           Navigator.pop(context);
-                          Get.snackbar("Success", "Email Verified");
+                          Get.snackbar("Succès", "E-mail vérifié");
                         } else {
                           Navigator.pop(context);
-                          Get.snackbar("Failed", "Something went wrong");
+                          Get.snackbar(
+                              "Échoué", "Quelque chose s'est mal passé");
                           log("Something went wrong");
                         }
                       },
                     );
                   },
-                  child: const Text('Verify'),
+                  child: const Text('Vérifier'),
                 ),
               ],
             );
@@ -504,13 +505,13 @@ class CustomerDetailController extends GetxController {
         return true;
       } else {
         print('Error: ${response.statusCode}');
-        Get.snackbar("Failed", "Something went wrong..");
+        Get.snackbar("Échoué", "Quelque chose s'est mal passé..");
         loading.value = false;
         return false;
       }
     } catch (e) {
       print('Exception: $e');
-      Get.snackbar("Failed", "Something went wrong..");
+      Get.snackbar("Échoué", "Quelque chose s'est mal passé..");
       loading.value = false;
       return false;
     }

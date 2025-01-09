@@ -54,15 +54,15 @@ class LoginController extends GetxController {
         return StatefulBuilder(
           builder: (context, setState) {
             return CupertinoAlertDialog(
-              title: const Text('Verify Email'),
+              title: const Text('Vérifier l\'e-mail'),
               content: Column(
                 children: [
                   const SizedBox(height: 10),
-                  Text('OTP has been sent to $email'),
+                  Text('OTP a été envoyé à $email'),
                   const SizedBox(height: 20),
                   CupertinoTextField(
                     onChanged: updateOtp,
-                    placeholder: 'Enter OTP',
+                    placeholder: 'Entrez OTP',
                     keyboardType: TextInputType.number,
                     maxLength: 6,
                     textAlign: TextAlign.center,
@@ -85,13 +85,13 @@ class LoginController extends GetxController {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 CupertinoDialogAction(
                   onPressed: () {
                     verifyOtp(email, otp.value, context);
                   },
-                  child: const Text('Verify'),
+                  child: const Text('Vérifier'),
                 ),
               ],
             );
@@ -115,7 +115,7 @@ class LoginController extends GetxController {
         SharedPrefs.setUserEmail(email);
         var data = jsonDecode(response.body);
         SharedPrefs.setToken(data['token']);
-        Get.snackbar("Suceess", "Email Verified");
+        Get.snackbar("Succès", "E-mail vérifié");
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
@@ -128,7 +128,7 @@ class LoginController extends GetxController {
         updateVerifyOtpStatus(true);
         return true;
       } else {
-        Get.snackbar("Failed", "Email Not Verified");
+        Get.snackbar("Échoué", "E-mail non vérifié");
         Navigator.pop(context);
         log("Something went wrong");
       }

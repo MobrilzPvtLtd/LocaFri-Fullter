@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       offline: const FullScreenWidget(),
       whenOffline: () => print('No Internet'),
       whenOnline: () => print('Connected to internet'),
-      loadingWidget: const Center(child: Text('Loading')),
+      loadingWidget: const Center(child: Text('Chargement')),
       online: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'LocaFri',

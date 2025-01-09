@@ -35,10 +35,10 @@ class SearchCars extends StatelessWidget {
                   color: Colors.black,
                 )),
             const Text(
-              "Search Cars",
+              "Rechercher des voitures",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 30,
+                  fontSize: 25,
                   fontWeight: FontWeight.w700,
                   fontFamily: "UberMove"),
             ),
@@ -52,7 +52,7 @@ class SearchCars extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (carListController.carList.isEmpty) {
-            return const Center(child: Text('No cars available'));
+            return const Center(child: Text('Aucune voiture disponible'));
           }
           return ListView.builder(
             itemCount: availableCars.length,
@@ -158,7 +158,7 @@ class SearchCars extends StatelessWidget {
                             ),
                             child: const Center(
                               child: Text(
-                                'Detail',
+                                'Détail',
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.white,
