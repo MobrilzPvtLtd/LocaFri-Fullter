@@ -90,6 +90,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           log("The status is $status");
           if (widget.fromCheckout) {
             if (status == "complete" && remainingAmount == "0.00") {
+              checkOutContractController.isPaymentDone.value = true;
               _stopPolling(timer, true);
             }
           } else {
@@ -106,7 +107,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void _stopPolling(Timer timer, bool paymentCompleted) async {
     timer.cancel();
-    checkOutContractController.isPaymentDone.value = paymentCompleted;
     _paymentStatusReceived = paymentCompleted;
 
     if (!_completer.isCompleted) {

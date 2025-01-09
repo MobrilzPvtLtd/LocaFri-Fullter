@@ -114,10 +114,8 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                 margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
                 padding: const EdgeInsets.only(
                     top: 20, bottom: 20, left: 10, right: 10),
-                child: const Flexible(
-                  child: Text(
-                      "Merci, veuillez prendre une capture d'écran ou enregistrer les détails pour votre référence..."),
-                ),
+                child: const Text(
+                    "Merci, veuillez prendre une capture d'écran ou enregistrer les détails pour votre référence..."),
               ),
               const SizedBox(
                 height: 20,
