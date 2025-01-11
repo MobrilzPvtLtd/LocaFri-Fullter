@@ -140,17 +140,56 @@ class CarDetailScreen extends StatelessWidget {
                                 fontFamily: "UberMove",
                                 fontWeight: FontWeight.w700),
                           ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Row(
+                            children: [
+                              Text(
+                                "2",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Icon(
+                                Icons.thumb_up,
+                                color: Colors.blue,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "2",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Icon(
+                                Icons.thumb_down_alt_outlined,
+                                color: Colors.blue,
+                              ),
+                            ],
+                          ),
                           TextButton.icon(
                             onPressed: () {},
                             icon: const Icon(
                               Icons.star,
                               color: const Color(0xffff36a21),
-                              size: 30,
+                              size: 25,
                             ),
                             label: const Text(
                               "4.9",
                               style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 20,
                                 color: Colors.black,
                                 fontFamily: "UberMove",
                                 fontWeight: FontWeight.bold,
@@ -158,6 +197,9 @@ class CarDetailScreen extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,31 +210,28 @@ class CarDetailScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "\CHF ${carDetails['Dprice']}/day",
+                                "${carDetails['Dprice']} CHF par jour",
                                 style: const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "\CHF ${carDetails['wprice']}/week",
+                                "${carDetails['wprice']} CHF par semaine",
                                 style: const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                "\CHF ${carDetails['mprice']}/month",
+                                "${carDetails['mprice']} CHF par mois",
                                 style: const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: const Color(0xffff36a21),
                                     fontFamily: "UberMove",
                                     fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(
-                                height: 10,
                               ),
                             ],
                           ),
@@ -213,7 +252,7 @@ class CarDetailScreen extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.all(10),
                               height: height * 0.05,
-                              width: width * 0.40,
+                              width: width * 0.35,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: const Color(0xffff36a21),
@@ -276,28 +315,28 @@ class CarDetailScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  "Corps",
+                                  "Modèle",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
+                                // const Text(
+                                //   "Taper",
+                                //   style: TextStyle(
+                                //       fontSize: 18,
+                                //       fontFamily: "UberMove",
+                                //       fontWeight: FontWeight.w500),
+                                // ),
+                                // const Text(
+                                //   "Emplacement",
+                                //   style: TextStyle(
+                                //       fontSize: 18,
+                                //       fontFamily: "UberMove",
+                                //       fontWeight: FontWeight.w500),
+                                // ),
                                 const Text(
-                                  "Taper",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                const Text(
-                                  "Emplacement",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                const Text(
-                                  "Nombre de places",
+                                  "Siège",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
@@ -306,7 +345,7 @@ class CarDetailScreen extends StatelessWidget {
                                 if (carDetails['door'] != null) ...{
                                   if (carDetails['door'] > 0) ...{
                                     const Text(
-                                      "Nombre de portes",
+                                      "Porte",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: "UberMove",
@@ -328,42 +367,49 @@ class CarDetailScreen extends StatelessWidget {
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if (carDetails['permitted_kilometers_day'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_day'] !=
-                                        "") ...{
-                                  const Text(
-                                    "Kilomètre autorisé",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
-                                if (carDetails['permitted_kilometers_week'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_week'] !=
-                                        "") ...{
-                                  const Text(
-                                    "",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
-                                if (carDetails['permitted_kilometers_month'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_month'] !=
-                                        "") ...{
-                                  const Text(
-                                    "",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
+                                const Text(
+                                  "Kilomètre autorisé",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                // if (carDetails['permitted_kilometers_day'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_day'] !=
+                                //         "") ...{
+                                //   const Text(
+                                //     "Kilomètre autorisé",
+                                //     style: TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
+                                // if (carDetails['permitted_kilometers_week'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_week'] !=
+                                //         "") ...{
+                                //   const Text(
+                                //     "",
+                                //     style: TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
+                                // if (carDetails['permitted_kilometers_month'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_month'] !=
+                                //         "") ...{
+                                //   const Text(
+                                //     "",
+                                //     style: TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
                                 const Text(
                                   "Bagage",
                                   style: TextStyle(
@@ -391,26 +437,26 @@ class CarDetailScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  carDetails['body'] ?? "None",
+                                  carDetails['model'] ?? "None",
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Text(
-                                  carDetails['type'] ?? "",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  carDetails['location'] ?? "",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: "UberMove",
-                                      fontWeight: FontWeight.w500),
-                                ),
+                                // Text(
+                                //   carDetails['type'] ?? "",
+                                //   style: const TextStyle(
+                                //       fontSize: 18,
+                                //       fontFamily: "UberMove",
+                                //       fontWeight: FontWeight.w500),
+                                // ),
+                                // Text(
+                                //   carDetails['location'] ?? "",
+                                //   style: const TextStyle(
+                                //       fontSize: 18,
+                                //       fontFamily: "UberMove",
+                                //       fontWeight: FontWeight.w500),
+                                // ),
                                 Text(
                                   carDetails['seat'] ?? "",
                                   style: const TextStyle(
@@ -443,42 +489,49 @@ class CarDetailScreen extends StatelessWidget {
                                       fontFamily: "UberMove",
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if (carDetails['permitted_kilometers_day'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_day'] !=
-                                        "") ...{
-                                  Text(
-                                    "${carDetails['permitted_kilometers_day']} / 1 day",
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
-                                if (carDetails['permitted_kilometers_week'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_week'] !=
-                                        "") ...{
-                                  Text(
-                                    "${carDetails['permitted_kilometers_week']} / 1 week",
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
-                                if (carDetails['permitted_kilometers_month'] !=
-                                        null &&
-                                    carDetails['permitted_kilometers_month'] !=
-                                        "") ...{
-                                  Text(
-                                    "${carDetails['permitted_kilometers_month']} / 1 month",
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "UberMove",
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                },
+                                Text(
+                                  carDetails['mitter'] ?? "",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: "UberMove",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                // if (carDetails['permitted_kilometers_day'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_day'] !=
+                                //         "") ...{
+                                //   Text(
+                                //     "${carDetails['permitted_kilometers_day']} / 1 day",
+                                //     style: const TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
+                                // if (carDetails['permitted_kilometers_week'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_week'] !=
+                                //         "") ...{
+                                //   Text(
+                                //     "${carDetails['permitted_kilometers_week']} / 1 week",
+                                //     style: const TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
+                                // if (carDetails['permitted_kilometers_month'] !=
+                                //         null &&
+                                //     carDetails['permitted_kilometers_month'] !=
+                                //         "") ...{
+                                //   Text(
+                                //     "${carDetails['permitted_kilometers_month']} / 1 month",
+                                //     style: const TextStyle(
+                                //         fontSize: 18,
+                                //         fontFamily: "UberMove",
+                                //         fontWeight: FontWeight.w500),
+                                //   ),
+                                // },
                                 Text(
                                   carDetails['luggage'],
                                   style: const TextStyle(
